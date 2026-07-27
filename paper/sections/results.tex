@@ -6,13 +6,21 @@ On OGW (100~kHz, OBS+BSS over a baseline pool at $\leq 40\,^\circ$C),
 the compensated residual energy of \emph{healthy} records rises from
 $0.043 \pm 0.014$ within the baseline range to $0.303 \pm 0.623$ in the
 extrapolated $40$--$60\,^\circ$C range---a $7.0	imes$ inflation that
-drives false alarms (Fig.~ef{fig:extrap} [TBD]). This reproduces, on
+drives false alarms (Fig.~
+ef{fig:extrap} [TBD]). This reproduces, on
 real data, the known fragility of compensation outside the baseline
 temperature range and motivates compensation-free discrimination (C2).
 
-\subsection{E2: eventization Pareto}
-[TBD: main Pareto figure, AUC vs event rate, comparison to uniform
-decimation and SVD compression.]
+\subsection{E2: eventization Pareto and the structure advantage}
+At high data rates both SoD events and matched-rate uniform decimation
+retain detection (AUC $=1.0$ on synthetic OGW-like data). The difference
+emerges in tasks that need the damage wavepacket's \emph{time
+structure}. Coarse localization from event-cluster arrival times stays
+accurate as the event rate drops (error $48.5	o31.2$~mm from rate
+$0.75	o 10^{-3}$), whereas uniform decimation at the same rate
+\emph{degrades} ($44.6	o53.5$~mm)---event sampling preferentially
+keeps the informative scattering transient that decimation averages
+away (Fig.~ef{fig:pareto} [TBD]).
 
 \subsection{E3: temperature--damage discrimination}
 [TBD: coherence--burstiness scatter, extrapolation AUC table.]

@@ -12,3 +12,26 @@ Traceback (most recent call last):
                                          ~~~~~~~~~^~~~~~~~~~~~
 numpy._core._exceptions._ArrayMemoryError: Unable to allocate 1.50 MiB for an array with shape (30, 13108) and data type float32
 === rc=1, waiting 90s for memory window ===
+=== attempt 2: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (27s)
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\experiments\e1_real2.py", line 69, in <module>
+    run(args.freq, args.dam, n_pool=args.n_pool)
+  File "D:\event-camera\SHM\src\experiments\e1_real2.py", line 42, in run
+    S = stretch_batch(Bp[c], a)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\experiments\..\..\src\methods\baseline_fast.py", line 14, in stretch_batch
+    return Y[:, i0] * (1 - w)[None, :] + Y[:, i1] * w[None, :]
+           ~~~~~~~~~^~~~~~~~~~~~~~~~~~
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 1.50 MiB for an array with shape (30, 13108) and data type float32
+=== rc=1, waiting 90s for memory window ===
+=== attempt 3: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (39s)
+=== rc=127, waiting 90s for memory window ===
+=== attempt 4: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (21s)
+  cond0 50/322 (514s)
+  cond0 100/322 (1027s)
+=== rc=127, waiting 90s for memory window ===
+=== attempt 5: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (25s)
