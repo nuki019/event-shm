@@ -1,1 +1,35 @@
-% experiments
+\paragraph{E1: baseline reproduction.}
+On OGW we reproduce the classic OBS+BSS + damage-index pipeline and the
+feature-ML pipeline of \cite{schnur2022} to establish a trustworthy
+anchor (target: near their reported leave-group-out accuracy).
+
+\paragraph{E2: level-A eventization Pareto.}
+For each frequency and damage position we sweep the SoD threshold
+$\delta$ and record detection ROC/AUC against the event rate
+(events per raw sample), producing the main Pareto front. At each rate
+we compare against (i) uniform decimation and (ii) SVD/PCA compression
+\cite{yang2023compression} at equal effective rate.
+
+\paragraph{E3: temperature--damage discrimination.}
+Without explicit compensation, the discriminator of
+Section~\ref{sec:disc} separates temperature- from damage-induced
+events; we additionally evaluate a temperature-extrapolation protocol
+(baselines from 20--$40\,^\circ$C, test 40--$60\,^\circ$C) where
+compensation-based pipelines degrade.
+
+\paragraph{E4: long-term level-B validation.}
+On the 4.5-year outdoor dataset we eventize the per-path DI series
+(level B) and measure detection latency and false-alarm rate for the
+three damage onsets (mass, dent, through-hole), reporting confounded
+segments separately.
+
+\paragraph{E5: directional analysis (CFRP).}
+The 66 paths are binned by propagation direction; we assess whether
+direction-dependent event-cluster strength/arrival carries usable
+information for coarse localization, stated conservatively given the
+quasi-isotropic layup.
+
+\paragraph{E6: ablation.}
+We ablate $\delta$, hysteresis, frequency selection, and compensation
+quality (BSS vs.\ OBS vs.\ none) to map the sensitivity chain of the
+eventization pipeline.
