@@ -1,0 +1,12 @@
+name: shm
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - h5py
+  - matplotlib
+  - pandas
+  - scikit-learn
+  - requests
