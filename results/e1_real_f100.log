@@ -1,0 +1,8 @@
+udam (322, 66, 13108), T 20.6..60.9 (24s)
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\experiments\e1_real.py", line 54, in <module>
+    run(args.freq, args.dam, args.n_chan)
+  File "D:\event-camera\SHM\src\experiments\e1_real.py", line 24, in run
+    pool = np.where(Tu <= t_base)[0]
+                    ^^^^^^^^^^^^
+TypeError: '<=' not supported between instances of 'float' and 'NoneType'
