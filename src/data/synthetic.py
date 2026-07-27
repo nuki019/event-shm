@@ -57,8 +57,8 @@ def path_signal(pos_a, pos_s, fc, temp, temp0=20.0, damaged=False,
                 rng=None, snr_db=40.0):
     """Generate one path signal at given temperature."""
     rng = rng or np.random.default_rng(0)
-    sig = np.zeros(N_SAMPLES)
-    burst = hann_toneburst(fc)
+    sig = np.zeros(N_SAMPLES, dtype=np.float32)
+    burst = hann_toneburst(fc).astype(np.float32)
     alpha = 1.0 + K_T * (temp - temp0)          # wave slower when hotter -> arrive later
     amp_T = 1.0 + AMP_DRIFT * (temp - temp0)
 
@@ -89,7 +89,7 @@ def path_signal(pos_a, pos_s, fc, temp, temp0=20.0, damaged=False,
             if dist < DAMAGE_R * 0.7:
                 sig *= (1.0 - SHADOW * (1 - dist / (DAMAGE_R * 0.7)))
 
-    noise = rng.standard_normal(N_SAMPLES)
+    noise = rng.standard_normal(N_SAMPLES).astype(np.float32)
     sig += noise * (np.max(np.abs(sig)) / (10 ** (snr_db / 20)))
     return sig
 
@@ -115,7 +115,7 @@ def make_cycle(n_temps=41, t_lo=20.0, t_hi=60.0, freqs=None, damaged=False,
             arr = np.stack([
                 path_signal(positions[i], positions[j], f * 1e3, T,
                             damaged=damaged, rng=rng)
-                for (i, j) in paths])
+                for (i, j) in paths]).astype(np.float32)
             signals[(f, ti)] = arr
     return {'temps': temps, 'freqs': freqs, 'signals': signals,
             'paths': paths, 'positions': positions}
