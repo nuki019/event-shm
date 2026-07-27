@@ -65,7 +65,8 @@ def run_pareto(ud, dm, freq, deltas, alphas, compensate=True, max_paths=None):
                     # DI = energy of the *reconstructed* residual, normalized
                     di_ev.append(float(np.dot(rec, rec)) / nn[pi])
                     # uniform downsample comparison at matched rate
-                    step = max(1, int(round(1.0 / max(len(t) / n_samp, 1e-9))))
+                    rate = len(t) / n_samp
+                    step = max(1, int(round(1.0 / rate))) if rate > 1e-6 else n_samp
                     uni = np.repeat(rr[pi][::step], step)[:n_samp]
                     if len(uni) < n_samp:
                         uni = np.pad(uni, (0, n_samp - len(uni)), mode='edge')
