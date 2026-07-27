@@ -1,0 +1,77 @@
+{
+ "8108297": {
+  "title": "OGW_CFRP_Temperature_udam",
+  "files": [
+   {
+    "id": 15129185,
+    "name": "OGW_CFRP_Temperature_udam.zip",
+    "size": 53609050314,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/15129185",
+    "supplied_md5": "9dd1f7ad53bc1fb3c887370acd40e4ba",
+    "computed_md5": "9dd1f7ad53bc1fb3c887370acd40e4ba",
+    "mimetype": "undefined"
+   }
+  ]
+ },
+ "8107886": {
+  "title": "OGW_CFRP_Temperature_dam_D12",
+  "files": [
+   {
+    "id": 15122537,
+    "name": "OGW_CFRP_Temperature_dam_D12.zip",
+    "size": 26804610548,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/15122537",
+    "supplied_md5": "c4d82a54f813c2863a8202a212116b01",
+    "computed_md5": "c4d82a54f813c2863a8202a212116b01",
+    "mimetype": "undefined"
+   }
+  ]
+ },
+ "8107880": {
+  "title": "OGW_CFRP_Temperature_dam_D24",
+  "files": [
+   {
+    "id": 15130196,
+    "name": "OGW_CFRP_Temperature_dam_D24.zip",
+    "size": 26804598535,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/15130196",
+    "supplied_md5": "25725eea1bcbe4beb0e39d8f1218af82",
+    "computed_md5": "25725eea1bcbe4beb0e39d8f1218af82",
+    "mimetype": "undefined"
+   }
+  ]
+ },
+ "8107889": {
+  "title": "OGW_CFRP_Temperature_dam_D04",
+  "files": [
+   {
+    "id": 15117569,
+    "name": "OGW_CFRP_Temperature_dam_D04.zip",
+    "size": 26804589215,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/15117569",
+    "supplied_md5": "724d573d2ff9e1e975afb3f8a3588bc9",
+    "computed_md5": "724d573d2ff9e1e975afb3f8a3588bc9",
+    "mimetype": "undefined"
+   }
+  ]
+ },
+ "8107883": {
+  "title": "OGW_CFRP_Temperature_dam_D16",
+  "files": [
+   {
+    "id": 15130364,
+    "name": "OGW_CFRP_Temperature_dam_D16.zip",
+    "size": 26804608838,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/15130364",
+    "supplied_md5": "ea3e3c02679de9b4125c9cfbca398564",
+    "computed_md5": "ea3e3c02679de9b4125c9cfbca398564",
+    "mimetype": "undefined"
+   }
+  ]
+ }
+}

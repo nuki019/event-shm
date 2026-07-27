@@ -1,0 +1,1 @@
+https://s3-eu-west-1.amazonaws.com/pstorage-npg-968563215/15129185/OGW_CFRP_Temperature_udam.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIQYK5H3JTELHKKTA/20260727/eu-west-1/s3/aws4_request&X-Amz-Date=20260727T144902Z&X-Amz-Expires=10&X-Amz-SignedHeaders=host&X-Amz-Signature=e4a4c52c624859d9d009d320cbac7ca291b25f13047e425e4d910a666da40683

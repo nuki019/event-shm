@@ -1,0 +1,19 @@
+name: Fetch OGW figshare metadata
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-meta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query figshare collection API
+        run: |
+          set -e
+          echo "=== Collection articles ==="
+          curl -s "https://api.figshare.com/v2/collections/4488089/articles" -o collection_articles.json
+          cat collection_articles.json | python3 -m json.tool | head -100
+      - name: Upload metadata artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: figshare-meta
+          path: collection_articles.json
