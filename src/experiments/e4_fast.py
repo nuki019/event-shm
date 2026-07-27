@@ -42,10 +42,13 @@ def detect_onset(DI, temp, warm=300):
     out = {}
     dT = np.abs(np.gradient(temp))
     for p in range(DI.shape[1]):
-        med = np.median(DI[:warm, p])
-        delta = 0.5 * (med + 1e-9)
+        # adaptive delta: scale with robust DI level (median + MAD)
+        seg = DI[:warm, p]
+        med = np.median(seg)
+        mad = np.median(np.abs(seg - med)) + 1e-9
+        delta = max(0.5 * med, 3 * mad)
         t, s, lv = sod_series(DI[:, p], delta)
-        out[p] = {'n_events': int(len(t)), 't': t,
+        out[p] = {'n_events': int(len(t)), 't': t, 'delta': float(delta),
                   'mean_dT_at_events': float(dT[t].mean()) if len(t) else 0.0,
                   'path': PATHS[p]}
     return out, dT

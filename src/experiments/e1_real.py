@@ -51,4 +51,4 @@ if __name__ == '__main__':
     ap.add_argument('--dam', default=None)
     ap.add_argument('--n-chan', type=int, default=None)
     args = ap.parse_args()
-    run(args.freq, args.dam, args.n_chan)
+    run(freq=args.freq, dam_zip=args.dam, n_chan=args.n_chan)

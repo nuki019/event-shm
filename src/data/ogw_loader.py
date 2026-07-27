@@ -67,10 +67,17 @@ class OGWSetZip:
 
 
 def load_matrix(s: OGWSetZip, freq, idx=None):
-    """Stack records: X (M, 66, N), temps (M,)."""
+    """Stack records: X (M, 66, N), temps (M,). Records lacking the
+    requested frequency or a readable temperature are skipped."""
     idx = idx if idx is not None else range(len(s))
     Xs, Ts = [], []
     for i in idx:
-        Xs.append(s.signals(i, freq))
-        Ts.append(s.temperature(i, freq))
-    return np.stack(Xs), np.array(Ts)
+        try:
+            x = s.signals(i, freq)
+            t = float(s.temperature(i, 100))
+            if not np.isfinite(t):
+                continue
+            Xs.append(x); Ts.append(t)
+        except Exception:
+            continue
+    return np.stack(Xs), np.array(Ts, dtype=float)
