@@ -3,15 +3,15 @@ import numpy as np
 
 
 def stretch_batch(Y, alpha):
-    """Time-stretch each row of Y (K, N) by alpha, keep length N (linear interp).
-    Uses np.interp per row (C speed, no big temporaries)."""
+    """Time-stretch each row of Y (K, N) by alpha, keep length N.
+    Fully vectorized linear interpolation (no python loop over rows)."""
     K, N = Y.shape
-    t = (np.arange(N, dtype=np.float64) / alpha)
-    xp = np.arange(N, dtype=np.float64)
-    out = np.empty(Y.shape, dtype=np.float32)
-    for k in range(K):
-        out[k] = np.interp(t, xp, Y[k])
-    return out
+    t = np.arange(N, dtype=np.float64) / alpha
+    np.clip(t, 0, N - 1, out=t)
+    i0 = t.astype(np.int64)
+    i1 = np.minimum(i0 + 1, N - 1)
+    w = (t - i0).astype(Y.dtype)
+    return Y[:, i0] * (1 - w)[None, :] + Y[:, i1] * w[None, :]
 
 
 def bss_search(x, baselines, alphas):

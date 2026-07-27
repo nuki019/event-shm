@@ -1,0 +1,77 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{article}
+
+% ---- XeTeX fonts & languages ----
+\usepackage{fontspec}
+\usepackage{xeCJK}              % Chinese support where needed
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{siunitx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\title{Event-Based Guided Wave Structural Health Monitoring:\
+Separating Temperature Drift from Damage by the Temporal Structure\
+of Send-on-Delta Event Streams}
+\author{Anonymous}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Long-term guided-wave structural health monitoring (SHM) produces vast
+continuous data streams although ``nothing happens'' most of the time.
+We introduce \emph{send-on-delta} (SoD) event-based acquisition to
+guided-wave SHM for the first time, at two levels: (A) level-crossing
+events of the within-record compensated residual, and (B) SoD events of
+the across-record damage-index series. Temperature drift and damage
+imprint fundamentally different spatio-temporal event patterns---slow,
+globally coherent versus fast, path-localized bursts---which enables
+discrimination \emph{without explicit temperature compensation}.
+On the public OGW CFRP temperature dataset and a 4.5-year outdoor
+aluminum-plate dataset we show that event streams at $\leq 1\%$ of the
+raw data rate preserve detection AUC within [TBD], and that a simple
+coherence--burstiness discriminator separates temperature- from
+damage-induced events with [TBD] accuracy, including in a
+temperature-extrapolation regime where classical baseline compensation
+degrades. [Results being generated; numbers to be filled.]
+\end{abstract}
+
+\section{Introduction}
+\input{sections/intro}
+
+\section{Related Work}
+\input{sections/related}
+
+\section{Method}
+\input{sections/method}
+
+\section{Data}
+\input{sections/data}
+
+\section{Experiments}
+\input{sections/experiments}
+
+\section{Results}
+\input{sections/results}
+
+\section{Discussion}
+\input{sections/discussion}
+
+\section{Conclusion}
+\input{sections/conclusion}
+
+\bibliographystyle{ieeetr}
+\bibliography{refs}
+
+\end{document}

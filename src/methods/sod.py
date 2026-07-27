@@ -16,54 +16,35 @@ import numpy as np
 
 
 def sod_encode(x, delta, initial=0.0):
-    """Encode 1-D signal x with send-on-delta sampling.
+    """Vectorized send-on-delta encoding of 1-D signal x.
 
-    An event is emitted at index i whenever x[i] crosses last_level +/- delta.
-    The emitted level is the crossed threshold (quantized), not x[i] itself
-    (classic SoD / level-crossing with absolute criterion).
+    Quantized level q_i = floor(x_i/delta + 1/2); an event is emitted
+    whenever the level changes. Multiple crossed levels produce multiple
+    events at the same sample index (classic SoD semantics).
 
-    Parameters
-    ----------
-    x : (N,) array
-    delta : float, event threshold (must be > 0)
-    initial : float, initial reference level
-
-    Returns
-    -------
-    t : (M,) int array — sample indices of events
-    s : (M,) int8 array — event signs (+1 up-crossing, -1 down-crossing)
-    levels : (M,) float array — the quantized levels crossed
+    Returns (t, signs, levels): event sample indices, +-1 signs, levels.
     """
     if delta <= 0:
         raise ValueError('delta must be positive')
-    x = np.asarray(x)
-    idx = []
-    signs = []
-    levels = []
-    last = initial
-    # vectorized inner loop is hard due to state dependence; use numpy where possible.
-    # For SHM residual signals (N ~ 10k-100k) a python loop is acceptable,
-    # but we accelerate by jumping: compute deviation from `last`, find first crossing.
-    N = x.shape[0]
-    i = 0
-    while True:
-        dev = x[i:] - last
-        cross = np.nonzero(np.abs(dev) >= delta)[0]
-        if cross.size == 0:
-            break
-        j = i + cross[0]
-        d = dev[cross[0]]
-        n_steps = int(abs(d) // delta)          # multiple levels can be crossed at once
-        step = delta if d > 0 else -delta
-        for k in range(1, n_steps + 1):
-            idx.append(j)
-            signs.append(1 if step > 0 else -1)
-            levels.append(last + k * step)
-        last = last + n_steps * step
-        i = j + 1
-        if i >= N:
-            break
-    return np.asarray(idx, dtype=np.int64), np.asarray(signs, dtype=np.int8), np.asarray(levels)
+    x = np.asarray(x, dtype=np.float64)
+    q = np.floor(x / delta + 0.5).astype(np.int64)
+    q0 = np.floor(initial / delta + 0.5)
+    dq = np.diff(np.concatenate(([q0], q)))
+    (idxs,) = np.nonzero(dq)
+    if idxs.size == 0:
+        return (np.empty(0, dtype=np.int64), np.empty(0, dtype=np.int8),
+                np.empty(0, dtype=np.float64))
+    steps = dq[idxs]
+    reps = np.abs(steps).astype(np.int64)
+    t = np.repeat(idxs, reps)
+    signs = np.repeat(np.sign(steps).astype(np.int8), reps)
+    # levels: walk from previous level to new level in unit steps
+    new_lvl = q[idxs]
+    prev_lvl = new_lvl - steps
+    offs = np.concatenate([np.arange(1, int(r) + 1) for r in reps]).astype(np.int64)
+    sgn = np.repeat(np.sign(steps), reps)
+    levels = (np.repeat(prev_lvl, reps) + offs * sgn) * delta
+    return t.astype(np.int64), signs, levels
 
 
 def sod_decode(t, levels, n_samples, initial=0.0):

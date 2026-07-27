@@ -40,7 +40,7 @@ def run_pareto(ud, dm, freq, deltas, alphas, compensate=True, max_paths=None):
     for ti in range(n_t):
         for cond, X, acc, xn in ((0, ud['signals'][(freq, ti)], res_u, xnorm_u),
                                  (1, dm['signals'][(freq, ti)], res_d, xnorm_d)):
-            rr = np.empty((n_paths, n_samp))
+            rr = np.empty((n_paths, n_samp), dtype=np.float32)
             nn = np.empty(n_paths)
             for pi in range(n_paths):
                 if compensate:
@@ -60,7 +60,7 @@ def run_pareto(ud, dm, freq, deltas, alphas, compensate=True, max_paths=None):
                 for pi in range(n_paths):
                     t, s, lv = sod_encode(rr[pi], delta)
                     rates.append(len(t) / n_samp)
-                    rec = sod_decode(t, lv, n_samp)
+                    rec = sod_decode(t, lv, n_samp).astype(np.float32)
                     labels.append(cond)
                     # DI = energy of the *reconstructed* residual, normalized
                     di_ev.append(float(np.dot(rec, rec)) / nn[pi])
