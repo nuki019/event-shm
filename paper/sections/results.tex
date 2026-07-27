@@ -32,7 +32,16 @@ ef{fig:fidelity}). On synthetic OGW-like data the same advantage appears in coar
 \end{figure}
 
 \subsection{E3: temperature--damage discrimination}
-Using only event-stream structure (cross-path coherence, localization, event count, arrival-time spread) at 40~kHz, a logistic discriminator separates healthy-temperature-drift records from damage records with cross-validated AUC $0.814$; the event count alone gives $0.846$ and coherence $0.789$. Temperature produces high-coherence events (many paths active together), damage a localized subset---confirming the structural prior on real data without any learned temperature model.
+Using only event-stream structure (cross-path coherence, localization, event count, arrival-time spread) at 40~kHz, a logistic discriminator separates healthy-temperature-drift records from damage records with cross-validated AUC $0.814$; the event count alone gives $0.846$ and coherence $0.789$. Temperature produces high-coherence events (many paths active together), damage a localized subset---confirming the structural prior on real data.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.55\linewidth]{e3_scatter.png}
+\caption{Event-structure separation at 40~kHz: healthy temperature-drift
+records (blue) vs.\ D24 damage records (red) in the coherence--event-count
+plane.}
+\label{fig:e3}
+\end{figure}
+without any learned temperature model.
 
 \subsection{E4: long-term level-B validation}
 On the 2021-04 outdoor month (reversible-mass onset at record 8401 of 15069), level-A event counts are eventized per path and a path-isolation score (max-path minus median-path event activity) separates damage from temperature: the damage segment scores $3.5\times$ the healthy one. At a false-alarm rate of $\approx 0.1\%$ (8 false events over 8401 healthy records) the mass is detected with a latency of $5509$ records ($\approx 269$~h). The reversible mass is deliberately subtle; permanent damage (dent, through-hole) produces a larger persistent step. Confounded sensor-drift segments are reported separately, not merged into these metrics.
