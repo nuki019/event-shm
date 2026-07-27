@@ -1,1 +1,2 @@
-udam (322, 66, 13108), T 20.6..60.9 (19s)
+=== attempt 1: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (21s)
