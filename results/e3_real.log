@@ -3,3 +3,7 @@
   120/322 (543s)
   180/322 (764s)
   240/322 (997s)
+  300/322 (1231s)
+healthy: coherence 0.499+-0.417, localization 0.555+-0.333
+coherence vs temperature: corr 0.916
+=== SUCCESS ===

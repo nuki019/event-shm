@@ -35,3 +35,8 @@ udam (322, 66, 13108), T 20.6..60.9 (21s)
 === rc=127, waiting 90s for memory window ===
 === attempt 5: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
 udam (322, 66, 13108), T 20.6..60.9 (25s)
+  cond0 50/322 (589s)
+=== rc=127, waiting 90s for memory window ===
+=== attempt 6: src/experiments/e1_real2.py --freq 100 --n-pool 30 ===
+udam (322, 66, 13108), T 20.6..60.9 (31s)
+  cond0 50/322 (627s)
