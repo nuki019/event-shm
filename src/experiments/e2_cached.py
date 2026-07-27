@@ -8,7 +8,7 @@ from sklearn.metrics import roc_auc_score
 
 PROC = 'data/processed'
 
-def run(freq=100, dam='D04', deltas=None):
+def run(freq=40, dam='D04', deltas=None):
     if deltas is None:
         deltas = np.geomspace(0.0005, 0.05, 12)
     RH = np.load(f'{PROC}/R_udam_f{freq}.npy')
@@ -42,4 +42,6 @@ def run(freq=100, dam='D04', deltas=None):
     print('saved')
 
 if __name__ == '__main__':
-    run(dam=sys.argv[1] if len(sys.argv) > 1 else 'D04')
+    dam = sys.argv[1] if len(sys.argv) > 1 else 'D04'
+    freq = int(sys.argv[2]) if len(sys.argv) > 2 else 40
+    run(freq=freq, dam=dam)

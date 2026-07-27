@@ -37,7 +37,7 @@ def residuals(x, Bpool, alphas):
     return R, NN
 
 
-def cache(freq=100, n_rec=40):
+def cache(freq=40, n_rec=40):
     ud = OGWSetZip('OGW_CFRP_Temperature_udam.zip')
     Tud = ud.temperatures()
     pool_idx = np.where(Tud <= 40.0)[0][::12][:8]
