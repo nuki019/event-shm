@@ -21,3 +21,16 @@ mera\SHM\src\data\s3_download.py", line 122, in <module>
   File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
     os.rename(part_path, path)
 PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_03.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_03.pickle'
+measurements_2021_04.pickle: 10/58 chunks, 336 MB, avg 6.3 MB/s, ETA 4 min
+measurements_2021_04.pickle: 20/58 chunks, 671 MB, avg 5.6 MB/s, ETA 4 min
+measurements_2021_04.pickle: 30/58 chunks, 1007 MB, avg 6.0 MB/s, ETA 3 min
+measurements_2021_04.pickle: 40/58 chunks, 1342 MB, avg 5.5 MB/s, ETA 2 min
+measurements_2021_04.pickle: 50/58 chunks, 1678 MB, avg 5.3 MB/s, ETA 1 min
+measurements_2021_04.pickle: 58/58 chunks, 1930 MB, avg 4.8 MB/s, ETA 0 min
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 122, in <module>
+    ok = download(fid, name, nconn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
+    os.rename(part_path, path)
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle'
