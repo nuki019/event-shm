@@ -14,9 +14,19 @@ At the damage-sensitive frequency (40~kHz, Section~E6), the full-resolution base
 ef{fig:pareto}). This is the headline result: acquisition-side eventization retains detection at three orders of magnitude below the raw rate. This advantage grows with compression: against SVD/PCA
 compression \cite{yang2023compression} at equal rate, eventization is
 comparable at high rate but pulls ahead below $10^{-2}$ (AUC $0.950$
-vs.\ $0.825$ at rate $2	imes10^{-3}$, Fig.~ef{fig:pareto})---
+vs.\ $0.825$ at rate $2	imes10^{-3}$, Fig.~
+ef{fig:pareto})---
 acquisition-side eventization beats storage-side transform coding for
 the scattering transient.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\linewidth]{e2_c3_pca.png}
+\caption{Acquisition-side eventization vs.\ storage-side PCA
+compression \cite{yang2023compression} at equal data rate (D04,
+40~kHz). Eventization pulls ahead as compression increases.}
+\label{fig:c3}
+\end{figure}
+
 
 \begin{figure}[t]
 \centering
