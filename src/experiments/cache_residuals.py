@@ -7,6 +7,15 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.data.ogw_loader import OGWSetZip
 from src.methods.baseline_fast import stretch_batch
+from scipy.signal import butter, filtfilt
+
+_BA = butter(3, 20e3 / 5e6, btype='high')   # 20 kHz high-pass, fs=10 MHz
+
+def prep(x):
+    """High-pass + per-path unit-energy normalize (C, N) -> float32."""
+    y = filtfilt(_BA[0], _BA[1], x, axis=1).astype(np.float32)
+    n = np.sqrt((y ** 2).sum(axis=1, keepdims=True)) + 1e-9
+    return y / n
 
 OUT = 'data/processed'
 os.makedirs(OUT, exist_ok=True)
@@ -31,9 +40,9 @@ def residuals(x, Bpool, alphas):
 def cache(freq=100, n_rec=40):
     ud = OGWSetZip('OGW_CFRP_Temperature_udam.zip')
     Tud = ud.temperatures()
-    pool_idx = np.where(Tud <= 40.0)[0][::8][:12]
-    Bpool = np.stack([ud.signals(int(i), freq) for i in pool_idx])
-    alphas = np.linspace(0.995, 1.005, 9)
+    pool_idx = np.where(Tud <= 40.0)[0][::12][:8]
+    Bpool = np.stack([prep(ud.signals(int(i), freq)) for i in pool_idx])
+    alphas = np.linspace(0.985, 1.015, 13)
     np.save(f'{OUT}/Bpool_f{freq}.npy', Bpool)
     np.save(f'{OUT}/Tud_f{freq}.npy', Tud)
     for name, s in [('udam', ud),
@@ -44,7 +53,7 @@ def cache(freq=100, n_rec=40):
         t0 = time.time()
         Rs, NNs = [], []
         for m in range(M):
-            R, NN = residuals(s.signals(m, freq), Bpool, alphas)
+            R, NN = residuals(prep(s.signals(m, freq)), Bpool, alphas)
             Rs.append(R); NNs.append(NN)
             if (m + 1) % 10 == 0:
                 print(f'  {name} {m+1}/{M} ({time.time()-t0:.0f}s)', flush=True)
