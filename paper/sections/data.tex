@@ -1,1 +1,22 @@
-% data
+\subsection{OGW CFRP temperature dataset}
+The Open Guided Waves temperature dataset \cite{moll2019ogw} records a
+$500\times500\times2$~mm quasi-isotropic CFRP plate with 12 co-cured
+piezoelectric transducers (all 66 pitch-catch pairs) in a climate
+chamber from 20 to $60\,^\circ$C in $0.5\,^\circ$C steps, at 12
+excitation frequencies (40--260~kHz). Two undamaged temperature cycles
+and one cycle with a reversible surface-mounted disc at each of four
+collinear positions (D04, D12, D16, D24) are provided as HDF5.
+
+\subsection{Long-term outdoor aluminum dataset}
+The UF/Utah dataset \cite{yang2025dataset} records an aluminum plate
+with 8 transducers (8 pitch-catch paths) outdoors for 4.5 years
+($-12.2$ to $+52.5\,^\circ$C, rain/snow, sensor drift), with 13 staged
+damage events (reversible mass, dent, through-hole) interleaved with
+confounding events. It provides the level-B validation stage (C4).
+
+\paragraph{Note on material split.}
+The long-term dataset is (isotropic) aluminum, while the
+temperature-controlled dataset is (quasi-isotropic) CFRP; claims are
+therefore stated per-dataset rather than globally, and anisotropy
+(direction-dependent event patterns) is assessed conservatively on the
+CFRP data only.
