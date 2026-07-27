@@ -1,0 +1,10 @@
+measurements_2018_03.pickle: 10/18 chunks, 336 MB, avg 2.7 MB/s, ETA 2 min
+measurements_2018_03.pickle: 18/18 chunks, 599 MB, avg 2.5 MB/s, ETA 0 min
+measurements_2018_03.pickle: COMPLETE 0.6 GB, fails=15
+measurements_2018_04.pickle: 10/58 chunks, 336 MB, avg 5.1 MB/s, ETA 5 min
+measurements_2018_04.pickle: 20/58 chunks, 671 MB, avg 5.7 MB/s, ETA 4 min
+measurements_2018_04.pickle: 30/58 chunks, 1007 MB, avg 5.8 MB/s, ETA 3 min
+measurements_2018_04.pickle: 40/58 chunks, 1342 MB, avg 5.7 MB/s, ETA 2 min
+measurements_2018_04.pickle: 50/58 chunks, 1678 MB, avg 5.8 MB/s, ETA 1 min
+measurements_2018_04.pickle: 58/58 chunks, 1920 MB, avg 5.0 MB/s, ETA 0 min
+measurements_2018_04.pickle: COMPLETE 1.9 GB, fails=0

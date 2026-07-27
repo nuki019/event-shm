@@ -1,0 +1,12 @@
+residuals precomputed in 229.1s
+delta=0.0100 rate=0.70216 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0154 rate=0.45469 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0239 rate=0.28916 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0368 rate=0.14407 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0569 rate=0.03192 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0879 rate=0.00148 AUC_event=1.000 AUC_uniform=1.000
+delta=0.1357 rate=0.00008 AUC_event=0.557 AUC_uniform=1.000
+delta=0.2096 rate=0.00001 AUC_event=0.512 AUC_uniform=1.000
+delta=0.3237 rate=0.00000 AUC_event=0.500 AUC_uniform=1.000
+delta=0.5000 rate=0.00000 AUC_event=0.500 AUC_uniform=1.000
+saved results/e2_pareto_synthetic.json

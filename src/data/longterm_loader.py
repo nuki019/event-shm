@@ -1,42 +1,43 @@
-"""Loader for the UF/Utah long-term aluminum-plate dataset.
+"""Loader for the UF/Utah long-term aluminum-plate dataset (2018-2022).
 
-Files: monthly pickles 'measurements YYYY_MM.pickle'. Based on the
-SmartDATA-Lab code and Scientific Data descriptor: each pickle holds a
-list/dict of records with waveforms + environmental metadata. We keep
-access lazy and tolerant of exact schema (probe first, then index).
+Each monthly pickle is a dict with keys:
+  datatime (M,) datetime; temperature/pressure/brightness/humidity (M,);
+  damage tag (M,) 0=healthy,1..13 damage stages; weather tag (M,) 0=fair,1..5;
+  excitation signal (1000,); guided wave (M, 8, 2000) float64.
+Path mapping (from data inf): waves 1..8 -> paths 5-1,5-2,5-3,5-4,6-1,6-2,6-3,6-4.
+Chirp excitation 5-350 kHz, 1 ms; fs ~ 2 MHz (2000 samples / 1 ms window).
 """
-import os, pickle, json
+import os, pickle, glob
 import numpy as np
 
 RAW = os.path.join(os.path.dirname(__file__), '../../data/raw')
+PATHS = ['5-1', '5-2', '5-3', '5-4', '6-1', '6-2', '6-3', '6-4']
+FS = 2e6   # 2000 samples per 1 ms
 
 
-def probe_month(path):
-    with open(path, 'rb') as f:
-        obj = pickle.load(f)
-    info = {'type': str(type(obj))}
-    if isinstance(obj, dict):
-        info['keys'] = list(obj.keys())[:30]
-        for k in list(obj.keys())[:3]:
-            v = obj[k]
-            info[f'{k}'] = {'type': str(type(v)),
-                            'len': len(v) if hasattr(v, '__len__') else None}
-    elif isinstance(obj, (list, tuple)):
-        info['len'] = len(obj)
-        if len(obj):
-            v = obj[0]
-            info['first'] = {'type': str(type(v))}
-            if isinstance(v, dict):
-                info['first_keys'] = list(v.keys())
-            elif hasattr(v, '__dict__'):
-                info['first_attrs'] = list(v.__dict__.keys())
-    return info
+def month_file(year_month):
+    return os.path.join(RAW, f'measurements_{year_month}.pickle')
 
 
-if __name__ == '__main__':
-    import sys, glob
-    files = sorted(glob.glob(os.path.join(RAW, 'measurements*.pickle')))
-    print('found', len(files), 'monthly files')
-    if files:
-        info = probe_month(files[0])
-        print(json.dumps(info, indent=1, default=str)[:2000])
+def load_month(year_month, float32=True):
+    with open(month_file(year_month), 'rb') as f:
+        d = pickle.load(f)
+    gw = d['guided wave']
+    if float32 and gw.dtype != np.float32:
+        gw = gw.astype(np.float32)
+    # drop unused big fields early to limit peak memory
+    for k in ('excitation signal',):
+        d.pop(k, None)
+    return {
+        'gw': gw,                                   # (M, 8, 2000)
+        't': d['datatime'],
+        'temp': np.asarray(d['temperature'], float),
+        'weather': np.asarray(d['weather tag'], int),
+        'damage': np.asarray(d['damage tag'], int),
+        'paths': PATHS, 'fs': FS,
+    }
+
+
+def available_months():
+    return [os.path.basename(p).replace('measurements_', '').replace('.pickle', '')
+            for p in sorted(glob.glob(month_file('*')))]

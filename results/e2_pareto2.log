@@ -1,0 +1,39 @@
+residuals precomputed in 255.1s
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\experiments\e2_pareto.py", line 102, in <module>
+    rows = run_pareto(ud, dm, args.freq, deltas, alphas,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\experiments\e2_pareto.py", line 76, in run_pareto
+    auc_ev = roc_auc_score(labels, di_ev)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\utils\_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_ranking.py", line 733, in roc_auc_score
+    return _average_binary_score(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_base.py", line 77, in _average_binary_score
+    return binary_metric(y_true, y_score, sample_weight=sample_weight)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_ranking.py", line 478, in _binary_roc_auc_score
+    fpr, tpr, _ = roc_curve(y_true, y_score, sample_weight=sample_weight)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\utils\_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_ranking.py", line 1319, in roc_curve
+    _, fps, _, tps, thresholds = confusion_matrix_at_thresholds(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\utils\validation.py", line 80, in inner_f
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\utils\_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_ranking.py", line 1021, in confusion_matrix_at_thresholds
+    _sort_inputs_and_compute_classification_thresholds(
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\metrics\_ranking.py", line 892, in _sort_inputs_and_compute_classification_thresholds
+    check_consistent_length(y_true, y_score, sample_weight)
+  File "C:\Users\wfy\.conda\envs\shm\Lib\site-packages\sklearn\utils\validation.py", line 458, in check_consistent_length
+    raise ValueError(
+ValueError: Found input variables with inconsistent numbers of samples: [1680, 3360]
