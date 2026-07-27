@@ -1,0 +1,12 @@
+months: ['2018_03', '2018_04', '2021_03', '2021_04', '2021_06', '2022_07', '2022_08']
+2018_04: DI (14994, 8) in 88s; temp -2.1..31.7C
+level-B events: 43126 (3x compression)
+  path 5-1: 6241 events, mean|dT|@events 0.1485 vs global 0.1255
+  path 5-2: 4917 events, mean|dT|@events 0.1485 vs global 0.1255
+  path 5-3: 6317 events, mean|dT|@events 0.1502 vs global 0.1255
+  path 5-4: 6990 events, mean|dT|@events 0.1501 vs global 0.1255
+  path 6-1: 5775 events, mean|dT|@events 0.1482 vs global 0.1255
+  path 6-2: 3607 events, mean|dT|@events 0.1474 vs global 0.1255
+  path 6-3: 4875 events, mean|dT|@events 0.1487 vs global 0.1255
+  path 6-4: 4404 events, mean|dT|@events 0.1497 vs global 0.1255
+saved

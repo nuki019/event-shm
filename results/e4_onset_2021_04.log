@@ -1,0 +1,20 @@
+=== attempt 1: src/experiments/e4_onset.py 2021_04 2018_03 ===
+2021_04 vs ref 2018_03: DI (15069, 8) in 131s; damage tags [0 1]
+{
+ "threshold_per_path": [
+  1.0266399383544922,
+  1.012797474861145,
+  1.0756438970565796,
+  1.050689458847046,
+  1.0139423608779907,
+  0.9872596263885498,
+  0.9838287234306335,
+  0.9941065907478333
+ ],
+ "first_detection": 251,
+ "true_onset": 8401,
+ "latency_records": -8150,
+ "max_paths_above": 8
+}
+saved
+=== SUCCESS ===

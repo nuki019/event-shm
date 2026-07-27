@@ -1,0 +1,24 @@
+months: ['2018_03', '2018_04', '2021_03', '2021_04']
+2018_03: DI (4681, 8) in 40s; temp -0.8..21.8C
+level-B events: 865 (43x compression)
+  path 5-1: 186 events, mean|dT|@events 0.1471 vs global 0.1168
+  path 5-2: 203 events, mean|dT|@events 0.1142 vs global 0.1168
+  path 5-3: 23 events, mean|dT|@events 0.1591 vs global 0.1168
+  path 5-4: 15 events, mean|dT|@events 0.1717 vs global 0.1168
+  path 6-1: 52 events, mean|dT|@events 0.1206 vs global 0.1168
+  path 6-2: 252 events, mean|dT|@events 0.1564 vs global 0.1168
+  path 6-3: 15 events, mean|dT|@events 0.0600 vs global 0.1168
+  path 6-4: 119 events, mean|dT|@events 0.1220 vs global 0.1168
+saved
+months: ['2018_03', '2018_04', '2021_03', '2021_04']
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\experiments\e4_fast.py", line 62, in <module>
+    d, DI = obs_di_month(ym)
+            ^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\experiments\e4_fast.py", line 15, in obs_di_month
+    d = load_month(ym)
+        ^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\experiments\..\..\src\data\longterm_loader.py", line 27, in load_month
+    gw = gw.astype(np.float32)
+         ^^^^^^^^^^^^^^^^^^^^^
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 915. MiB for an array with shape (14994, 8, 2000) and data type float32

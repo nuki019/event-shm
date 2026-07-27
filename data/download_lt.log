@@ -26,11 +26,58 @@ measurements_2021_04.pickle: 20/58 chunks, 671 MB, avg 5.6 MB/s, ETA 4 min
 measurements_2021_04.pickle: 30/58 chunks, 1007 MB, avg 6.0 MB/s, ETA 3 min
 measurements_2021_04.pickle: 40/58 chunks, 1342 MB, avg 5.5 MB/s, ETA 2 min
 measurements_2021_04.pickle: 50/58 chunks, 1678 MB, avg 5.3 MB/s, ETA 1 min
-measurements_2021_04.pickle: 58/58 chunks, 1930 MB, avg 4.8 MB/s, ETA 0 min
+measurements_2021_04.pickle: 58/58 chunks, 1930 MB, avg 4.4 MB/s, ETA 0 min
+measurements_2021_04.pickle: COMPLETE 1.9 GB, fails=0
+mera\SHM\src\data\s3_download.py", line 122, in <module>
+    ok = download(fid, name, nconn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
+    os.rename(part_path, path)
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle'
+measurements_2021_05.pickle: 10/60 chunks, 336 MB, avg 1.8 MB/s, ETA 15 min
+measurements_2021_05.pickle: 20/60 chunks, 671 MB, avg 2.3 MB/s, ETA 10 min
+measurements_2021_05.pickle: 30/60 chunks, 1007 MB, avg 2.4 MB/s, ETA 7 min
+measurements_2021_05.pickle: 40/60 chunks, 1342 MB, avg 2.5 MB/s, ETA 4 min
+measurements_2021_05.pickle: 50/60 chunks, 1678 MB, avg 2.5 MB/s, ETA 2 min
+measurements_2021_05.pickle: 60/60 chunks, 1992 MB, avg 2.4 MB/s, ETA 0 min
 Traceback (most recent call last):
   File "D:\event-camera\SHM\src\data\s3_download.py", line 122, in <module>
     ok = download(fid, name, nconn)
          ^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
     os.rename(part_path, path)
-PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_04.pickle'
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_05.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2021_05.pickle'
+measurements_2021_06.pickle: 10/58 chunks, 336 MB, avg 3.9 MB/s, ETA 7 min
+measurements_2021_06.pickle: 20/58 chunks, 671 MB, avg 4.0 MB/s, ETA 5 min
+measurements_2021_06.pickle: 30/58 chunks, 1007 MB, avg 3.5 MB/s, ETA 4 min
+measurements_2021_06.pickle: 40/58 chunks, 1342 MB, avg 3.8 MB/s, ETA 3 min
+measurements_2021_06.pickle: 50/58 chunks, 1678 MB, avg 3.9 MB/s, ETA 1 min
+measurements_2021_06.pickle: 58/58 chunks, 1928 MB, avg 3.8 MB/s, ETA 0 min
+measurements_2021_06.pickle: COMPLETE 1.9 GB, fails=0
+
+measurements_2022_08.pickle: 10/42 chunks, 336 MB, avg 3.1 MB/s, ETA 6 min
+measurements_2022_07.pickle: 10/60 chunks, 336 MB, avg 3.1 MB/s, ETA 9 min
+measurements_2022_07.pickle: 20/60 chunks, 671 MB, avg 3.4 MB/s, ETA 6 min
+measurements_2022_07.pickle: 30/60 chunks, 1007 MB, avg 4.0 MB/s, ETA 4 min
+measurements_2022_07.pickle: 40/60 chunks, 1342 MB, avg 4.3 MB/s, ETA 3 min
+measurements_2022_07.pickle: 50/60 chunks, 1678 MB, avg 4.5 MB/s, ETA 1 min
+measurements_2022_07.pickle: 60/60 chunks, 1993 MB, avg 4.6 MB/s, ETA 0 min
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 122, in <module>
+    ok = download(fid, name, nconn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
+    os.rename(part_path, path)
+FileExistsError: [WinError 183] 当文件已存在时，无法创建该文件。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2022_07.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2022_07.pickle'
+measurements_2022_08.pickle: 10/42 chunks, 336 MB, avg 4.3 MB/s, ETA 4 min
+measurements_2022_08.pickle: 20/42 chunks, 671 MB, avg 5.0 MB/s, ETA 2 min
+measurements_2022_08.pickle: 30/42 chunks, 1007 MB, avg 4.9 MB/s, ETA 1 min
+measurements_2022_08.pickle: 40/42 chunks, 1342 MB, avg 5.3 MB/s, ETA 0 min
+measurements_2022_08.pickle: 42/42 chunks, 1399 MB, avg 5.2 MB/s, ETA 0 min
+Traceback (most recent call last):
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 122, in <module>
+    ok = download(fid, name, nconn)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\event-camera\SHM\src\data\s3_download.py", line 111, in download
+    os.rename(part_path, path)
+FileExistsError: [WinError 183] 当文件已存在时，无法创建该文件。: 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2022_08.pickle.part' -> 'D:\\event-camera\\SHM\\src\\data\\../../data/raw\\measurements_2022_08.pickle'

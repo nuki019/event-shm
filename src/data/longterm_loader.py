@@ -24,7 +24,12 @@ def load_month(year_month, float32=True):
         d = pickle.load(f)
     gw = d['guided wave']
     if float32 and gw.dtype != np.float32:
-        gw = gw.astype(np.float32)
+        # convert in chunks to limit peak memory
+        out = np.empty(gw.shape, dtype=np.float32)
+        step = max(1, gw.shape[0] // 8)
+        for a in range(0, gw.shape[0], step):
+            out[a:a+step] = gw[a:a+step]
+        gw = out
     # drop unused big fields early to limit peak memory
     for k in ('excitation signal',):
         d.pop(k, None)

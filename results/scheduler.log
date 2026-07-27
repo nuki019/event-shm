@@ -1,0 +1,33 @@
+=== [e1_extrap] attempt 1 01:46:57 ===
+pool 12 records T 21.2..38.6
+  60/322 (257s)
+  120/322 (498s)
+  180/322 (742s)
+=== [e1_extrap] failed rc=127, wait 75s ===
+=== [e1_extrap] attempt 2 02:01:48 ===
+pool 12 records T 21.2..38.6
+  60/322 (249s)
+  120/322 (466s)
+  180/322 (681s)
+  240/322 (901s)
+  300/322 (1124s)
+healthy DI_mean: <=40C 0.0431+-0.0136 | >40C 0.3029+-0.6234
+extrapolation inflation factor: 7.02x
+=== [e1_extrap] DONE ===
+=== [e2_syn] attempt 1 02:22:05 ===
+=== [e2_syn] failed rc=127, wait 75s ===
+=== [e2_syn] attempt 2 02:29:10 ===
+residuals precomputed in 307.1s
+delta=0.0100 rate=0.70216 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0154 rate=0.45469 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0239 rate=0.28916 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0368 rate=0.14407 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0569 rate=0.03192 AUC_event=1.000 AUC_uniform=1.000
+delta=0.0879 rate=0.00148 AUC_event=1.000 AUC_uniform=1.000
+delta=0.1357 rate=0.00008 AUC_event=0.557 AUC_uniform=1.000
+delta=0.2096 rate=0.00001 AUC_event=0.512 AUC_uniform=1.000
+delta=0.3237 rate=0.00000 AUC_event=0.500 AUC_uniform=1.000
+delta=0.5000 rate=0.00000 AUC_event=0.500 AUC_uniform=1.000
+saved results/e2_pareto_synthetic2.json
+=== [e2_syn] DONE ===
+ALL SCHEDULED TASKS DONE
