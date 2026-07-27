@@ -11,6 +11,15 @@ ef{fig:extrap} [TBD]). This reproduces, on
 real data, the known fragility of compensation outside the baseline
 temperature range and motivates compensation-free discrimination (C2).
 
+egin{figure}[t]
+\centering
+\includegraphics[width=0.6\linewidth]{e1_extrapolation.png}
+\caption{Healthy-record compensated residual energy vs.\ temperature
+(OGW, 100~kHz, baseline pool $\leq 40\,^\circ$C). The residual inflates
+$7.0	imes$ in the extrapolated range $>40\,^\circ$C.}
+\label{fig:extrap}
+\end{figure}
+
 \subsection{E2: eventization Pareto and the structure advantage}
 At high data rates both SoD events and matched-rate uniform decimation
 retain detection (AUC $=1.0$ on synthetic OGW-like data). The difference
@@ -44,6 +53,15 @@ deliberately subtle; permanent damage (dent, through-hole) produces a
 larger persistent step. Confounded sensor-drift segments are reported
 separately, not merged into these metrics.
 
+egin{figure}[t]
+\centering
+\includegraphics[width=0.7\linewidth]{e4_detection.png}
+\caption{Long-term level-B detection (2021-04): path 5-1 level-A event
+count (top) and the path-isolation score (bottom) with the 99.9\%
+healthy threshold; the reversible-mass onset is marked.}
+\label{fig:e4}
+\end{figure}
+
 \subsection{E5: directional analysis}
 Binning the 66 paths by propagation direction, the damage-induced
 event activity is concentrated at $15^\circ$ and $105^\circ$
@@ -63,3 +81,12 @@ response dominates the disc scattering; frequency choice matters more
 than the compensation refinement here. We ablate the SoD threshold
 $\delta$, hysteresis, and compensation (BSS vs.\ OBS vs.\ none) in
 the supplement [TBD].
+
+egin{figure}[t]
+\centering
+\includegraphics[width=0.55\linewidth]{e6_freqscan.png}
+\caption{Frequency selection: weak-disc detection AUC vs.\ excitation
+frequency. Both damage positions are detected near-perfectly at
+40~kHz and fall toward chance by $\geq 120$~kHz.}
+\label{fig:freq}
+\end{figure}
