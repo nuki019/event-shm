@@ -26,3 +26,16 @@ report those separately rather than merging them into headline metrics.
 Synthetic-to-real gap: pipeline sanity checks used a simplified
 dispersion/temperature model; all headline numbers are from the two
 public real datasets.
+
+\paragraph{Long-term level-B in practice.}
+On the outdoor aluminum data the level-A event counts are dominated by
+temperature drift, so naive DI thresholds false-alarm; the
+path-isolation score recovers detection but with long latency for the
+reversible mass. Cross-month and cross-year baseline drift (sensor
+ageing, coupling changes) further raises the level-A event floor on
+permanent-damage months. Long-term level-B eventization therefore
+benefits from pairing with a drift-robust reference (e.g.\ long
+short-term PCA \cite{yang2022ltpca})---a combination we leave to future
+work. This is an honest limitation rather than a failure of the
+eventization itself, which succeeds on the temperature-controlled OGW
+data (E2, E3).
