@@ -32,8 +32,17 @@ coherence $0.789$. Temperature produces high-coherence events (many
 paths active together), damage a localized subset---confirming the
 structural prior on real data without any learned temperature model.
 
-\subsection{E4: long-term level-B}
-[TBD: detection latency / false alarms for the three damage onsets.]
+\subsection{E4: long-term level-B validation}
+On the 2021-04 outdoor month (reversible-mass onset at record 8401 of
+15069), level-A event counts are eventized per path and a
+path-isolation score (max-path minus median-path event activity)
+separates damage from temperature: the damage segment scores
+$3.5	imes$ the healthy one. At a false-alarm rate of $pprox 0.1\%$
+(8 false events over 8401 healthy records) the mass is detected with a
+latency of $5509$ records ($pprox 269$~h). The reversible mass is
+deliberately subtle; permanent damage (dent, through-hole) produces a
+larger persistent step. Confounded sensor-drift segments are reported
+separately, not merged into these metrics.
 
 \subsection{E5: directional analysis}
 Binning the 66 paths by propagation direction, the damage-induced
