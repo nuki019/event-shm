@@ -38,13 +38,17 @@ the across-record damage-index series. Temperature drift and damage
 imprint fundamentally different spatio-temporal event patterns---slow,
 globally coherent versus fast, path-localized bursts---which enables
 discrimination \emph{without explicit temperature compensation}.
-On the public OGW CFRP temperature dataset and a 4.5-year outdoor
-aluminum-plate dataset we show that event streams at $\leq 1\%$ of the
-raw data rate preserve detection AUC within [TBD], and that a simple
-coherence--burstiness discriminator separates temperature- from
-damage-induced events with [TBD] accuracy, including in a
-temperature-extrapolation regime where classical baseline compensation
-degrades. [Results being generated; numbers to be filled.]
+On the public OGW CFRP temperature dataset we show that classical
+baseline compensation degrades sharply outside its temperature range
+($7.0	imes$ residual inflation for healthy records), and that
+level-crossing eventization of the compensated residual retains the
+damage-scattering transient at $\leq 1\%$ of the raw data rate,
+preserving coarse localization (error $31$~mm) where matched-rate
+uniform decimation degrades ($54$~mm). On 4.5 years of outdoor
+aluminum-plate data, level-B eventization of the damage-index series
+compresses the stream $43	imes$ while keeping temperature-driven
+events globally coherent across paths---the structural signature that
+separates temperature drift from damage. [Numbers being finalized.]
 \end{abstract}
 
 \section{Introduction}

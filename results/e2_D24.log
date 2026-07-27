@@ -1,0 +1,13 @@
+delta=0.0005 rate=1.34997 AUC_ev=0.552 AUC_uni=0.552
+delta=0.0008 rate=0.88674 AUC_ev=0.552 AUC_uni=0.552
+delta=0.0012 rate=0.57034 AUC_ev=0.552 AUC_uni=0.552
+delta=0.0018 rate=0.34492 AUC_ev=0.552 AUC_uni=0.553
+delta=0.0027 rate=0.18132 AUC_ev=0.551 AUC_uni=0.551
+delta=0.0041 rate=0.06373 AUC_ev=0.550 AUC_uni=0.551
+delta=0.0062 rate=0.01124 AUC_ev=0.545 AUC_uni=0.552
+delta=0.0094 rate=0.00116 AUC_ev=0.531 AUC_uni=0.544
+delta=0.0142 rate=0.00011 AUC_ev=0.513 AUC_uni=0.547
+delta=0.0216 rate=0.00001 AUC_ev=0.503 AUC_uni=0.543
+delta=0.0329 rate=0.00000 AUC_ev=0.501 AUC_uni=0.542
+delta=0.0500 rate=0.00000 AUC_ev=0.500 AUC_uni=0.542
+saved
