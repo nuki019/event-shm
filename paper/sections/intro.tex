@@ -1,1 +1,54 @@
-% intro
+Guided-wave structural health monitoring (SHM) is one of the most
+mature approaches for plate-like structures: a sparse network of
+piezoelectric transducers excites and receives ultrasonic Lamb waves,
+and scattering at damage is detected as a change relative to baseline
+records. Deployed long-term, however, the technique faces two coupled
+problems. First, the \emph{data deluge}: a monitoring system sampling
+continuously over months or years produces gigabytes of records although
+the structure is almost always in its nominal state
+\cite{yang2025dataset}. Second, \emph{environmental variation}---chiefly
+temperature---modifies wave speed, attenuation and transducer coupling
+so strongly that temperature-induced signal changes routinely exceed
+damage-induced ones \cite{croxford2010,clarke2010}.
+
+The dominant response to the second problem is \emph{temperature
+compensation}: baseline signal stretch (BSS) and optimal baseline
+selection (OBS) \cite{croxford2010}, physics-based models, and more
+recently learned compensators. The dominant response to the first is
+\emph{post-hoc compression} of the stored records, e.g.\ SVD/PCA-based
+reduction of the long-term data matrix \cite{yang2023compression}. Both
+leave the acquisition itself untouched: every record is sampled
+uniformly at full rate, whether or not it carries information.
+
+This paper asks a different question: what if the acquisition itself is
+\emph{event-based}? Neuromorphic vision has shown that send-on-delta
+(SoD) sampling---emitting an event only when the signal changes by a
+threshold $\delta$ \cite{miskowicz2006}---preserves task-relevant
+information at a small fraction of the data rate. Guided-wave SHM is a
+natural candidate: most records are ``nothing happened'', so the
+compensated residual is near zero most of the time and an event-based
+representation should be extremely sparse. More interestingly,
+temperature drift and damage are expected to produce
+\emph{qualitatively different event patterns}. Temperature drift is
+slow and affects all propagation paths coherently; damage appears
+suddenly, persists, and affects only the paths geometrically related to
+its location. This suggests that the \emph{temporal and spatial
+structure of the event stream}---not the compensated amplitude---can
+separate the two, sidestepping explicit temperature compensation.
+
+We make the following contributions:
+\begin{itemize}
+\item[\textbf{C1}] The first send-on-delta eventization of guided-wave
+SHM data, at two levels: within-record level-crossing events of the
+compensated residual (microsecond scale), and across-record SoD events
+of the damage-index series (day/month scale).
+\item[\textbf{C2}] A temperature--damage discrimination mechanism that
+uses only event-stream structure (cross-path coherence and burstiness),
+without explicit temperature compensation, complementary to the
+BSS/OBS paradigm.
+\item[\textbf{C3}] A controlled comparison of acquisition-side
+eventization against post-hoc compression at equal data rate.
+\item[\textbf{C4}] Validation on 4.5 years of real outdoor long-term
+data (rain, snow, $-12$ to $+52\,^\circ$C, sensor drift), a regime in
+which most guided-wave ML methods are never tested.
+\end{itemize}

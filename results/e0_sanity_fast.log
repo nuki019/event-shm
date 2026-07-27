@@ -1,0 +1,7 @@
+cycles built 13.5s, paths=132, n_samp=12000
+near-damage paths: 18/132
+compensation done in 1427.3s
+AUC no-comp : 0.462
+AUC OBS+BSS : 1.000
+event rate (delta=0.05): near-damage 0.0011 vs far 0.0005 ev/sample
+total 1441.5s

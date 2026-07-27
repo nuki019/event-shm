@@ -1,1 +1,59 @@
-% method
+\subsection{Two-level send-on-delta eventization}
+Let $x_p^{(k)}(t)$ be the guided-wave record of path $p$ at monitoring
+epoch $k$, sampled at $f_s$. After temperature compensation against a
+baseline $\hat{x}_p^{(k)}$ (Section~\ref{sec:comp}), we form the
+residual $r_p^{(k)}(t) = x_p^{(k)}(t) - \hat{x}_p^{(k)}(t)$.
+
+\paragraph{Level A: within-record events.}
+SoD sampling of $r$ with threshold $\delta$: an event
+$e = (t_i, s_i)$ is emitted at sample $t_i$ whenever
+$r(t_i)$ crosses the last emitted level by $\pm\delta$, with sign
+$s_i = \mathrm{sgn}(\Delta r)$. A perfect compensation of a healthy
+record yields $r \approx 0$ and hence almost no events; a scattering
+wavepacket from damage produces a time-localized cluster of events
+whose arrival time encodes the damage--path geometry
+(Fig.~\ref{fig:method} [TBD]).
+
+\paragraph{Level B: across-record events.}
+Each record is summarized by a damage index
+$\mathrm{DI}_p(k)$ (Section~\ref{sec:di}). SoD eventization of the
+slowly varying series $\mathrm{DI}_p(k)$ with threshold $\delta_B$
+emits an event only when the DI changes materially. A 4.5-year stream
+of $\sim 10^6$ records per path compresses to $10^2$--$10^4$ events, a
+$10^3$--$10^4\times$ reduction.
+
+\subsection{Temperature compensation (baseline)}
+\label{sec:comp}
+We use OBS+BSS \cite{croxford2010}: select the baseline minimizing
+residual energy from a pool (OBS), then stretch it in time by a factor
+$\alpha \in [1-\epsilon, 1+\epsilon]$ minimizing residual energy (BSS).
+Importantly, level-B eventization does \emph{not} depend on
+within-record compensation quality, providing an independent detection
+channel.
+
+\subsection{Damage indices}
+\label{sec:di}
+We use the normalized residual energy
+$\mathrm{DI}_p(k) = \|r_p^{(k)}\|_2^2 \,/\, \|x_p^{(k)}\|_2^2$
+and, for eventized records, the energy of the zero-order-hold
+reconstruction of the residual from its SoD events.
+
+\subsection{Temperature--damage discrimination from event structure}
+\label{sec:disc}
+Two scalar statistics of the per-record event counts
+$\{n_p\}_{p=1}^{P}$ across the $P$ paths capture the physics:
+\begin{itemize}
+\item \emph{Cross-path coherence}
+  $c = \frac{1}{P}\sum_p \mathbb{1}[n_p \geq \theta]$:
+  fraction of paths simultaneously active. Temperature acts globally
+  ($c \to 1$); damage is localized ($c \ll 1$).
+\item \emph{Path-localization index}
+  $\ell = \sum_{p \in \text{top-}10\%} n_p / \sum_p n_p$:
+  concentration of the event mass on a few paths.
+\end{itemize}
+A rule-based discriminator scores a record as temperature-like when
+$c$ is high and damage-like when $\ell$ is high; a logistic regression
+on $(c, \ell, \bar{n}, \sigma_n)$ provides the learned variant.
+At level B, damage shows a sudden, persistent rise of $\mathrm{DI}_p$
+events on a path subset, whereas temperature produces slow,
+seasonally-correlated events on all paths.
