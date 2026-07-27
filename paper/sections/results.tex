@@ -78,9 +78,26 @@ ef{fig:freq}): both D04 and D24 are detected near-perfectly at
 40~kHz (AUC $1.000$ and $0.953$) but fall toward chance by
 $\geq 120$~kHz (AUC $pprox 0.44$--$0.48$). The low-frequency A0
 response dominates the disc scattering; frequency choice matters more
-than the compensation refinement here. We ablate the SoD threshold
-$\delta$, hysteresis, and compensation (BSS vs.\ OBS vs.\ none) in
-the supplement [TBD].
+than the compensation refinement here. Compensation quality dominates the detection chain
+(Table~ef{tab:ablation}): at 40~kHz, no compensation gives AUC
+$0.583$, OBS alone $0.843$, and OBS+BSS $1.000$. The SoD threshold
+$\delta$ trades event rate against fidelity
+(Fig.~ef{fig:pareto}); hysteresis has second-order effect [TBD].
+
+egin{table}[t]
+\centering
+\caption{Ablation: compensation method vs.\ detection AUC (D04, 40~kHz).}
+\label{tab:ablation}
+egin{tabular}{lc}
+	oprule
+Compensation & AUC \
+\midrule
+None & 0.583 \
+OBS & 0.843 \
+OBS+BSS & 1.000 \
+ottomrule
+\end{tabular}
+\end{table}
 
 egin{figure}[t]
 \centering
