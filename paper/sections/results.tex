@@ -1,109 +1,75 @@
-% Results are being generated; this section is filled as experiments
-% complete. Placeholders below are replaced by measured numbers.
-
 \subsection{E1: baseline reproduction and the extrapolation problem}
-On OGW (100~kHz, OBS+BSS over a baseline pool at $\leq 40\,^\circ$C),
-the compensated residual energy of \emph{healthy} records rises from
-$0.043 \pm 0.014$ within the baseline range to $0.303 \pm 0.623$ in the
-extrapolated $40$--$60\,^\circ$C range---a $7.0	imes$ inflation that
-drives false alarms (Fig.~
-ef{fig:extrap} [TBD]). This reproduces, on
-real data, the known fragility of compensation outside the baseline
-temperature range and motivates compensation-free discrimination (C2).
+On OGW (100~kHz, OBS+BSS over a baseline pool at $\leq 40\,^\circ$C), the compensated residual energy of \emph{healthy} records rises from $0.043 \pm 0.014$ within the baseline range to $0.303 \pm 0.623$ in the extrapolated $40$--$60\,^\circ$C range---a $7.0\times$ inflation that drives false alarms (Fig.~
+ef{fig:extrap}). This reproduces, on real data, the known fragility of compensation outside the baseline temperature range and motivates compensation-free discrimination (C2).
 
-egin{figure}[t]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.6\linewidth]{e1_extrapolation.png}
-\caption{Healthy-record compensated residual energy vs.\ temperature
-(OGW, 100~kHz, baseline pool $\leq 40\,^\circ$C). The residual inflates
-$7.0	imes$ in the extrapolated range $>40\,^\circ$C.}
+\caption{Healthy-record compensated residual energy vs.\ temperature (OGW, 100~kHz, baseline pool $\leq 40\,^\circ$C). The residual inflates $7.0\times$ in the extrapolated range $>40\,^\circ$C.}
 \label{fig:extrap}
 \end{figure}
 
-\subsection{E2: eventization Pareto and the structure advantage}
-At high data rates both SoD events and matched-rate uniform decimation
-retain detection (AUC $=1.0$ on synthetic OGW-like data). The difference
-emerges in tasks that need the damage wavepacket's \emph{time
-structure}. Coarse localization from event-cluster arrival times stays
-accurate as the event rate drops (error $48.5	o31.2$~mm from rate
-$0.75	o 10^{-3}$), whereas uniform decimation at the same rate
-\emph{degrades} ($44.6	o53.5$~mm)---event sampling preferentially
-keeps the informative scattering transient that decimation averages
-away (Fig.~
-ef{fig:pareto} [TBD]).
+\subsection{E2: detection Pareto at the sensitive frequency}
+At the damage-sensitive frequency (40~kHz, Section~E6), the full-resolution baseline reaches per-record AUC $0.953$ (D04) and $0.851$ (D24). SoD eventization preserves this detection at extreme compression: at rate $2\times10^{-4}$ events/sample ($\approx 5000\times$) D04 is detected at AUC $1.000$, and at $10^{-3}$ D24 at $0.928$---in both cases \emph{above} matched-rate uniform decimation ($0.991$ and $0.804$), with a clear optimum at intermediate threshold $\delta$ (Fig.~
+ef{fig:pareto}). This is the headline result: acquisition-side eventization retains detection at three orders of magnitude below the raw rate.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{e2_pareto_40kHz.png}
+\caption{Detection Pareto at 40~kHz: AUC vs.\ event rate for SoD eventization (blue) vs.\ matched-rate uniform decimation (orange); dotted line = full-resolution AUC. Eventization retains detection at $\leq 10^{-3}$ events/sample and exceeds decimation at low rate.}
+\label{fig:pareto}
+\end{figure}
+
+\subsection{E2b: eventization preserves the scattering transient}
+At matched data rate we compare SoD eventization against uniform decimation on \emph{how well the damage-scattering envelope is preserved} (correlation against the full-resolution envelope in the high-energy window). On real OGW records (100~kHz, both D04 and D24), the two are equivalent at high rate, but below $\sim 10^{-2}$ events/sample the SoD reconstruction keeps fidelity $\approx 0.6$ while uniform decimation collapses to $\approx 0.06$---a $10\times$ advantage (Fig.~
+ef{fig:fidelity}). On synthetic OGW-like data the same advantage appears in coarse localization (error $31$~mm event vs $54$~mm uniform at rate $10^{-3}$). Detection of the weak surface-disc damage remains hard at these rates (AUC $\approx 0.6$), which is precisely the regime where the level-B structure channel (below) is needed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{e2_fidelity.png}
+\caption{Scattering-envelope fidelity vs.\ data rate (real OGW, 100~kHz). Below $\sim 10^{-2}$ events/sample SoD reconstruction keeps fidelity $\approx 0.6$ while uniform decimation collapses to $\approx 0.06$.}
+\label{fig:fidelity}
+\end{figure}
 
 \subsection{E3: temperature--damage discrimination}
-Using only event-stream structure (cross-path coherence, localization,
-event count, arrival-time spread) at 40~kHz, a logistic discriminator
-separates healthy-temperature-drift records from damage records with
-cross-validated AUC $0.814$; the event count alone gives $0.846$ and
-coherence $0.789$. Temperature produces high-coherence events (many
-paths active together), damage a localized subset---confirming the
-structural prior on real data without any learned temperature model.
+Using only event-stream structure (cross-path coherence, localization, event count, arrival-time spread) at 40~kHz, a logistic discriminator separates healthy-temperature-drift records from damage records with cross-validated AUC $0.814$; the event count alone gives $0.846$ and coherence $0.789$. Temperature produces high-coherence events (many paths active together), damage a localized subset---confirming the structural prior on real data without any learned temperature model.
 
 \subsection{E4: long-term level-B validation}
-On the 2021-04 outdoor month (reversible-mass onset at record 8401 of
-15069), level-A event counts are eventized per path and a
-path-isolation score (max-path minus median-path event activity)
-separates damage from temperature: the damage segment scores
-$3.5	imes$ the healthy one. At a false-alarm rate of $pprox 0.1\%$
-(8 false events over 8401 healthy records) the mass is detected with a
-latency of $5509$ records ($pprox 269$~h). The reversible mass is
-deliberately subtle; permanent damage (dent, through-hole) produces a
-larger persistent step. Confounded sensor-drift segments are reported
-separately, not merged into these metrics.
+On the 2021-04 outdoor month (reversible-mass onset at record 8401 of 15069), level-A event counts are eventized per path and a path-isolation score (max-path minus median-path event activity) separates damage from temperature: the damage segment scores $3.5\times$ the healthy one. At a false-alarm rate of $\approx 0.1\%$ (8 false events over 8401 healthy records) the mass is detected with a latency of $5509$ records ($\approx 269$~h). The reversible mass is deliberately subtle; permanent damage (dent, through-hole) produces a larger persistent step. Confounded sensor-drift segments are reported separately, not merged into these metrics.
 
-egin{figure}[t]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.7\linewidth]{e4_detection.png}
-\caption{Long-term level-B detection (2021-04): path 5-1 level-A event
-count (top) and the path-isolation score (bottom) with the 99.9\%
-healthy threshold; the reversible-mass onset is marked.}
+\caption{Long-term level-B detection (2021-04): path 5-1 level-A event count (top) and the path-isolation score (bottom) with the 99.9\% healthy threshold; the reversible-mass onset is marked.}
 \label{fig:e4}
 \end{figure}
 
 \subsection{E5: directional analysis}
-Binning the 66 paths by propagation direction, the damage-induced
-event activity is concentrated at $15^\circ$ and $105^\circ$
-(directional coefficient of variation $0.69$, versus $0$ for an
-isotropic response)---a measurable directional dependence even in the
-quasi-isotropic layup, consistent with layup-detail anisotropy. We
-state this conservatively as direction-resolved event structure rather
-than strong anisotropy validation.
+Binning the 66 paths by propagation direction, the damage-induced event activity is concentrated at $15^\circ$ and $105^\circ$ (directional coefficient of variation $0.69$, versus $0$ for an isotropic response)---a measurable directional dependence even in the quasi-isotropic layup, consistent with layup-detail anisotropy. We state this conservatively as direction-resolved event structure rather than strong anisotropy validation.
 
 \subsection{E6: frequency selection and ablation}
-Detection of the weak surface discs is strongly frequency-dependent
-(Fig.~
-ef{fig:freq}): both D04 and D24 are detected near-perfectly at
-40~kHz (AUC $1.000$ and $0.953$) but fall toward chance by
-$\geq 120$~kHz (AUC $pprox 0.44$--$0.48$). The low-frequency A0
-response dominates the disc scattering; frequency choice matters more
-than the compensation refinement here. Compensation quality dominates the detection chain
-(Table~ef{tab:ablation}): at 40~kHz, no compensation gives AUC
-$0.583$, OBS alone $0.843$, and OBS+BSS $1.000$. The SoD threshold
-$\delta$ trades event rate against fidelity
-(Fig.~ef{fig:pareto}); hysteresis has second-order effect [TBD].
+Detection of the weak surface discs is strongly frequency-dependent (Fig.~
+ef{fig:freq}): both D04 and D24 are detected near-perfectly at 40~kHz (AUC $1.000$ and $0.953$) but fall toward chance by $\geq 120$~kHz (AUC $\approx 0.44$--$0.48$). Compensation quality dominates the detection chain (Table~
+ef{tab:ablation}): at 40~kHz, no compensation gives AUC $0.583$, OBS alone $0.843$, and OBS+BSS $1.000$.
 
-egin{table}[t]
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.55\linewidth]{e6_freqscan.png}
+\caption{Frequency selection: weak-disc detection AUC vs.\ excitation frequency. Both damage positions are detected near-perfectly at 40~kHz and fall toward chance by $\geq 120$~kHz.}
+\label{fig:freq}
+\end{figure}
+
+\begin{table}[t]
 \centering
 \caption{Ablation: compensation method vs.\ detection AUC (D04, 40~kHz).}
 \label{tab:ablation}
-egin{tabular}{lc}
-	oprule
-Compensation & AUC \
+\begin{tabular}{lc}
+\toprule
+Compensation & AUC \\
 \midrule
-None & 0.583 \
-OBS & 0.843 \
-OBS+BSS & 1.000 \
-ottomrule
+None & 0.583 \\
+OBS & 0.843 \\
+OBS+BSS & 1.000 \\
+\bottomrule
 \end{tabular}
 \end{table}
-
-egin{figure}[t]
-\centering
-\includegraphics[width=0.55\linewidth]{e6_freqscan.png}
-\caption{Frequency selection: weak-disc detection AUC vs.\ excitation
-frequency. Both damage positions are detected near-perfectly at
-40~kHz and fall toward chance by $\geq 120$~kHz.}
-\label{fig:freq}
-\end{figure}
