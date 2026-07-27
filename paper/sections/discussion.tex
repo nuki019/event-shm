@@ -1,1 +1,28 @@
-% discussion
+\paragraph{Why eventization helps beyond compression.}
+Post-hoc compression reduces what is \emph{stored}; acquisition-side
+eventization reduces what is \emph{sensed and transmitted}, which is
+the binding constraint for battery-powered and wireless SHM nodes
+\cite{henkmann2025tinyml}. Our Pareto comparison (E2) quantifies
+whether the information lost by event sampling exceeds that lost by
+transform coding at the same rate.
+
+\paragraph{Event structure as a physical feature.}
+The coherence--burstiness separation rests on physics: temperature is a
+global, slow boundary condition, whereas damage is a local, persistent
+scatterer. This makes the discriminator interpretable and, unlike
+learned compensators, free of a training distribution over temperature.
+
+\paragraph{Limitations.}
+(i) The level-A residual quality still depends on compensation; level B
+provides an independent channel but at coarser time resolution.
+(ii) The OGW damage cases are reversible surface-mounted discs, not
+grown defects; conclusions about small real cracks require caution.
+(iii) The CFRP plate is quasi-isotropic, so directional (anisotropy)
+claims are stated conservatively. (iv) Eight of thirteen damage stages
+of the long-term dataset are confounded with sensor-drift events; we
+report those separately rather than merging them into headline metrics.
+
+\paragraph{Threats to validity.}
+Synthetic-to-real gap: pipeline sanity checks used a simplified
+dispersion/temperature model; all headline numbers are from the two
+public real datasets.
