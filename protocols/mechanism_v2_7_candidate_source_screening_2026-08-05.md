@@ -21,7 +21,7 @@
 
 | 优先级 | 来源 | 已由公开元数据确认 | 仍缺失的硬门槛 | 结论 |
 |---|---|---|---|---|
-| A | [IEEE DataPort：small-diameter pipes](https://doi.org/10.21227/2v7s-g915) | `CC BY 4.0`；官方 DataCite 描述明确为多通道 UGW time-series waveforms，含十种损伤类别；在当前仓的 v2.6 收据、缓存和本地盘点中没有出现。 | 公开 DOI 元数据没有说明无损/健康类别、文件格式、样本到物理管段或独立 campaign 的映射、文件清单或校验信息。该站公开着陆页本轮超时，不能以推断补齐。 | `CONDITIONAL_NOT_AUTHORIZED`。不得把“十种损伤类别”误写成健康/损伤二元语义。 |
+| A | [IEEE DataPort：small-diameter pipes](https://doi.org/10.21227/2v7s-g915) | `CC BY 4.0`；官方 DataCite 描述明确为多通道 UGW time-series waveforms，含十种损伤类别；在当前仓的 v2.6 收据、缓存和本地盘点中没有出现。 | DataCite 的 `version=null`、`versionCount=0`、`formats/sizes/relatedIdentifiers=[]`，且没有无损/健康类别、文件格式、样本到物理管段或独立 campaign 的映射、文件清单或校验信息。2026-08-05 公开 DataPort 着陆页重定向后为 HTTP 403，公开 JSON 返回需要 `view own unpublished content` 权限；这不能断言记录未发布，但不足以补齐硬门槛。 | `CONDITIONAL_NOT_AUTHORIZED` / `METADATA_PUBLICLY_UNVERIFIABLE`。不得把“十种损伤类别”误写成健康/损伤二元语义，也不得据此冻结或访问波形。 |
 
 “条件候选”不是批准、不是盲确认结果，也不是可立即启动的 v2.7 数据源。
 

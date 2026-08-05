@@ -31,16 +31,18 @@ import json
 import os
 import re
 import tempfile
+import threading
 import uuid
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Iterator, Mapping
+from typing import Any, Iterator, Mapping, Protocol
 
 
 LEDGER_FORMAT = "mechanism-v2.7-checkpoint-ledger-v1"
 WRITER_LOCK_FORMAT = "mechanism-v2.7-writer-lease-v1"
+GATE_FORMAT = "mechanism-v2.7-checkpoint-gate-v1"
 ACTIVE_STATE = "active"
 TERMINAL_STATES = frozenset({"completed", "invalidated", "aborted"})
 GENESIS_PREVIOUS_SHA256 = "0" * 64
@@ -65,6 +67,20 @@ class CheckpointLedgerError(RuntimeError):
     """Raised when an attempt ledger is unsafe to create, resume, or update."""
 
 
+class HeadAnchorAuthority(Protocol):
+    """External, immutable-head verifier required for resume and final audit.
+
+    The local ledger cannot prove that a hash-valid old file was not restored.
+    A future frozen runner must therefore inject a verifier for an append-only,
+    independently retained head anchor.  This module deliberately ships no
+    production implementation: a plain local JSON file or mutable Git branch
+    is not sufficient authority for a real confirmation run.
+    """
+
+    def verify_head(self, expectation: "CheckpointHeadExpectation") -> bool:
+        """Return ``True`` only when the independently retained anchor matches."""
+
+
 @dataclass(frozen=True)
 class AttemptBinding:
     """Immutable public identities that must all match before a resume.
@@ -86,6 +102,30 @@ class AttemptBinding:
 
 
 @dataclass(frozen=True)
+class CheckpointHeadExpectation:
+    """A head identity which must be verified outside the mutable worktree.
+
+    ``anchor_id`` is deliberately opaque.  A source-specific frozen runner
+    must define how it resolves to an append-only, independently retained
+    record; this synthetic layer only requires a verifier to attest it.
+    """
+
+    attempt_id: str
+    binding: AttemptBinding
+    ledger_sha256: str
+    anchor_id: str
+    anchor_sha256: str
+
+    def __post_init__(self) -> None:
+        _require(isinstance(self.attempt_id, str) and self.attempt_id, "attempt_id must be a non-empty string")
+        if not isinstance(self.binding, AttemptBinding):
+            raise CheckpointLedgerError("head expectation binding must be an AttemptBinding")
+        _require_digest("head expectation ledger_sha256", self.ledger_sha256)
+        _require(isinstance(self.anchor_id, str) and self.anchor_id, "anchor_id must be a non-empty string")
+        _require_digest("head expectation anchor_sha256", self.anchor_sha256)
+
+
+@dataclass(frozen=True)
 class WriterLease:
     """Exclusive writer identity for one active synthetic attempt ledger.
 
@@ -101,6 +141,17 @@ class WriterLease:
     attempt_id: str
     writer_id: str
     token: str
+    _gate: "_GateHandle" = field(repr=False, compare=False)
+    _capability: object = field(repr=False, compare=False)
+    _sidecar_identity: tuple[int, int] = field(repr=False, compare=False)
+    _owner_pid: int = field(repr=False, compare=False)
+    _write_mutex: Any = field(repr=False, compare=False)
+
+
+# This process-local registry makes a deserialized or manually reconstructed
+# WriterLease fail even if its caller copied every public sidecar field.  The
+# OS gate below supplies the corresponding cross-process capability.
+_ISSUED_LEASE_CAPABILITIES: dict[tuple[Path, str], object] = {}
 
 
 def _require(condition: bool, message: str) -> None:
@@ -241,6 +292,228 @@ def _fsync_parent_best_effort(path: Path) -> None:
         os.close(descriptor)
 
 
+def _file_identity_from_stat(stat_result: os.stat_result) -> tuple[int, int]:
+    return stat_result.st_dev, stat_result.st_ino
+
+
+def _file_identity(path: Path) -> tuple[int, int]:
+    try:
+        return _file_identity_from_stat(path.stat())
+    except OSError as error:
+        raise CheckpointLedgerError(f"cannot stat checkpoint artifact: {path}") from error
+
+
+def _gate_path(destination: Path) -> Path:
+    return destination.with_name(f".{destination.name}.gate")
+
+
+def _lock_gate_fd(fd: int, *, shared: bool) -> None:
+    """Acquire a non-blocking OS lock on byte zero of a persistent gate."""
+
+    try:
+        if os.name == "nt":
+            import msvcrt
+
+            os.lseek(fd, 0, os.SEEK_SET)
+            mode = msvcrt.LK_NBRLCK if shared else msvcrt.LK_NBLCK
+            msvcrt.locking(fd, mode, 1)
+        else:
+            import fcntl
+
+            mode = fcntl.LOCK_SH if shared else fcntl.LOCK_EX
+            fcntl.flock(fd, mode | fcntl.LOCK_NB)
+    except (ImportError, OSError) as error:
+        raise CheckpointLedgerError("checkpoint gate is unavailable or already held") from error
+
+
+def _unlock_gate_fd(fd: int) -> None:
+    try:
+        if os.name == "nt":
+            import msvcrt
+
+            os.lseek(fd, 0, os.SEEK_SET)
+            msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(fd, fcntl.LOCK_UN)
+    except (ImportError, OSError):
+        # Closing the descriptor below is still required.  A failed unlock
+        # must never cause the caller to continue using the capability.
+        pass
+
+
+@dataclass
+class _GateHandle:
+    """A live OS-level gate capability; it is never reconstructed from JSON."""
+
+    path: Path
+    fd: int
+    shared: bool
+    identity: tuple[int, int]
+    owner_pid: int
+    _released: bool = False
+
+    def assert_held(self, *, require_exclusive: bool = False) -> None:
+        if self._released or self.fd < 0:
+            raise CheckpointLedgerError("checkpoint gate capability has already been released")
+        if self.owner_pid != os.getpid():
+            raise CheckpointLedgerError("checkpoint gate capability belongs to another process")
+        if require_exclusive and self.shared:
+            raise CheckpointLedgerError("writer requires an exclusive checkpoint gate")
+        try:
+            descriptor_identity = _file_identity_from_stat(os.fstat(self.fd))
+        except OSError as error:
+            raise CheckpointLedgerError("checkpoint gate descriptor is no longer valid") from error
+        if descriptor_identity != self.identity or _file_identity(self.path) != self.identity:
+            raise CheckpointLedgerError("checkpoint gate identity changed; refusing to continue")
+
+    def release(self) -> None:
+        if self._released:
+            return
+        try:
+            _unlock_gate_fd(self.fd)
+        finally:
+            try:
+                os.close(self.fd)
+            finally:
+                self.fd = -1
+                self._released = True
+
+
+def _read_fd_bytes(fd: int) -> bytes:
+    try:
+        size = os.fstat(fd).st_size
+        os.lseek(fd, 0, os.SEEK_SET)
+        chunks: list[bytes] = []
+        remaining = size
+        while remaining > 0:
+            block = os.read(fd, min(1024 * 1024, remaining))
+            if not block:
+                break
+            chunks.append(block)
+            remaining -= len(block)
+    except OSError as error:
+        raise CheckpointLedgerError("cannot read checkpoint gate") from error
+    payload = b"".join(chunks)
+    if len(payload) != size:
+        raise CheckpointLedgerError("checkpoint gate changed while it was being read")
+    return payload
+
+
+def _gate_document(document: Mapping[str, Any]) -> dict[str, str]:
+    return {
+        "format": GATE_FORMAT,
+        "attempt_id": document["attempt_id"],
+        "binding_sha256": document["binding_sha256"],
+        "initial_ledger_sha256": document["ledger_sha256"],
+    }
+
+
+def _validate_gate_document(gate: _GateHandle, document: Mapping[str, Any]) -> None:
+    gate.assert_held()
+    try:
+        payload = json.loads(_read_fd_bytes(gate.fd).decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise CheckpointLedgerError("checkpoint gate is not valid UTF-8 JSON") from error
+    required_fields = {"format", "attempt_id", "binding_sha256", "initial_ledger_sha256"}
+    if not isinstance(payload, dict) or set(payload) != required_fields:
+        raise CheckpointLedgerError("checkpoint gate has an invalid field set")
+    if payload.get("format") != GATE_FORMAT:
+        raise CheckpointLedgerError("checkpoint gate format is not recognized")
+    if payload.get("attempt_id") != document.get("attempt_id"):
+        raise CheckpointLedgerError("checkpoint gate belongs to a different attempt")
+    if payload.get("binding_sha256") != document.get("binding_sha256"):
+        raise CheckpointLedgerError("checkpoint gate belongs to a different freeze/source/code binding")
+    _require_digest("checkpoint gate initial_ledger_sha256", payload.get("initial_ledger_sha256"))
+
+
+def _write_all(fd: int, payload: bytes) -> None:
+    offset = 0
+    while offset < len(payload):
+        try:
+            written = os.write(fd, payload[offset:])
+        except OSError as error:
+            raise CheckpointLedgerError("cannot write checkpoint gate") from error
+        if written <= 0:
+            raise CheckpointLedgerError("cannot write checkpoint gate")
+        offset += written
+
+
+def _create_gate(destination: Path, document: Mapping[str, Any]) -> _GateHandle:
+    """Create the permanent gate once, then hold its exclusive OS lock."""
+
+    path = _gate_path(destination)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+    try:
+        fd = os.open(str(path), flags)
+    except FileExistsError as error:
+        raise CheckpointLedgerError(
+            f"checkpoint gate already exists: {path}; never reuse or replace a prior attempt"
+        ) from error
+    try:
+        os.set_inheritable(fd, False)
+        _write_all(fd, _canonical_json_bytes(_gate_document(document)))
+        os.fsync(fd)
+        identity = _file_identity_from_stat(os.fstat(fd))
+        _lock_gate_fd(fd, shared=False)
+        handle = _GateHandle(path, fd, False, identity, os.getpid())
+        handle.assert_held(require_exclusive=True)
+        _fsync_parent_best_effort(path)
+        return handle
+    except BaseException:
+        try:
+            os.close(fd)
+        except OSError:
+            pass
+        # Do not remove a partially created gate.  A residual gate is
+        # intentional fail-closed evidence, not a retriable namespace.
+        raise
+
+
+def _open_gate(destination: Path, *, shared: bool) -> _GateHandle:
+    path = _gate_path(destination)
+    # A final auditor never writes the persistent gate.  On Windows this also
+    # proves that the shared msvcrt read lock works for a genuinely read-only
+    # independent process rather than relying on worktree write permission.
+    flags = (os.O_RDONLY if shared else os.O_RDWR) | getattr(os, "O_BINARY", 0)
+    try:
+        fd = os.open(str(path), flags)
+    except FileNotFoundError as error:
+        raise CheckpointLedgerError("checkpoint gate is missing; refusing an unguarded operation") from error
+    except OSError as error:
+        raise CheckpointLedgerError("cannot open checkpoint gate") from error
+    try:
+        os.set_inheritable(fd, False)
+        identity = _file_identity_from_stat(os.fstat(fd))
+        _lock_gate_fd(fd, shared=shared)
+        handle = _GateHandle(path, fd, shared, identity, os.getpid())
+        handle.assert_held(require_exclusive=not shared)
+        return handle
+    except BaseException:
+        try:
+            os.close(fd)
+        finally:
+            raise
+
+
+@contextmanager
+def checkpoint_audit_guard(ledger_path: str | Path) -> Iterator[_GateHandle]:
+    """Hold the shared OS gate used by the independent read-only auditor."""
+
+    destination = Path(ledger_path)
+    try:
+        resolved_destination = destination.resolve(strict=True)
+    except OSError as error:
+        raise CheckpointLedgerError(f"cannot resolve ledger for audit guard: {destination}") from error
+    gate = _open_gate(resolved_destination, shared=True)
+    try:
+        yield gate
+    finally:
+        gate.release()
+
+
 def _write_temp_bytes(destination: Path, payload: bytes) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(
@@ -352,7 +625,7 @@ def _validate_writer_lock(document: Mapping[str, Any]) -> dict[str, Any]:
     return copy.deepcopy(dict(document))
 
 
-def _write_exclusive_writer_lock(lock_path: Path, document: Mapping[str, Any]) -> None:
+def _write_exclusive_writer_lock(lock_path: Path, document: Mapping[str, Any]) -> tuple[int, int]:
     payload = _canonical_json_bytes(document)
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
@@ -375,6 +648,7 @@ def _write_exclusive_writer_lock(lock_path: Path, document: Mapping[str, Any]) -
             handle.flush()
             os.fsync(handle.fileno())
         _fsync_parent_best_effort(lock_path)
+        return _file_identity(lock_path)
     except BaseException:
         try:
             lock_path.unlink(missing_ok=True)
@@ -407,12 +681,22 @@ def _require_owned_writer_lease(
 ) -> WriterLease:
     if not isinstance(lease, WriterLease):
         raise CheckpointLedgerError("an exclusive WriterLease is required for every ledger update")
+    if lease._owner_pid != os.getpid():
+        raise CheckpointLedgerError("writer lease belongs to another process")
     try:
         resolved_destination = destination.resolve(strict=True)
     except OSError as error:
         raise CheckpointLedgerError(f"cannot resolve ledger for writer lease: {destination}") from error
     if lease.ledger_path != resolved_destination or lease.lock_path != _writer_lock_path(resolved_destination):
         raise CheckpointLedgerError("writer lease belongs to a different ledger")
+    issued_capability = _ISSUED_LEASE_CAPABILITIES.get((lease.ledger_path, lease.token))
+    if issued_capability is not lease._capability:
+        raise CheckpointLedgerError("writer lease was not issued by this live process")
+    lease._gate.assert_held(require_exclusive=True)
+    if lease._gate.path != _gate_path(resolved_destination):
+        raise CheckpointLedgerError("writer lease is bound to a different checkpoint gate")
+    if _file_identity(lease.lock_path) != lease._sidecar_identity:
+        raise CheckpointLedgerError("writer lease sidecar identity changed; refusing to continue")
     lock = _validate_writer_lock(_read_writer_lock(lease.lock_path))
     if (
         lock["token"] != lease.token
@@ -569,8 +853,8 @@ def verify_ledger(ledger_path: str | Path) -> dict[str, Any]:
 def acquire_writer_lease(
     ledger_path: str | Path,
     *,
-    binding: AttemptBinding | Mapping[str, str],
-    expected_ledger_sha256: str,
+    expectation: CheckpointHeadExpectation,
+    anchor_authority: HeadAnchorAuthority,
     writer_id: str,
     acquired_at_utc: str | None = None,
 ) -> WriterLease:
@@ -585,68 +869,102 @@ def acquire_writer_lease(
 
     _require(isinstance(writer_id, str) and writer_id, "writer_id must be a non-empty string")
     destination = Path(ledger_path)
-    document = verify_ledger(destination)
-    _require_matching_binding(document, binding)
-    _require_active(document)
-    _require_expected_head(document, expected_ledger_sha256)
     try:
         resolved_destination = destination.resolve(strict=True)
     except OSError as error:
         raise CheckpointLedgerError(f"cannot resolve ledger for writer lease: {destination}") from error
-    lock_path = _writer_lock_path(resolved_destination)
-    token = uuid.uuid4().hex
-    lock_document = {
-        "format": WRITER_LOCK_FORMAT,
-        "attempt_id": document["attempt_id"],
-        "writer_id": writer_id,
-        "token": token,
-        "pid": os.getpid(),
-        "acquired_at_utc": _timestamp(acquired_at_utc),
-        "ledger_sha256": document["ledger_sha256"],
-    }
-    _validate_writer_lock(lock_document)
-    _write_exclusive_writer_lock(lock_path, lock_document)
-    lease = WriterLease(
-        ledger_path=resolved_destination,
-        lock_path=lock_path,
-        attempt_id=document["attempt_id"],
-        writer_id=writer_id,
-        token=token,
-    )
+    gate = _open_gate(resolved_destination, shared=False)
+    lease: WriterLease | None = None
     try:
+        document = verify_ledger(resolved_destination)
+        _validate_gate_document(gate, document)
+        _assert_no_writer_lock(resolved_destination)
+        _require_head_expectation(document, expectation)
+        verify_head_anchor(anchor_authority, expectation)
+        _require_active(document)
+        lock_path = _writer_lock_path(resolved_destination)
+        token = uuid.uuid4().hex
+        lock_document = {
+            "format": WRITER_LOCK_FORMAT,
+            "attempt_id": document["attempt_id"],
+            "writer_id": writer_id,
+            "token": token,
+            "pid": os.getpid(),
+            "acquired_at_utc": _timestamp(acquired_at_utc),
+            "ledger_sha256": document["ledger_sha256"],
+        }
+        _validate_writer_lock(lock_document)
+        sidecar_identity = _write_exclusive_writer_lock(lock_path, lock_document)
+        capability = object()
+        lease = WriterLease(
+            ledger_path=resolved_destination,
+            lock_path=lock_path,
+            attempt_id=document["attempt_id"],
+            writer_id=writer_id,
+            token=token,
+            _gate=gate,
+            _capability=capability,
+            _sidecar_identity=sidecar_identity,
+            _owner_pid=os.getpid(),
+            _write_mutex=threading.RLock(),
+        )
+        _ISSUED_LEASE_CAPABILITIES[(lease.ledger_path, lease.token)] = capability
         current = verify_ledger(resolved_destination)
-        _require_matching_binding(current, binding)
+        _validate_gate_document(gate, current)
+        _require_head_expectation(current, expectation)
+        verify_head_anchor(anchor_authority, expectation)
         _require_active(current)
-        _require_expected_head(current, expected_ledger_sha256)
         _require_owned_writer_lease(lease, destination=resolved_destination, document=current)
     except BaseException:
-        release_writer_lease(lease)
+        if lease is not None:
+            release_writer_lease(lease)
+        else:
+            gate.release()
         raise
     return lease
 
 
 def release_writer_lease(lease: WriterLease) -> None:
-    """Release a lease only when its immutable token still owns the sidecar."""
+    """Release a live capability, retaining a sidecar if cleanup is uncertain."""
 
     if not isinstance(lease, WriterLease):
         raise CheckpointLedgerError("release requires a WriterLease")
-    lock = _validate_writer_lock(_read_writer_lock(lease.lock_path))
-    if (
-        lock["token"] != lease.token
-        or lock["writer_id"] != lease.writer_id
-        or lock["attempt_id"] != lease.attempt_id
-    ):
-        raise CheckpointLedgerError("writer lease ownership changed; refusing to remove another writer's lock")
-    lease.lock_path.unlink()
-    _fsync_parent_best_effort(lease.lock_path)
+    issued = _ISSUED_LEASE_CAPABILITIES.get((lease.ledger_path, lease.token)) is lease._capability
+    if not issued:
+        raise CheckpointLedgerError("writer lease was not issued by this live process")
+    # This is the same mutex held across verify -> append -> replace.  Without
+    # it, a sibling thread could delete the sidecar and release the OS gate
+    # after an append has checked its head but before it publishes the update.
+    with lease._write_mutex:
+        issued = _ISSUED_LEASE_CAPABILITIES.get((lease.ledger_path, lease.token)) is lease._capability
+        if not issued:
+            raise CheckpointLedgerError("writer lease was already released by this process")
+        try:
+            document = verify_ledger(lease.ledger_path)
+            _require_owned_writer_lease(lease, destination=lease.ledger_path, document=document)
+            lock = _validate_writer_lock(_read_writer_lock(lease.lock_path))
+            if (
+                lock["token"] != lease.token
+                or lock["writer_id"] != lease.writer_id
+                or lock["attempt_id"] != lease.attempt_id
+            ):
+                raise CheckpointLedgerError("writer lease ownership changed; refusing to remove another writer's lock")
+            lease.lock_path.unlink()
+            _fsync_parent_best_effort(lease.lock_path)
+        finally:
+            # If the ownership checks or unlink fail, the sidecar remains as
+            # explicit fail-closed recovery evidence.  The OS capability must
+            # still be released so a crash does not leave an invisible lock.
+            _ISSUED_LEASE_CAPABILITIES.pop((lease.ledger_path, lease.token), None)
+            lease._gate.release()
 
 
 @contextmanager
 def writer_lease(
     ledger_path: str | Path,
     *,
-    binding: AttemptBinding | Mapping[str, str],
-    expected_ledger_sha256: str,
+    expectation: CheckpointHeadExpectation,
+    anchor_authority: HeadAnchorAuthority,
     writer_id: str,
     acquired_at_utc: str | None = None,
 ) -> Iterator[WriterLease]:
@@ -654,8 +972,8 @@ def writer_lease(
 
     lease = acquire_writer_lease(
         ledger_path,
-        binding=binding,
-        expected_ledger_sha256=expected_ledger_sha256,
+        expectation=expectation,
+        anchor_authority=anchor_authority,
         writer_id=writer_id,
         acquired_at_utc=acquired_at_utc,
     )
@@ -686,6 +1004,39 @@ def _require_expected_head(document: Mapping[str, Any], expected_ledger_sha256: 
         raise CheckpointLedgerError("ledger changed since the caller's expected head")
 
 
+def _require_head_expectation(
+    document: Mapping[str, Any], expectation: CheckpointHeadExpectation
+) -> CheckpointHeadExpectation:
+    if not isinstance(expectation, CheckpointHeadExpectation):
+        raise CheckpointLedgerError("a CheckpointHeadExpectation is required")
+    if document.get("attempt_id") != expectation.attempt_id:
+        raise CheckpointLedgerError("ledger attempt_id differs from the externally expected head")
+    _require_matching_binding(document, expectation.binding)
+    _require_expected_head(document, expectation.ledger_sha256)
+    return expectation
+
+
+def verify_head_anchor(
+    authority: HeadAnchorAuthority | Any, expectation: CheckpointHeadExpectation
+) -> None:
+    """Require an injected verifier for the independently retained head.
+
+    The boolean return is intentional: an implementation that merely fetched
+    bytes, logged a warning, or returned ``None`` cannot accidentally grant a
+    real resume or final audit.
+    """
+
+    verifier = getattr(authority, "verify_head", None)
+    if not callable(verifier):
+        raise CheckpointLedgerError("a HeadAnchorAuthority is required for this operation")
+    try:
+        verified = verifier(expectation)
+    except Exception as error:
+        raise CheckpointLedgerError("external checkpoint-head anchor verification failed") from error
+    if verified is not True:
+        raise CheckpointLedgerError("external checkpoint-head anchor was not verified")
+
+
 def create_attempt(
     ledger_path: str | Path,
     *,
@@ -704,7 +1055,8 @@ def create_attempt(
     normalized_binding = _coerce_binding(binding)
     normalized_metadata = _canonical_json_value(dict(metadata or {}))
     destination = Path(ledger_path)
-    _assert_no_writer_lock(destination)
+    if destination.exists():
+        raise CheckpointLedgerError(f"attempt ledger already exists: {destination}")
     binding_sha256 = _json_sha256(normalized_binding.as_dict())
     start = _new_entry(
         sequence=0,
@@ -727,15 +1079,26 @@ def create_attempt(
         }
     )
     _validate_document(document)
-    _atomic_create_json(destination, document)
-    return verify_ledger(destination)
+    try:
+        resolved_destination = destination.resolve(strict=False)
+    except OSError as error:
+        raise CheckpointLedgerError(f"cannot resolve ledger for attempt creation: {destination}") from error
+    gate = _create_gate(resolved_destination, document)
+    try:
+        _assert_no_writer_lock(resolved_destination)
+        _atomic_create_json(resolved_destination, document)
+        created = verify_ledger(resolved_destination)
+        _validate_gate_document(gate, created)
+        return created
+    finally:
+        gate.release()
 
 
 def resume_attempt(
     ledger_path: str | Path,
     *,
-    binding: AttemptBinding | Mapping[str, str],
-    expected_ledger_sha256: str,
+    expectation: CheckpointHeadExpectation,
+    anchor_authority: HeadAnchorAuthority,
 ) -> dict[str, Any]:
     """Verify a resumable attempt at one exact head while no writer holds it.
 
@@ -744,12 +1107,14 @@ def resume_attempt(
     """
 
     destination = Path(ledger_path)
-    _assert_no_writer_lock(destination)
-    document = verify_ledger(destination)
-    _require_matching_binding(document, binding)
-    _require_active(document)
-    _require_expected_head(document, expected_ledger_sha256)
-    return document
+    with checkpoint_audit_guard(destination) as gate:
+        _assert_no_writer_lock(destination)
+        document = verify_ledger(destination)
+        _validate_gate_document(gate, document)
+        _require_head_expectation(document, expectation)
+        verify_head_anchor(anchor_authority, expectation)
+        _require_active(document)
+        return document
 
 
 def _append_event(
@@ -765,34 +1130,40 @@ def _append_event(
     lease: WriterLease,
 ) -> dict[str, Any]:
     destination = Path(ledger_path)
-    document = verify_ledger(destination)
-    _require_matching_binding(document, binding)
-    _require_active(document)
-    _require_expected_head(document, expected_ledger_sha256)
-    _require_owned_writer_lease(lease, destination=destination, document=document)
-    if event == "checkpoint":
-        existing_ids = {entry["checkpoint_id"] for entry in document["entries"] if entry["event"] == "checkpoint"}
-        if checkpoint_id in existing_ids:
-            raise CheckpointLedgerError(f"checkpoint_id is repeated: {checkpoint_id}")
-    entry = _new_entry(
-        sequence=len(document["entries"]),
-        event=event,
-        attempt_id=document["attempt_id"],
-        binding_sha256=document["binding_sha256"],
-        previous_entry_sha256=document["entries"][-1]["entry_sha256"],
-        payload=payload,
-        recorded_at_utc=recorded_at_utc,
-        checkpoint_id=checkpoint_id,
-        terminal_state=terminal_state,
-    )
-    updated = copy.deepcopy(document)
-    updated["entries"].append(entry)
-    if event == "terminal":
-        updated["state"] = terminal_state
-    updated = _seal_document(updated)
-    _validate_document(updated)
-    _atomic_replace_json(destination, updated)
-    return verify_ledger(destination)
+    if not isinstance(lease, WriterLease):
+        raise CheckpointLedgerError("an exclusive WriterLease is required for every ledger update")
+    with lease._write_mutex:
+        document = verify_ledger(destination)
+        _require_owned_writer_lease(lease, destination=destination, document=document)
+        _validate_gate_document(lease._gate, document)
+        _require_matching_binding(document, binding)
+        _require_active(document)
+        _require_expected_head(document, expected_ledger_sha256)
+        if event == "checkpoint":
+            existing_ids = {entry["checkpoint_id"] for entry in document["entries"] if entry["event"] == "checkpoint"}
+            if checkpoint_id in existing_ids:
+                raise CheckpointLedgerError(f"checkpoint_id is repeated: {checkpoint_id}")
+        entry = _new_entry(
+            sequence=len(document["entries"]),
+            event=event,
+            attempt_id=document["attempt_id"],
+            binding_sha256=document["binding_sha256"],
+            previous_entry_sha256=document["entries"][-1]["entry_sha256"],
+            payload=payload,
+            recorded_at_utc=recorded_at_utc,
+            checkpoint_id=checkpoint_id,
+            terminal_state=terminal_state,
+        )
+        updated = copy.deepcopy(document)
+        updated["entries"].append(entry)
+        if event == "terminal":
+            updated["state"] = terminal_state
+        updated = _seal_document(updated)
+        _validate_document(updated)
+        _atomic_replace_json(destination, updated)
+        verified = verify_ledger(destination)
+        _validate_gate_document(lease._gate, verified)
+        return verified
 
 
 def append_checkpoint(

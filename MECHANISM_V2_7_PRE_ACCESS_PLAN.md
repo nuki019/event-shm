@@ -43,18 +43,25 @@ v2.6 表现不佳或中断而激活。
 - src/experiments/audit_mechanism_v2_7.py：只读 synthetic pre-access envelope auditor。
 - src/experiments/test_mechanism_v2_7_terminal_hold.py：按路径数、样本数、容量和 delta 参数化的
   合成 terminal-hold 预访问测试。
-- src/experiments/mechanism_v2_7_checkpoint.py：单 attempt、持久单写者 lease、强制 CAS head、原子写入、
-  严格递增 UTC、哈希链、冻结/源/代码三哈希绑定和 fail-closed resume 前置条件。
-- src/experiments/audit_mechanism_v2_7_checkpoint.py：独立的只读 checkpoint 账本 auditor；默认拒绝仍持有
-  writer lease 的账本，并且不具备创建、更新或恢复 attempt 的能力。
+- src/experiments/mechanism_v2_7_checkpoint.py：单 attempt、持久 OS 级 gate、不可由 sidecar 重建的 live
+  writer capability、同 lease 的线程互斥、强制 CAS head、原子写入、严格递增 UTC 和哈希链。resume 与新
+  writer lease 必须同时给出 attempt/binding/head 的 `CheckpointHeadExpectation`，并注入通过验证的外部
+  `HeadAnchorAuthority`；本仓没有生产级 authority，因此不会把本地 JSON 或可变分支当作恢复授权。
+- src/experiments/audit_mechanism_v2_7_checkpoint.py：独立的只读终态 checkpoint auditor；它在 shared OS
+  guard 内读取两次同一快照，拒绝 active/stale writer、错误 attempt/binding/head 及没有外部锚验证器的调用。
+  命令行入口刻意 fail-closed：在合格来源、冻结链和受保护 append-only 锚存在之前不会输出 audit passed。
 
-2026-08-05 已运行以下定向测试，25/25 通过：
+2026-08-05 已运行以下定向测试，34/34 通过：
 
     C:\Users\wfy\.conda\envs\shm\python.exe -m unittest discover -s tests -p test_mechanism_v2_7_*.py -v
 
-这些测试只证明开发期的合约、单写者恢复机制和只读账本审计在合成 fixture 上工作；它们不是
-数据资格、机制结果、一次性运行或论文证据。第 2.3 和第 2.5 项仍必须绑定一个合格的新来源后
-才能完成，且不得用历史来源补齐。
+这些测试只证明开发期的合约、OS gate、外部 head 注入接口和只读终态账本审计在合成 fixture 上工作；
+它们不是数据资格、机制结果、一次性运行或论文证据。受保护的 append-only 外部锚尚未实现，因而真实
+v2.7 仍禁止 resume、最终 audit receipt 和任何波形访问；第 2.3 和第 2.5 项仍必须绑定一个合格的新
+来源后才能完成，且不得用历史来源补齐。
+
+本轮 gate 仅在本机 Windows/NTFS 临时目录上以 `spawn` 跨进程和只读 shared lock 方式验证；网络共享、
+FAT/exFAT 或跨主机锁语义未经验证，未来真实 runner 必须在实际冻结存储上重新做有界 preflight。
 
 ## 3. 后续决策门
 
