@@ -14,6 +14,7 @@ import argparse
 import json
 import math
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -128,8 +129,18 @@ def audit_e8(protocol: dict[str, Any], output: dict[str, Any]) -> None:
 
     metadata = output.get("test_label_metadata")
     _require(isinstance(metadata, dict), "E8 test-label metadata is missing")
-    _require(int(metadata.get("protocol_declared_source_index", -1)) == int(alarm["test_label_change_record"]),
+    expected_onset_index = int(alarm["test_label_change_record"])
+    _require(int(metadata.get("protocol_declared_source_index", -1)) == expected_onset_index,
              "E8 reported onset index does not match the protocol")
+    _require(int(metadata.get("first_nonzero_label_local_index", -1)) == expected_onset_index,
+             "E8 observed onset index does not match the protocol")
+    expected_onset_time_text = str(alarm["test_label_change_time"])
+    _require(metadata.get("first_nonzero_label_time") == expected_onset_time_text,
+             "E8 observed onset time does not match the protocol")
+    try:
+        expected_onset_time = datetime.fromisoformat(expected_onset_time_text)
+    except ValueError as error:
+        raise AuditError("strict-evaluation-v1 has an invalid onset timestamp") from error
     _require(metadata.get("blind_replay_completed_before_label_evaluation") is True,
              "E8 output does not attest that blind replay preceded label evaluation")
 
@@ -159,9 +170,32 @@ def audit_e8(protocol: dict[str, Any], output: dict[str, Any]) -> None:
                 coverage = point.get(coverage_key)
                 if coverage is not None:
                     _number_in_range(coverage, 0.0, 1.0, f"E8 {feature_name} threshold {index} {coverage_key}")
+            pre_onset_active = point.get("pre_onset_incident_active_at_onset")
+            _require(type(pre_onset_active) is bool,
+                     f"E8 {feature_name} threshold {index} pre-onset activity flag must be boolean")
+            first_alarm = point.get("first_post_onset_alarm")
             delay = point.get("first_post_onset_delay_minutes")
-            if delay is not None:
-                _number_in_range(delay, 0.0, math.inf, f"E8 {feature_name} threshold {index} post-onset delay")
+            if first_alarm is None:
+                _require(delay is None,
+                         f"E8 {feature_name} threshold {index} has a delay without a new post-onset alarm")
+                continue
+            _require(isinstance(first_alarm, str) and first_alarm,
+                     f"E8 {feature_name} threshold {index} first post-onset alarm is invalid")
+            try:
+                alarm_time = datetime.fromisoformat(first_alarm)
+            except ValueError as error:
+                raise AuditError(f"E8 {feature_name} threshold {index} first post-onset alarm is not ISO-8601") from error
+            _require(alarm_time >= expected_onset_time,
+                     f"E8 {feature_name} threshold {index} first post-onset alarm predates the onset")
+            _require(delay is not None,
+                     f"E8 {feature_name} threshold {index} has a post-onset alarm without a delay")
+            reported_delay = _number_in_range(delay, 0.0, math.inf,
+                                              f"E8 {feature_name} threshold {index} post-onset delay")
+            expected_delay = (alarm_time - expected_onset_time).total_seconds() / 60.0
+            _require(math.isclose(reported_delay, expected_delay, rel_tol=0.0, abs_tol=1e-6),
+                     f"E8 {feature_name} threshold {index} post-onset delay does not match its alarm time")
+            _require(not pre_onset_active or expected_delay > 0.0,
+                     f"E8 {feature_name} threshold {index} credits an onset-active incident as a new alarm")
 
 
 def _load_json(path: Path) -> dict[str, Any]:

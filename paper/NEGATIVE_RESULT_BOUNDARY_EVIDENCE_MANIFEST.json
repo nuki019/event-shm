@@ -1,0 +1,150 @@
+{
+  "manifest_id": "strict-negative-result-boundary-paper-v1",
+  "created_utc": "2026-08-05T12:03:32Z",
+  "purpose": "Bind the strict negative-result/applicability-boundary paper to its only paper-eligible empirical evidence, exact manuscript dependency closure, and explicit exclusion of invalidated mechanism artifacts.",
+  "paper_route": "strict_negative_result_and_applicability_boundary",
+  "artifacts": [
+    {
+      "id": "strict_evaluation_protocol",
+      "role": "only_paper_eligible_evaluation_protocol",
+      "path": "protocols/strict_evaluation_v1.json",
+      "sha256": "9c780aee880c46580978d949c737573d59a9eee7092d9b90fc64a56d99858154"
+    },
+    {
+      "id": "e7_result",
+      "role": "paper_eligible_empirical_result",
+      "path": "results/e7_strict_codec_benchmark_v1.json",
+      "sha256": "5b44ff3fbdd30a07101c0c2971455f8ed56bda1e41ba7b050eec2f75896638fa"
+    },
+    {
+      "id": "e8_result",
+      "role": "paper_eligible_empirical_result",
+      "path": "results/e8_cold_start_alarm_v1.json",
+      "sha256": "53228251c6607e01b17288a4723ba60d0201eb0d81f62463820871d684c49e94"
+    },
+    {
+      "id": "mechanism_v2_6_invalidation",
+      "role": "exclusion_only_integrity_record",
+      "path": "protocols/mechanism_v2_6_invalidation_receipt.json",
+      "sha256": "c65d281b3e9bf3c5c841ed052b8ba258cee9e92f578982da0ada3655e3b79a1d"
+    }
+  ],
+  "manuscript_inputs": [
+    {
+      "id": "main_tex",
+      "role": "manuscript_tex",
+      "path": "paper/main.tex",
+      "sha256": "512d77571a801b8b8da9f5e5eea08043d346b0a2be4129cd8dc1f20c890a9adc"
+    },
+    {
+      "id": "intro_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/intro.tex",
+      "sha256": "8b42663803d6bc5a8e1bcef848e32fc9507534918149df1814b3be0bb20ee2e1"
+    },
+    {
+      "id": "related_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/related.tex",
+      "sha256": "41aeffa955bf0588c9d6b08020238d7b5ed6bec0e27830545cffc830713c83ab"
+    },
+    {
+      "id": "method_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/method.tex",
+      "sha256": "4f6f616d1375caa22d13586cbf3fcbb125802cb7385e72f8b9dfac905bc975dc"
+    },
+    {
+      "id": "data_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/data.tex",
+      "sha256": "5d9b47fd7ea1b45a40080a9a0b93597bb47c7a070ab85d61ac777f80e34f6c79"
+    },
+    {
+      "id": "experiments_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/experiments.tex",
+      "sha256": "7cf98f378585dc461f3f0d35dc523d357c1d437001ff8f52243f2b0bab68b8e0"
+    },
+    {
+      "id": "results_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/results.tex",
+      "sha256": "2b47c3ec16b621df2db8294e5a3a9d5f81ebce8175469adb96bb3ccd129b4baa"
+    },
+    {
+      "id": "discussion_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/discussion.tex",
+      "sha256": "2724c2f64d6b5cf6b44d2d767fb439b3de4005d4bdb46fdf684cce1045b6e125"
+    },
+    {
+      "id": "conclusion_tex",
+      "role": "manuscript_tex",
+      "path": "paper/sections/conclusion.tex",
+      "sha256": "e91afc036d735a86645f81fd97a5acbea0ec999021e14ea80a4bd4c326ed485f"
+    },
+    {
+      "id": "references_bib",
+      "role": "manuscript_bibliography",
+      "path": "paper/refs.bib",
+      "sha256": "c80ecc0304cd6b588a31978a94fd152bf7a8784ee7ce4163b191e9dd38bd850d"
+    },
+    {
+      "id": "e7_figure",
+      "role": "manuscript_figure",
+      "path": "paper/e7_strict_codec_benchmark_v1.png",
+      "sha256": "0339b7847efeca16596b289b92e77e6dffab94815ea0362d059aaec0a1cf83c1"
+    },
+    {
+      "id": "e8_figure",
+      "role": "manuscript_figure",
+      "path": "paper/e8_cold_start_alarm_v1.png",
+      "sha256": "0cd543b1181526ef06525e8c2bfc1ad1d81c4d2bd65852d7ea7af23307f86e97"
+    }
+  ],
+  "paper_eligible_empirical_artifacts": [
+    "strict_evaluation_protocol",
+    "e7_result",
+    "e8_result"
+  ],
+  "exclusion_only_artifacts": [
+    "mechanism_v2_6_invalidation"
+  ],
+  "required_invalidation_flags": {
+    "v2_6_d16_output_is_historical_integrity_evidence_only": true,
+    "v2_6_terminal_hold_receipt_is_not_mechanism_performance_evidence": true,
+    "v2_6_external_schema_gate_is_not_external_confirmation_evidence": true,
+    "morpho_waveform_access_is_treated_as_consumed": true,
+    "morpho_is_not_an_untouched_blind_confirmation_source_for_any_successor": true,
+    "morpho_auc_reconstruction_loss_control_injection_or_partial_grid_claims_are_not_eligible": true,
+    "d16_and_morpho_must_not_be_resumed_rerun_overwritten_or_recast": true,
+    "d04_d24_remain_discovery_only": true,
+    "e7_e8_remain_independent_strict_negative_result_evidence": true,
+    "pod_field_far_hardware_power_realtime_and_deployment_claims_remain_prohibited": true
+  },
+  "required_invalidation_flag_interpretations": {
+    "d04_d24_remain_discovery_only": "Within the invalidated mechanism-v2.6 chain, this flag prohibits D04/D24 from being reused as fresh blind-confirmation sources; it does not alter their completed strict-evaluation-v1 E7 role."
+  },
+  "allowed_scope_bounded_claims": [
+    "Under strict-evaluation-v1, bounded SoD does not lead held-out record AUC among the four tested codecs at any declared record capacity for the held-out D04 and D24 conditions.",
+    "Under the frozen March-to-April cold-start replay, the two tested alarm features cannot establish an operational-alarm claim.",
+    "The conclusions apply only to post-compensation software replay on the declared data splits and codec/alarm families."
+  ],
+  "prohibited_claims": [
+    "A mechanism result, external confirmation, or performance conclusion derived from mechanism-v2.x artifacts.",
+    "Population probability of detection, calibrated field false-alarm rate, multi-structure generalization, hardware energy, MCU performance, real-time latency, or deployment readiness.",
+    "A universal statement about all Send-on-Delta implementations, structures, damage morphologies, or dense/learned alternatives."
+  ],
+  "build_receipt_contract": {
+    "path": "paper/NEGATIVE_RESULT_BOUNDARY_BUILD_RECEIPT.json",
+    "source_commit_must_precede_receipt_commit": true,
+    "required_outputs": [
+      "paper/main.pdf",
+      "paper/main.bbl",
+      "paper/main.fls",
+      "paper/main.log"
+    ]
+  },
+  "audit_boundary": "The companion source audit verifies current evidence identity, strict-result contract consistency, the complete manuscript dependency closure, and the recorded v2.6 exclusion flags. The optional build-receipt audit verifies one local XeLaTeX output against its preceding source commit. Neither audit proves original execution chronology, raw-data provenance, absence of unrecorded access, scientific generalization, or submission acceptance."
+}

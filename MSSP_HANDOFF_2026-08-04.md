@@ -3,6 +3,14 @@
 **快照日期：2026-08-04（Asia/Shanghai）**  
 **当前结论：MSSP 投稿 `NO-GO`。**
 
+> **已于 2026-08-05 被新的论文路线说明取代。** 本文件保留为 2026-08-04
+> 的历史交接快照，其中关于“v2.6 以后”的未来计划不再代表当前状态。当前
+> 机制链已由 `protocols/mechanism_v2_6_invalidation_receipt.json` 作废；项目
+> 已转向仅由严格 E7/E8 支持的负结果/适用边界论文。请优先阅读
+> `paper/NEGATIVE_RESULT_BOUNDARY_PAPER_PLAN.md`、
+> `paper/NEGATIVE_RESULT_BOUNDARY_EVIDENCE_MANIFEST.json` 和
+> `paper/EVIDENCE_MAP.md`。
+
 本项目已经形成一套可复现、泄漏受控的 SoD 严格负结果审计；它可以支撑一篇范围明确的评测/审计型论文，但目前不足以支撑以 *Mechanical Systems and Signal Processing*（MSSP）为目标的机制论文。最关键的原因不是结果“负”，而是机制确认链在 v2.5 的 D12 一次性运行后被审计判定为无效：后续 D16 和 MORPHO 均未启动，不能将当前产物包装成跨数据集机制证据。
 
 本文件将“已验证结果”“探索性诊断”“作废证据”和“未来工作”严格分开。任何接手者都应先阅读本文件与相应协议，再决定是否设计新的 successor；不得恢复已暂停的 v2.5 自动任务。
@@ -23,8 +31,8 @@
 | 工件 | 当前状态 | SHA-256 |
 | --- | --- | --- |
 | [`protocols/strict_evaluation_v1.json`](protocols/strict_evaluation_v1.json) | 冻结且为当前严格评测唯一论文级协议 | `9c780aee880c46580978d949c737573d59a9eee7092d9b90fc64a56d99858154` |
-| [`results/e7_strict_codec_benchmark_v1.json`](results/e7_strict_codec_benchmark_v1.json) | 完成的 E7 全网格结果 | `dda083e903837f42aea9452ccf75862552c610b07db7fd63634a5d5990de8d3b` |
-| [`results/e8_cold_start_alarm_v1.json`](results/e8_cold_start_alarm_v1.json) | 完成的 E8 全阈值网格结果 | `62a59de1f3aa97d27b1489f894304048cf088895144390526d62eae7ad7447c1` |
+| [`results/e7_strict_codec_benchmark_v1.json`](results/e7_strict_codec_benchmark_v1.json) | 完成的 E7 全网格结果 | `5b44ff3fbdd30a07101c0c2971455f8ed56bda1e41ba7b050eec2f75896638fa` |
+| [`results/e8_cold_start_alarm_v1.json`](results/e8_cold_start_alarm_v1.json) | 完成的 E8 全阈值网格结果 | `53228251c6607e01b17288a4723ba60d0201eb0d81f62463820871d684c49e94` |
 | [`protocols/mechanism_v2_5_invalidation_receipt.json`](protocols/mechanism_v2_5_invalidation_receipt.json) | v2.5 机制确认正式作废收据 | `71c96b4444f951f2c4bdfc181cf0c05847ce62d2f03434f2daff55d2559308a5` |
 | [`paper/main.pdf`](paper/main.pdf) | 本地已编译论文 PDF；不能代替投稿前的最终构建验收 | `d77bc12ad3e7c190373493fd31c26bd810b1b77373ae61a1f70943f7d037e404` |
 

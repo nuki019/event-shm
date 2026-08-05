@@ -1,4 +1,4 @@
-# Strict Evaluation of SoD Eventization for Guided-Wave SHM
+# Applicability Boundaries of SoD Eventization for Guided-Wave SHM
 
 This repository contains a research audit of send-on-delta (SoD) eventization
 for guided-wave structural health monitoring. It is not a deployment-ready
@@ -10,23 +10,52 @@ protocols/strict_evaluation_v1.json.
 
 ## Current evidence status
 
-The full strict E7 and E8 evaluations have completed. Their derived JSON and
-PNG files are intentionally ignored by Git, but the completed artifacts in
-this checkout are:
+The full strict E7 and E8 evaluations have completed. The two frozen result
+summaries and the two manuscript figures are versioned for the paper
+snapshot; raw archives and all other derived outputs remain ignored:
 
 - results/e7_strict_codec_benchmark_v1.json
 - results/e8_cold_start_alarm_v1.json
-- figures/e7_strict_codec_benchmark_v1.png
-- figures/e8_cold_start_alarm_v1.png
+- paper/e7_strict_codec_benchmark_v1.png
+- paper/e8_cold_start_alarm_v1.png
 
 | Audit | Frozen scope | Result |
 | --- | --- | --- |
 | E7: byte-accounted codec benchmark | 2,048, 4,096, 8,192, and 16,384 bytes/record; bounded SoD, uniform linear interpolation, PCA, and Haar DWT | Bounded SoD has lower held-out record AUC than every general codec at every capacity for D04 and D24. |
 | E8: cold-start alarm replay | March 2021 calibration, full April 2021 scoring, nine March-derived thresholds per feature | Dense residual energy: 0.897--5.144 false calls/day; Level-A SoD count: 0.897--4.964; first new alarms occur 2,556--2,585 minutes after onset. |
 
-These results are negative findings under the frozen public-data protocol.
+These results are negative findings under the frozen declared-data protocol.
 They are not a reason to choose a different SoD configuration after seeing
 test AUC, false calls, delay, or coverage.
+
+## Current paper route: strict negative result and applicability boundary
+
+The repository now advances the completed E7/E8 work as a strict
+negative-result/applicability-boundary paper. E7 and E8 are the only
+paper-eligible empirical results. The corresponding evidence ledger,
+hash-bound manuscript-input manifest, and read-only boundary audit are:
+
+- `paper/NEGATIVE_RESULT_BOUNDARY_PAPER_PLAN.md`
+- `paper/NEGATIVE_RESULT_BOUNDARY_EVIDENCE_MANIFEST.json`
+- `paper/NEGATIVE_RESULT_BOUNDARY_BUILD_RECEIPT.json` (created only after
+  the committed source snapshot has been built)
+- `paper/EVIDENCE_MAP.md`
+- `src/experiments/audit_negative_result_boundary.py`
+
+`mechanism-v2.6` is invalidated. Its D16/MORPHO artifacts and all historical
+mechanism-chain outputs are exclusion-only integrity history: they cannot be
+recast as negative findings, mechanism evidence, external confirmation, or
+paper parameters. Synthetic v2.7 infrastructure likewise has no empirical
+paper role.
+
+Check the completed artifacts, manuscript input closure, and exclusion rule
+without reading raw waveforms. Before the source snapshot is committed, add
+`--allow-dirty`; the default command intentionally requires a clean worktree.
+
+~~~powershell
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_strict_evaluation.py
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_negative_result_boundary.py --allow-dirty
+~~~
 
 ## Integrity gates
 
@@ -72,7 +101,8 @@ retune a configuration. A changed protocol requires a new versioned protocol
 file and a clearly separated result.
 
 See RUN_STRICT_EVALUATION.md for the result audit and REPRODUCIBILITY.md for
-data, command, and claim boundaries.
+data, command, and claim boundaries. See RUN_MECHANISM_V2.md only for the
+disabled historical mechanism route.
 
 ## Repository layout
 

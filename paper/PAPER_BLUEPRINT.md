@@ -1,51 +1,66 @@
-# Strict Evaluation Manuscript Blueprint
+# Strict Negative-Result and Applicability-Boundary Manuscript Blueprint
 
-This is a working blueprint, not paper prose.
+This is a working blueprint, not paper prose or a new experimental protocol.
+The current paper route is independent of mechanism-v2.7 and uses only the
+completed strict E7/E8 evidence.
 
 ## Position
 
-The manuscript is an evaluation audit, not a claim of a new SoD sensing
-principle or a deployment study. Its falsifiable conclusion is limited to the
-frozen public-data protocol: bounded SoD is not the preferred codec among the
-four tested codecs, and the tested cold-start alarms do not provide an
-operational alarm result.
+The manuscript is an evaluation audit and applicability-boundary paper, not a
+claim of a new SoD sensing principle, a physical failure mechanism, external
+confirmation, or a deployment study. Its falsifiable conclusion is limited to
+the frozen declared-data contract: bounded SoD does not lead held-out record
+AUC among the four tested codecs, and the tested cold-start alarms cannot
+establish an operational-alarm claim.
 
-## Evaluation Audit
+## Research questions and findings
 
-| Pillar | Status | Evidence |
+| Question | Evidence path | Scope-bounded finding |
 | --- | --- | --- |
-| Research gap | Covered | Previous count-matched representation comparisons omitted byte accounting, healthy-only selection, and cold-start alarm separation |
-| Construction pipeline | Covered within scope | Fixed date splits, training-only quantization/baselines, validation-only selection, serialized packets, and cache manifests |
-| Evaluation framework | Covered | Four hard capacities, record-level AUC with bootstrap intervals, temperature matching, full threshold grids, false calls/day, delay, coverage |
-| Empirical findings | Covered | E7 and E8 full JSON outputs |
-| Companion method | Not applicable | The contribution is the audit and its negative result, not an optimized new detector |
+| RQ1: Under a fixed per-record byte capacity, how does bounded SoD compare with the three implemented codecs on held-out OGW records? | E7, four capacities, D04/D24 | Bounded SoD does not lead at any declared capacity or either held-out condition. |
+| RQ2: What alarm outcomes appear when March-only calibration is replayed over April? | E8, two features, nine frozen thresholds | Neither feature supports an operational-alarm claim under the reported false calls, newly started delay, and coverage. |
+| RQ3: What does the combined evidence permit and exclude? | E7/E8 eligibility rule and data boundaries | The two audits delimit software applicability in their declared settings; they are not pooled mechanism evidence, external replication, or deployment validation. |
 
-## Introduction Logic
+## Evaluation-paper completeness audit
 
-1. Guided-wave monitoring needs representations and alarms that remain
-   evaluable under environmental variation.
-2. Early project comparisons used sample counts, exploratory selection, and a
-   non-blind long-term replay; those properties cannot support codec or alarm
-   claims.
-3. The question is whether SoD remains competitive after exact packet
-   accounting and frozen selection, and whether a March-calibrated alarm gives
-   useful April outcomes.
-4. The protocol must prevent path pseudoreplication, payload undercounting,
-   label leakage, and retroactive operating-point selection.
-5. The solution is a date-separated hard-cap codec benchmark plus a
-   cross-month cold-start replay.
-6. Contributions are the frozen protocol, the all-capacity codec result, and
-   the all-threshold alarm audit.
+| Pillar | Status | Evidence | Boundary |
+| --- | --- | --- | --- |
+| Research gap | Covered within this audit | Historical project diagnostics and the frozen protocol identify payload accounting, selection, unit-of-analysis, and cold-start gaps | Does not establish a complete literature taxonomy |
+| Evaluation construction | Covered within scope | Fixed date splits, healthy-only fitting, actual serialization, and complete grids | Does not construct a multi-structure benchmark |
+| Evaluation framework | Covered | Four hard capacities, record-level AUC, matching diagnostics, false calls/day, delay, coverage | Bootstrap is not cross-structure inference |
+| Empirical findings | Covered but narrow | E7 and E8 full JSON outputs | One plate, two reversible conditions, one observed transition |
+| Companion method | Not applicable | No unverified remedy is presented | Do not invent a method or use the invalidated mechanism chain |
 
-## Section Plan
+## Evidence eligibility
+
+| Category | Permitted role | Prohibited role |
+| --- | --- | --- |
+| E7/E8 under `strict-evaluation-v1` | The only empirical evidence in the manuscript | General SoD, deployment, field-FAR, or population-PoD claims |
+| Strict result and boundary auditors | Reproducibility and current-artifact checks | Proof of original chronology or unrecorded-access absence |
+| E2--E6 and early PCA / long-term outputs | Historical implementation diagnostics | Tables, figures, parameter choices, or scientific conclusions |
+| mechanism-v2.x, D12/D16/MORPHO, and v2.7 infrastructure | Exclusion or engineering history only | Mechanism, external confirmation, performance, or new data authorization |
+
+## Section plan
 
 | Section | Role | Evidence |
 | --- | --- | --- |
-| Introduction | State the evaluation question and the narrow, falsifiable claim | E1--E6 |
-| Related Work | Position SoD, compensation, and compression without novelty claims | E6 |
-| Method | Define the shared residual contract, codecs, scoring, and alarm calculation | E2, E5 |
-| Data | Define record-level split units and the two dataset boundaries | E2--E4, E6 |
-| Experiments | State frozen selection and test gates before results | E2, E5 |
-| Results | Report every capacity and every threshold-grid range | E3, E4 |
-| Discussion | State the negative result and bound the conclusion | E1--E4 |
-| Conclusion | Summarize the audited finding and next required evidence | E1--E4 |
+| Introduction | Define RQ1--RQ3 and the narrow, falsifiable contribution | B1--B3, B7 |
+| Related Work | Position compensation, event reporting, and compression without priority or performance claims | B7 |
+| Method | State evidence eligibility, system boundary, codec and alarm contracts | B0, B1, B4, B5 |
+| Data | State record-level units and separate validity limits for each source | B1--B3, B7 |
+| Experiments | State frozen selection, full-grid reporting, and audit limits | B0, B1, B4, B5 |
+| Results | Report every capacity and every threshold-grid range | B2, B3 |
+| Discussion | Interpret the negative result, non-combination rule, and applicability boundary | B0--B5 |
+| Conclusion | Answer RQ1--RQ3 and name the minimum future evidence | B1--B5 |
+
+## Pre-submission gates
+
+1. Re-run the two read-only audits on the exact E7/E8 files and record their
+   hashes; an audit pass remains a structural check, not a chronology proof.
+2. Verify each cited source independently and keep metadata-only references at
+   citation-level wording.
+3. Ensure every numerical claim traces to E7/E8, not a historical diagnostic
+   or mechanism artifact.
+4. Compile and visually inspect the PDF from a clean working directory.
+5. Do not call the paper submission-ready until the venue template, data/code
+   availability statement, and final author metadata are complete.

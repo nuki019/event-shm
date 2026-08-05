@@ -10,40 +10,42 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{float}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \usepackage{geometry}
 \geometry{margin=2.5cm}
 \usepackage{siunitx}
 
-\title{A Strict Evaluation of Send-on-Delta Eventization for Guided-Wave Structural Health Monitoring}
+\title{Applicability Boundaries of Send-on-Delta Eventization for Guided-Wave Structural Health Monitoring: A Strict Negative-Result Evaluation}
 \author{Anonymous}
-\date{\today}
+\date{August 5, 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 Send-on-delta (SoD) eventization is a sparse representation that may reduce
-the stored content of a compensated guided-wave residual. Whether it remains
-competitive after exact byte accounting and frozen operating-point selection
-is an empirical question. We define a strict post-compensation software
-evaluation with date-separated fitting, healthy-only validation selection,
-actual serialized packets, and hard record capacities of 2,048, 4,096, 8,192,
-and 16,384 bytes. Bounded SoD is compared with uniform linear interpolation,
-PCA, and Haar discrete wavelet coding on held-out records from the public
-OGW data. We also replay two alarm features in a cold-start protocol: all
-parameters and a nine-value threshold grid are fitted on healthy March 2021
-records before the complete April 2021 stream is scored. At every declared
-capacity and for both D04 and D24 conditions, bounded SoD has lower held-out
-record AUC than the three general codecs. Across the frozen alarm grids, the
-two features produce 0.897--5.144 false calls per day, first newly started
-post-onset alarms 2,556--2,585 minutes after the labelled transition, and
-2.6--25.6\% post-onset record exceedance coverage. Thus, within this public
-data and software-only scope, SoD is neither the preferred codec among the
-tested alternatives nor evidence of an operational alarm. The contribution
-is a reproducible negative-result audit that prevents payload undercounting,
-label leakage, and post-hoc selection from being mistaken for compression or
-monitoring evidence.
+the stored content of a compensated guided-wave residual. Its applicability
+under exact byte accounting and frozen operating-point selection is an
+empirical question. We define a strict post-compensation software evaluation
+with date-separated fitting, healthy-only validation selection, actual
+serialized packets, and hard record capacities of 2,048, 4,096, 8,192, and
+16,384 bytes. Bounded SoD is compared with uniform linear interpolation, PCA,
+and Haar discrete wavelet coding on held-out records from the OGW resource. A
+separate cold-start audit fits two alarm features and a nine-value
+threshold grid on healthy March 2021 records before scoring the complete April
+2021 stream. At every declared capacity and for both D04 and D24 conditions,
+bounded SoD has lower held-out record AUC than the three implemented general
+codecs. Across the frozen alarm grids, the two features produce 0.897--5.144
+false calls per day, first newly started post-onset alarms 2,556--2,585
+minutes after the labelled transition, and 2.6--25.6\% post-onset record
+exceedance coverage. Thus, within the declared data and software-only
+scope, bounded SoD does not lead the held-out record-AUC comparison among the
+tested codecs under the declared per-record capacity contract, and the two
+replayed features cannot establish an operational-alarm claim. The
+contribution is a reproducible strict negative-result and applicability-boundary
+evaluation; it does not assert a universal SoD mechanism, external
+confirmation, or deployment performance.
 \end{abstract}
 
 \section{Introduction}

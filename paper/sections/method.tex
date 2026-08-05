@@ -1,3 +1,27 @@
+\subsection{Evidence eligibility and claim boundary}
+The empirical evidence in this paper consists only of the completed E7 codec
+benchmark and E8 cold-start replay under the frozen
+\texttt{strict\_evaluation\_v1} contract. These are separate audits with
+different data sources and tasks; they are not pooled as repeated observations
+of one physical mechanism. Historical exploratory comparisons and invalidated
+mechanism-chain artifacts are excluded from configuration selection, figures,
+tables, and conclusions. In particular, a protocol or runner invalidation is
+an integrity event rather than a negative measurement of codec performance.
+
+Accordingly, the paper makes claims only about the declared post-compensation
+software representations, data splits, codec families, and replay features.
+It does not estimate population probability of detection, calibrated field
+false-alarm rates, cross-structure performance, hardware energy, embedded
+memory, throughput, real-time latency, or deployment readiness.
+
+For the reviewed submission snapshot, a source manifest hashes every TeX
+input, bibliography, and included result figure together with the frozen
+protocol and result artifacts. A separate build receipt records one rendered
+PDF against that committed source snapshot. The accompanying read-only checks
+reject source drift and direct historical identifiers in the manuscript; they
+identify the reviewed files, not the original execution chronology or any
+broader scientific claim.
+
 \subsection{Scope and shared representation}
 The system boundary is post-compensation waveform coding. Each method receives
 the same 40~kHz, high-pass, unit-energy-normalized OBS+BSS residual record

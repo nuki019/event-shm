@@ -1,4 +1,11 @@
-\subsection{E7: bounded SoD does not lead the hard-cap comparison}
+\subsection{E7: bounded SoD does not lead the hard-cap record-AUC comparison}
+\paragraph{Finding 1: codec boundary.}
+Within the four declared capacities, the D04/D24 conditions, and the four
+implemented codecs, bounded SoD does not lead held-out record AUC. This is a
+scope-bounded ordering under the frozen per-record capacity contract, not a
+statement about overall codec preference, every SoD implementation, or every
+guided-wave monitoring setting.
+
 All observed packets satisfy their declared record capacity. The
 training-fitted signal quantizer clips no samples in training, validation,
 D04, or D24 and clips two of 70,075,368 healthy test samples. Temperature
@@ -19,7 +26,7 @@ claim that any tested codec is universally optimal. PCA model bytes are
 listed separately because the fitted decoder is substantial even though it is
 not amortized into a per-record packet.
 
-\begin{table*}[t]
+\begin{table}[H]
 \centering
 \caption{Held-out record AUC under every hard capacity. Brackets are
 record-level stratified-bootstrap 95\% intervals, which quantify resampling
@@ -54,9 +61,9 @@ Haar DWT & 8,192  & 0.962 [0.919, 0.993] & 0.909 [0.855, 0.955] & 6,060  & 16 \\
 Haar DWT & 16,384 & 0.960 [0.917, 0.992] & 0.903 [0.852, 0.949] & 12,490 & 16 \\
 \bottomrule
 \end{tabular}}
-\end{table*}
+\end{table}
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{e7_strict_codec_benchmark_v1.png}
 \caption{All-capacity held-out codec AUC. Each marker is the
@@ -65,7 +72,13 @@ marker is selected from test AUC.}
 \label{fig:codec}
 \end{figure}
 
-\subsection{E8: neither alarm feature yields an operational result}
+\subsection{E8: one cold-start replay cannot establish operational readiness}
+\paragraph{Finding 2: cold-start alarm boundary.}
+Within the March-calibrated, April-replayed threshold grids, neither tested
+feature can establish an operational-alarm claim. This scope limit is separate
+from the codec ranking: it is neither a pooled score nor a causal explanation
+for the E7 ordering.
+
 The April replay has 8,401 labelled healthy-prefix records, corresponding to
 16.72 days of healthy exposure. Across all threshold settings, no
 pre-onset incident remains active at the labelled onset, so the reported
@@ -77,12 +90,12 @@ points, not an uncertainty interval or a chosen working point.
 Dense residual energy produces 0.897--5.144 false calls/day, and Level-A SoD
 event count produces 0.897--4.964 false calls/day. Their first newly started
 post-onset alarms occur 2,556.2--2,584.8 minutes after onset, while record
-exceedance coverage remains at most 25.6\%. These observations do not support
-an operational alarm claim. They also do not estimate a population
-probability of detection because April contributes one observed labelled
-transition.
+exceedance coverage remains at most 25.6\%. These observations do not
+establish operational readiness or an operational-alarm claim. They also do
+not estimate a population probability of detection because April contributes
+one observed labelled transition.
 
-\begin{table}[t]
+\begin{table}[H]
 \centering
 \caption{Cold-start alarm outcomes over all nine March-derived thresholds.
 Each range is minimum--maximum over the frozen grid; no point is selected for
@@ -99,7 +112,7 @@ Level-A SoD count & 1.6002--2.5949 & 0.897--4.964 & 2556.2--2584.8 & 3.0--25.6 &
 \end{tabular}
 \end{table}
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{e8_cold_start_alarm_v1.png}
 \caption{All frozen April alarm points. Left: false calls/day versus delay

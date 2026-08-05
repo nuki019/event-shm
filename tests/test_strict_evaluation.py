@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import copy
+import json
 import unittest
+from pathlib import Path
 
 import numpy as np
 
@@ -10,7 +13,7 @@ from src.methods.strict_alarm import (
     incident_starts,
     temperature_support_distance,
 )
-from src.experiments.audit_strict_evaluation import AuditError, _descriptor_is_listed, _payload_is_within_cap
+from src.experiments.audit_strict_evaluation import AuditError, _descriptor_is_listed, _payload_is_within_cap, audit_e8
 from src.methods.strict_codecs import (
     HaarDwtCodec,
     Int16SignalQuantizer,
@@ -155,6 +158,13 @@ class StrictAlarmTests(unittest.TestCase):
 
 
 class StrictOutputAuditTests(unittest.TestCase):
+    @staticmethod
+    def _e8_fixture() -> tuple[dict, dict]:
+        root = Path(__file__).resolve().parents[1]
+        protocol = json.loads((root / "protocols" / "strict_evaluation_v1.json").read_text(encoding="utf-8"))
+        output = json.loads((root / "results" / "e8_cold_start_alarm_v1.json").read_text(encoding="utf-8"))
+        return protocol, output
+
     def test_output_audit_rejects_packet_over_cap(self) -> None:
         with self.assertRaises(AuditError):
             _payload_is_within_cap(
@@ -171,6 +181,42 @@ class StrictOutputAuditTests(unittest.TestCase):
         ]
         self.assertTrue(_descriptor_is_listed(selected, candidates))
         self.assertFalse(_descriptor_is_listed({"name": "sod_transition_bounded", "delta_codes": 512}, candidates))
+
+    def test_e8_audit_rejects_drifted_onset_metadata_and_non_boolean_activity(self) -> None:
+        protocol, output = self._e8_fixture()
+        drifted_metadata = copy.deepcopy(output)
+        drifted_metadata["test_label_metadata"]["first_nonzero_label_time"] = "2021-04-17T17:32:17"
+        with self.assertRaisesRegex(AuditError, "onset time"):
+            audit_e8(protocol, drifted_metadata)
+
+        non_boolean_activity = copy.deepcopy(output)
+        point = non_boolean_activity["feature_results"]["dense_residual_energy"]["blind_test_curve"][0]
+        point["pre_onset_incident_active_at_onset"] = "false"
+        with self.assertRaisesRegex(AuditError, "must be boolean"):
+            audit_e8(protocol, non_boolean_activity)
+
+    def test_e8_audit_checks_alarm_delay_and_does_not_credit_an_onset_active_incident(self) -> None:
+        protocol, output = self._e8_fixture()
+        inconsistent_delay = copy.deepcopy(output)
+        point = inconsistent_delay["feature_results"]["dense_residual_energy"]["blind_test_curve"][0]
+        point["first_post_onset_delay_minutes"] = 1.0
+        with self.assertRaisesRegex(AuditError, "does not match its alarm time"):
+            audit_e8(protocol, inconsistent_delay)
+
+        onset_credit = copy.deepcopy(output)
+        point = onset_credit["feature_results"]["dense_residual_energy"]["blind_test_curve"][0]
+        point["pre_onset_incident_active_at_onset"] = True
+        point["first_post_onset_alarm"] = "2021-04-17T17:32:16"
+        point["first_post_onset_delay_minutes"] = 0.0
+        with self.assertRaisesRegex(AuditError, "credits an onset-active incident"):
+            audit_e8(protocol, onset_credit)
+
+        later_new_incident = copy.deepcopy(output)
+        point = later_new_incident["feature_results"]["dense_residual_energy"]["blind_test_curve"][0]
+        point["pre_onset_incident_active_at_onset"] = True
+        point["first_post_onset_alarm"] = "2021-04-17T18:32:16"
+        point["first_post_onset_delay_minutes"] = 60.0
+        audit_e8(protocol, later_new_incident)
 
 
 if __name__ == "__main__":

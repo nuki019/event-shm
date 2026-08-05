@@ -1,23 +1,28 @@
 \subsection{OGW codec data}
-The codec audit uses the public Open Guided Waves (OGW) temperature data
-\cite{moll2019ogw}. The available conditions are one CFRP plate under
-healthy and reversible disc states; consequently, paths within a record are
-features rather than independent observations, and the data do not represent
-multiple independent structures. The protocol fixes healthy training dates
-from 2018-12-13 through 2018-12-17 (168 records), healthy validation dates
-from 2018-12-18 through 2018-12-19 (73 records), and healthy test dates from
-2018-12-20 through 2018-12-22 (81 records). D04 and D24 are held-out damage
-conditions with 161 records each. The baseline pool is selected only from
-the healthy training dates.
+The codec audit uses the record subset specified by the frozen protocol from
+the Open Guided Waves (OGW) temperature resource \cite{moll2019ogw}. The
+available conditions are one CFRP plate under healthy and reversible disc
+states; consequently, paths within a record are features rather than
+independent observations, and the data do not represent multiple independent
+structures. The protocol fixes healthy training dates from 2018-12-13 through
+2018-12-17 (168 records), healthy validation dates from 2018-12-18 through
+2018-12-19 (73 records), and healthy test dates from 2018-12-20 through
+2018-12-22 (81 records). D04 and D24 are held-out damage conditions with 161
+records each. The baseline pool is selected only from the healthy training
+dates. The resulting comparison is therefore a within-plate applicability
+boundary, not a structural replication.
 
 \subsection{Long-term alarm data}
-The cold-start audit uses selected months from the public long-term
-guided-wave dataset \cite{yang2025dataset}. March 2021 supplies 15,554
-healthy calibration records. April 2021 supplies 15,069 future records; its
-labelled change begins at source index 8,401 at
-2021-04-17T17:32:16. This is one observed transition, not a collection of
-independent failures. The April temperature support check also finds 831 of
-15,069 records (5.5\%) outside the March calibration temperature range.
+The cold-start audit uses the selected months and local record index defined
+by the frozen protocol from the long-term guided-wave dataset
+\cite{yang2025dataset}. March 2021 supplies 15,554 healthy calibration
+records. April 2021 supplies 15,069 future records; its labelled change
+begins at source index 8,401 at 2021-04-17T17:32:16. This is one observed
+transition, not a collection of independent failures. The April temperature
+support check also finds 831 of 15,069 records (5.5\%) outside the March
+calibration temperature range. Consequently, the replay describes threshold
+transfer across these two months, not a field false-alarm calibration or a
+population detection study.
 
 \paragraph{Scope.}
 The two data sources support a software representation and replay audit only.

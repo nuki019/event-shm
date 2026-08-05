@@ -13,9 +13,9 @@ conda run -n shm python -m compileall -q src
 
 The raw archives are ignored by Git. The OGW CFRP temperature archives are
 listed in data/ogw_files.json; selected UF/Utah long-term monthly files are
-listed in data/longterm_selected.json. Derived residuals, caches, JSON
-results, and plots are also ignored so that they are not mistaken for source
-data.
+listed in data/longterm_selected.json. Derived residuals, caches, plots, and
+all JSON results except the two hash-bound E7/E8 paper summaries are ignored
+so that they are not mistaken for source data or paper evidence.
 
 ## Frozen protocol
 
@@ -37,6 +37,39 @@ path. It defines:
 Test labels are forbidden for codec fitting, quantizer fitting, codec
 selection, alarm baseline construction, score calibration, and threshold
 selection. Paths are never resampled as independent samples.
+
+## Strict negative-result paper boundary
+
+The active manuscript route is a strict negative-result and
+applicability-boundary paper. Its evidence eligibility is frozen in
+`paper/NEGATIVE_RESULT_BOUNDARY_EVIDENCE_MANIFEST.json` and explained in
+`paper/EVIDENCE_MAP.md`. The manifest binds the current protocol and completed
+E7/E8 JSON SHA-256 values; it records `mechanism-v2.6` only as an
+exclusion-only integrity record.
+
+Run both read-only checks before building or handing off the manuscript:
+
+~~~powershell
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_strict_evaluation.py
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_negative_result_boundary.py
+~~~
+
+The boundary audit verifies current file identity, strict result-contract
+consistency, and the recorded v2.6 exclusion flags. It does not prove original
+execution chronology, raw-data provenance, absence of unrecorded access,
+scientific generalization, or submission readiness.
+
+## Local paper-build receipt
+
+The release identity is deliberately anchored in two commits to avoid a
+self-referential receipt. First commit the audited manuscript source, protocol,
+E7/E8 summaries, manifest, and auditors as the clean source snapshot (C1).
+Build from C1 with XeLaTeX and `-recorder`, then record the C1 commit/tree,
+input hashes, runtime identity, and local PDF/BibTeX outputs in
+`paper/NEGATIVE_RESULT_BOUNDARY_BUILD_RECEIPT.json`. Commit only that receipt
+as C2 and run the boundary audit again with `--build-receipt`. The receipt
+identifies one local build; it does not make the ignored PDF public, nor does
+it prove an experimental chronology or submission acceptance.
 
 ## Completed full outputs
 
@@ -77,6 +110,11 @@ E2--E4 and related plots remain in the repository for implementation audit.
 They are not paper evidence because they predate the frozen byte-accounted and
 cold-start protocol. They must not be used to choose a reported SoD threshold,
 capacity, or alarm setting.
+
+All mechanism-v2.x artifacts, including D12/D16/MORPHO history and v2.7
+synthetic infrastructure, are also excluded from this paper's empirical
+claims. They cannot be used as a mechanism result, external replication, or
+successor authorization.
 
 ## Claim boundary
 

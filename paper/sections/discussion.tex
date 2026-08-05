@@ -1,35 +1,50 @@
 \paragraph{A substantive negative codec result.}
 The strict comparison yields a clear decision within its scope: bounded SoD
-is not the preferred codec among the four tested implementations. This is not
-an absence of a conclusion. The conclusion follows because the same
-date-separated protocol, hard-cap accounting, record-level metric, and
-all-capacity reporting are applied to each codec, yet SoD is lower in held-out
-AUC at every capacity for both D04 and D24. It would be incorrect to restore
-the historical matched-count comparison as a headline because sample counts
-do not charge SoD timestamp framing or establish parity with general codecs.
+does not lead held-out record AUC among the four tested implementations under
+the declared per-record capacity contract. This is not an absence of a
+conclusion. The conclusion follows because the same date-separated protocol,
+hard-cap accounting, record-level metric, and all-capacity reporting are
+applied to each codec, yet SoD is lower in held-out AUC at every capacity for
+both D04 and D24. It would be incorrect to restore the historical
+matched-count comparison as a headline because sample counts do not charge
+SoD timestamp framing or establish parity with general codecs.
 
 \paragraph{What the alarm audit says.}
-The cold-start replay is also unfavorable. Across both frozen feature grids,
-false calls remain nonzero on the future healthy prefix, the first new
-post-onset alarm is delayed by roughly 42.6--43.1 hours, and post-onset
-record exceedance is sparse. Reporting this joint outcome is more informative
-than reporting one threshold with the smallest false-call rate or the largest
-coverage. It does not establish a calibrated field false-alarm rate, and it
-does not estimate probability of detection from a single transition.
+The cold-start replay cannot establish operational readiness. Across both
+frozen feature grids, false calls remain nonzero on the future healthy prefix,
+the first new post-onset alarm is delayed by roughly 42.6--43.1 hours, and
+post-onset record exceedance is sparse. Reporting this joint outcome is more
+informative than reporting one threshold with the smallest false-call rate or
+the largest coverage. It does not establish a calibrated field false-alarm
+rate, and it does not estimate probability of detection from a single
+transition.
+
+\paragraph{Evidence eligibility and non-combination.}
+The codec and alarm audits answer different questions with different data
+sources. They jointly delimit the claims that are not supported in this
+setting, but they do not identify one physical failure mechanism or form an
+independent replication pair. Historical exploratory comparisons and
+invalidated mechanism-chain artifacts are deliberately excluded rather than
+added as favourable or unfavourable observations. Treating an integrity or
+runner failure as a codec-performance measurement would conflate evidence
+eligibility with the scientific question.
 
 \paragraph{Evaluation boundaries.}
-The result is tied to a post-compensation software representation, one CFRP
-plate with reversible disc conditions, two damage labels, and the implemented
-codec families. The April replay has a 5.5\% temperature-support gap relative
-to March and one labelled onset. None of those data measure acquisition-side
-sampling, embedded memory, energy, real-time latency, sensor ageing, packet
-loss, or industrial interference. The reported PCA model sizes also caution
-against interpreting a per-record payload alone as a full deployment cost.
+The codec result is tied to a post-compensation software representation, one
+CFRP plate with reversible disc conditions, two damage labels, and the
+implemented codec families. The April replay has a 5.5\% temperature-support
+gap relative to March and one labelled onset. None of those data measure
+acquisition-side sampling, embedded memory, energy, real-time latency, sensor
+ageing, packet loss, or industrial interference. The reported PCA model sizes
+also caution against interpreting a per-record payload alone as a full
+deployment cost.
 
 \paragraph{Next evidence.}
 The next defensible step is a preregistered multi-structure study with
 independent calibration and future test periods, the same hard-cap accounting,
-and predeclared alert criteria. A hardware claim would additionally require
-measured firmware memory, throughput, energy, and end-to-end latency. Those
-experiments could change the scope of the conclusion, but they cannot be
-inferred from the present replay.
+and predeclared alert criteria. To support a mechanism claim, it would also
+need an independently eligible confirmation source and a frozen analysis that
+separates representation loss from score construction. A hardware claim would
+additionally require measured firmware memory, throughput, energy, and
+end-to-end latency. Those experiments could change the scope of the
+conclusion, but they cannot be inferred from the present replay.

@@ -2,13 +2,15 @@ This work replaces exploratory sample-count comparisons with a strict
 post-compensation codec benchmark and a cross-month cold-start alarm replay.
 All configurations are selected without test labels, all record packets are
 charged by serialized bytes, and all predeclared capacities and threshold
-grids are reported. On the held-out OGW conditions, bounded SoD does not
-outperform uniform linear interpolation, PCA, or Haar DWT at any tested
-capacity. On the March-to-April replay, neither tested alarm feature provides
-an operational result under the reported false-call, newly started delay, and
-coverage outcomes.
+grids are reported. The resulting applicability boundary has three parts:
+bounded SoD does not lead held-out record AUC against uniform linear
+interpolation, PCA, or Haar DWT on the OGW conditions at any tested capacity
+under the declared per-record capacity contract; the March-to-April replay
+cannot establish an operational-alarm claim; and the two results are not a
+shared mechanism study or a deployment validation.
 
-These are scope-bounded negative findings, not evidence about general
-deployment, hardware cost, or population probability of detection. Future
-work requires independent structures and transitions together with measured
-endpoint performance under a preregistered protocol.
+These are scope-bounded negative findings, not evidence about general SoD
+behavior, external confirmation, hardware cost, field false-alarm calibration,
+or population probability of detection. Future work requires independently
+eligible structures and transitions under a preregistered protocol, together
+with measured endpoint performance before any hardware claim is made.

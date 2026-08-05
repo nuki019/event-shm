@@ -42,13 +42,34 @@ credited as a new detection.
 & C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/e7_strict_codec_benchmark.py
 & C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/e8_cold_start_alarm.py
 & C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_strict_evaluation.py
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_negative_result_boundary.py
 ~~~
 
-The last command is read-only: it checks that the completed JSON artifacts
+The strict-output audit command is read-only: it checks that the completed JSON artifacts
 contain every declared capacity and threshold, obey hard packet caps, and
 trace each selected codec descriptor to its validation audit. It is an
 artifact-consistency check, not proof of execution chronology or of the
 absence of hidden data access.
+
+The final command is also read-only. It verifies that the current strict
+protocol and E7/E8 artifact hashes match the paper evidence manifest, then
+checks that the v2.6 invalidation receipt remains exclusion-only. It does not
+turn v2.6 history into a scientific result or prove execution chronology.
+
+## Paper-release identity
+
+For the strict negative-result manuscript, the E7/E8 JSON summaries are the
+only versioned result JSON files. Commit the clean audited source snapshot
+first (C1). Then make the local XeLaTeX build with `-recorder`, create
+`paper/NEGATIVE_RESULT_BOUNDARY_BUILD_RECEIPT.json` against C1, commit that
+receipt separately (C2), and verify it from C2:
+
+~~~powershell
+& C:\Users\wfy\.conda\envs\shm\python.exe src/experiments/audit_negative_result_boundary.py --build-receipt paper/NEGATIVE_RESULT_BOUNDARY_BUILD_RECEIPT.json
+~~~
+
+The PDF stays local and ignored; C2 records its identity rather than uploading
+it to the public repository.
 
 Do not alter configurations after inspecting the result JSON. Any protocol
 revision must create a new protocol identifier and a separately labelled

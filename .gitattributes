@@ -36,3 +36,15 @@ tests/test_mechanism*.py -text
 *.pdf binary
 *.zip binary
 *.part binary
+
+# This paper has an explicit source/build hash closure.  These two protocol
+# inputs deliberately override the historical protocol preservation rule so
+# their Git bytes and release-worktree bytes are canonical LF.
+paper/main.tex text eol=lf
+paper/sections/*.tex text eol=lf
+paper/refs.bib text eol=lf
+paper/NEGATIVE_RESULT_BOUNDARY_*.json text eol=lf
+protocols/strict_evaluation_v1.json text eol=lf
+protocols/mechanism_v2_6_invalidation_receipt.json text eol=lf
+results/e7_strict_codec_benchmark_v1.json text eol=lf
+results/e8_cold_start_alarm_v1.json text eol=lf

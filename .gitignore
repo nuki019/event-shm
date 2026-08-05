@@ -11,6 +11,10 @@ data/external/
 figures/*.png
 !figures/.gitkeep
 results/*.json
+# The strict-boundary manuscript manifest verifies these two immutable result
+# summaries by SHA-256. Keep all other experiment JSON outputs untracked.
+!results/e7_strict_codec_benchmark_v1.json
+!results/e8_cold_start_alarm_v1.json
 results/*.log
 results/logs/
 !results/.gitkeep

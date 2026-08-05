@@ -1,0 +1,3668 @@
+{
+  "protocol_id": "strict-evaluation-v1",
+  "smoke": false,
+  "system_boundary": "Post-compensation waveform coding. The benchmark measures payload for residual records reconstructed by software. It does not measure ADC acquisition power, MCU execution time, or hardware energy.",
+  "selection_boundary": "For each codec and target, retain only predeclared candidates with a proven worst-case packet bound no greater than the target. Fixed-configuration uniform, PCA, and Haar candidates use the closest proven bound. Bounded-SoD uses healthy-validation mean payload closest to the target; payload ties use lower code-domain reconstruction MSE on 8 chronologically evenly spaced healthy-validation records, then frozen candidate order. No labels or test records are used.",
+  "payload_capacity_contract": "At every target, every serialized healthy and damaged record packet must be no larger than the target. SoD reserves an equal per-path packet cap including its timestamp/level framing and stops only at an event boundary; a decoder then holds the final transmitted level.",
+  "cache_manifest": {
+    "frequency_khz": 40,
+    "smoke": false,
+    "baseline_source_indices": [
+      0,
+      162,
+      3,
+      166,
+      153,
+      150,
+      12,
+      15,
+      142,
+      20,
+      23,
+      134,
+      131,
+      31,
+      126,
+      123,
+      39,
+      118,
+      115,
+      47,
+      50,
+      107,
+      104,
+      58,
+      99,
+      96,
+      66,
+      91,
+      72,
+      74,
+      77,
+      80
+    ],
+    "baseline_temperatures": [
+      21.2335,
+      21.818,
+      22.7825,
+      23.7675,
+      24.8095,
+      26.119999999999997,
+      27.25,
+      28.756999999999998,
+      30.118000000000002,
+      31.201,
+      32.710499999999996,
+      34.164500000000004,
+      35.697,
+      36.676500000000004,
+      38.1175,
+      39.604,
+      40.641,
+      42.129000000000005,
+      43.5385,
+      44.5785,
+      46.1125,
+      47.5235,
+      49.018,
+      50.096000000000004,
+      51.4705,
+      52.953,
+      53.983999999999995,
+      55.471,
+      56.926,
+      57.938500000000005,
+      59.405,
+      60.8935
+    ],
+    "alphas": [
+      0.985,
+      0.9875,
+      0.99,
+      0.9925,
+      0.995,
+      0.9975,
+      1.0,
+      1.0025,
+      1.005,
+      1.0075,
+      1.01,
+      1.0125,
+      1.015
+    ],
+    "splits": {
+      "healthy_train": {
+        "records": 168,
+        "source_dates": [
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181213",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181214",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181215",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181216",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217",
+          "20181217"
+        ]
+      },
+      "healthy_validation": {
+        "records": 73,
+        "source_dates": [
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181218",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219",
+          "20181219"
+        ]
+      },
+      "healthy_test": {
+        "records": 81,
+        "source_dates": [
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181220",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181221",
+          "20181222",
+          "20181222",
+          "20181222",
+          "20181222"
+        ]
+      },
+      "D04": {
+        "records": 161,
+        "source_dates": [
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190104",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190105",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190106",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190107",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108"
+        ]
+      },
+      "D24": {
+        "records": 161,
+        "source_dates": [
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190108",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190109",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190110",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190111",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190112",
+          "20190113",
+          "20190113",
+          "20190113",
+          "20190113"
+        ]
+      }
+    }
+  },
+  "signal_quantizer": {
+    "scale": 2.4646507881309607e-06,
+    "model_bytes": 8,
+    "saturation": {
+      "healthy_train": {
+        "clipped_samples": 0,
+        "total_samples": 145341504,
+        "fraction": 0.0
+      },
+      "healthy_validation": {
+        "clipped_samples": 0,
+        "total_samples": 63154344,
+        "fraction": 0.0
+      },
+      "healthy_test": {
+        "clipped_samples": 2,
+        "total_samples": 70075368,
+        "fraction": 2.8540699208315254e-08
+      },
+      "D04": {
+        "clipped_samples": 0,
+        "total_samples": 139285608,
+        "fraction": 0.0
+      },
+      "D24": {
+        "clipped_samples": 0,
+        "total_samples": 139285608,
+        "fraction": 0.0
+      }
+    }
+  },
+  "pca_fit": {
+    "max_rank": 128,
+    "training_records": 168
+  },
+  "haar_fit": {
+    "coefficient_scale": 1.3796369721012206e-05
+  },
+  "validation_payload_candidate_audit": {
+    "sod_transition_bounded": {
+      "2048": [
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 1992.5479452054794,
+          "median_bytes_per_record": 1993.0,
+          "p95_bytes_per_record": 2001.0,
+          "maximum_bytes_per_record": 2009.0,
+          "mean_bits_per_original_sample": 0.01842546254617101,
+          "maximum_guaranteed_bytes_per_record": 2046,
+          "healthy_validation_code_mse": 150421.31997129327,
+          "mse_tie_break_records": 8
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 1983.3835616438357,
+          "median_bytes_per_record": 1983.0,
+          "p95_bytes_per_record": 1986.4,
+          "maximum_bytes_per_record": 1987.0,
+          "mean_bits_per_original_sample": 0.01834071778182036,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 1980.0,
+          "median_bytes_per_record": 1980.0,
+          "p95_bytes_per_record": 1980.0,
+          "maximum_bytes_per_record": 1980.0,
+          "mean_bits_per_original_sample": 0.0183094293561184,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 512,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 1911.4520547945206,
+          "median_bytes_per_record": 1956.0,
+          "p95_bytes_per_record": 2003.4,
+          "maximum_bytes_per_record": 2006.0,
+          "mean_bits_per_original_sample": 0.01767555371963012,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 4096,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 132.05479452054794,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 136.0,
+          "mean_bits_per_original_sample": 0.0012211353188942948,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8192,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 16384,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 2046
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 32767,
+          "max_path_payload_bytes": 30,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 2046
+        }
+      ],
+      "4096": [
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 4038.5205479452056,
+          "median_bytes_per_record": 4039.0,
+          "p95_bytes_per_record": 4049.0,
+          "maximum_bytes_per_record": 4051.0,
+          "mean_bits_per_original_sample": 0.03734495286658349,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 4088.27397260274,
+          "median_bytes_per_record": 4088.0,
+          "p95_bytes_per_record": 4091.0,
+          "maximum_bytes_per_record": 4092.0,
+          "mean_bits_per_original_sample": 0.03780503206556939,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 4092.0,
+          "median_bytes_per_record": 4092.0,
+          "p95_bytes_per_record": 4092.0,
+          "maximum_bytes_per_record": 4092.0,
+          "mean_bits_per_original_sample": 0.03783948733597803,
+          "maximum_guaranteed_bytes_per_record": 4092,
+          "healthy_validation_code_mse": 103931.95082606273,
+          "mse_tie_break_records": 8
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 512,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 3858.671232876712,
+          "median_bytes_per_record": 3934.0,
+          "p95_bytes_per_record": 4069.0,
+          "maximum_bytes_per_record": 4072.0,
+          "mean_bits_per_original_sample": 0.03568185270042548,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 4096,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 132.05479452054794,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 136.0,
+          "mean_bits_per_original_sample": 0.0012211353188942948,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8192,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 16384,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 32767,
+          "max_path_payload_bytes": 61,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 4092
+        }
+      ],
+      "8192": [
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 8130.643835616438,
+          "median_bytes_per_record": 8131.0,
+          "p95_bytes_per_record": 8138.0,
+          "maximum_bytes_per_record": 8143.0,
+          "mean_bits_per_original_sample": 0.07518558026665592,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 8179.753424657534,
+          "median_bytes_per_record": 8180.0,
+          "p95_bytes_per_record": 8183.0,
+          "maximum_bytes_per_record": 8184.0,
+          "mean_bits_per_original_sample": 0.07563970579759327,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 8184.0,
+          "median_bytes_per_record": 8184.0,
+          "p95_bytes_per_record": 8184.0,
+          "maximum_bytes_per_record": 8184.0,
+          "mean_bits_per_original_sample": 0.07567897467195606,
+          "maximum_guaranteed_bytes_per_record": 8184,
+          "healthy_validation_code_mse": 61125.99291925588,
+          "mse_tie_break_records": 8
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 512,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 7637.835616438356,
+          "median_bytes_per_record": 7770.0,
+          "p95_bytes_per_record": 8157.4,
+          "maximum_bytes_per_record": 8167.0,
+          "mean_bits_per_original_sample": 0.07062849073374905,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 4096,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 132.05479452054794,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 136.0,
+          "mean_bits_per_original_sample": 0.0012211353188942948,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8192,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 16384,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 32767,
+          "max_path_payload_bytes": 123,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 8184
+        }
+      ],
+      "16384": [
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 16314.164383561643,
+          "median_bytes_per_record": 16315.0,
+          "p95_bytes_per_record": 16324.0,
+          "maximum_bytes_per_record": 16327.0,
+          "mean_bits_per_original_sample": 0.15086012135602264,
+          "maximum_guaranteed_bytes_per_record": 16368,
+          "healthy_validation_code_mse": 51129.350294118325,
+          "mse_tie_break_records": 8
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 16306.86301369863,
+          "median_bytes_per_record": 16307.0,
+          "p95_bytes_per_record": 16310.4,
+          "maximum_bytes_per_record": 16312.0,
+          "mean_bits_per_original_sample": 0.1507926042268763,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 16302.0,
+          "median_bytes_per_record": 16302.0,
+          "p95_bytes_per_record": 16302.0,
+          "maximum_bytes_per_record": 16302.0,
+          "mean_bits_per_original_sample": 0.1507476350320415,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 512,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 15009.315068493152,
+          "median_bytes_per_record": 15256.0,
+          "p95_bytes_per_record": 16329.0,
+          "maximum_bytes_per_record": 16332.0,
+          "mean_bits_per_original_sample": 0.13879393632843373,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 4096,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 132.05479452054794,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 136.0,
+          "mean_bits_per_original_sample": 0.0012211353188942948,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 8192,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 16384,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 32767,
+          "max_path_payload_bytes": 246,
+          "mean_bytes_per_record": 132.0,
+          "median_bytes_per_record": 132.0,
+          "p95_bytes_per_record": 132.0,
+          "maximum_bytes_per_record": 132.0,
+          "mean_bits_per_original_sample": 0.0012206286237412267,
+          "maximum_guaranteed_bytes_per_record": 16368
+        }
+      ]
+    },
+    "uniform_linear": {
+      "2048": [
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 937,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 1024,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1848
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2048,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2185,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 4096,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 660
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 8192,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        }
+      ],
+      "4096": [
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 437,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 512,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3564
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 937,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 1024,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1848
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2048,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2185,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 4096,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 660
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 8192,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        }
+      ],
+      "8192": [
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 215,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 256,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6996
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 437,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 512,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3564
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 937,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 1024,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1848
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2048,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2185,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 4096,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 660
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 8192,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        }
+      ],
+      "16384": [
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 107,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 16368
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 128,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 13728
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 215,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 256,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6996
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 437,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 512,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3564
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 937,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 1024,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1848
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2048,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 2185,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 4096,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 660
+        },
+        {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 8192,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        }
+      ]
+    },
+    "pca": {
+      "2048": [
+        {
+          "name": "pca",
+          "model_bytes": 104876,
+          "rank": 1,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 132
+        },
+        {
+          "name": "pca",
+          "model_bytes": 157312,
+          "rank": 2,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 264
+        },
+        {
+          "name": "pca",
+          "model_bytes": 209748,
+          "rank": 3,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        },
+        {
+          "name": "pca",
+          "model_bytes": 262184,
+          "rank": 4,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 528
+        },
+        {
+          "name": "pca",
+          "model_bytes": 367056,
+          "rank": 6,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 792
+        },
+        {
+          "name": "pca",
+          "model_bytes": 419492,
+          "rank": 7,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "pca",
+          "model_bytes": 471928,
+          "rank": 8,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "pca",
+          "model_bytes": 681672,
+          "rank": 12,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1584
+        },
+        {
+          "name": "pca",
+          "model_bytes": 838980,
+          "rank": 15,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        }
+      ],
+      "4096": [
+        {
+          "name": "pca",
+          "model_bytes": 104876,
+          "rank": 1,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 132
+        },
+        {
+          "name": "pca",
+          "model_bytes": 157312,
+          "rank": 2,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 264
+        },
+        {
+          "name": "pca",
+          "model_bytes": 209748,
+          "rank": 3,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        },
+        {
+          "name": "pca",
+          "model_bytes": 262184,
+          "rank": 4,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 528
+        },
+        {
+          "name": "pca",
+          "model_bytes": 367056,
+          "rank": 6,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 792
+        },
+        {
+          "name": "pca",
+          "model_bytes": 419492,
+          "rank": 7,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "pca",
+          "model_bytes": 471928,
+          "rank": 8,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "pca",
+          "model_bytes": 681672,
+          "rank": 12,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1584
+        },
+        {
+          "name": "pca",
+          "model_bytes": 838980,
+          "rank": 15,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "pca",
+          "model_bytes": 891416,
+          "rank": 16,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2112
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1310904,
+          "rank": 24,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3168
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1677956,
+          "rank": 31,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        }
+      ],
+      "8192": [
+        {
+          "name": "pca",
+          "model_bytes": 104876,
+          "rank": 1,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 132
+        },
+        {
+          "name": "pca",
+          "model_bytes": 157312,
+          "rank": 2,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 264
+        },
+        {
+          "name": "pca",
+          "model_bytes": 209748,
+          "rank": 3,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        },
+        {
+          "name": "pca",
+          "model_bytes": 262184,
+          "rank": 4,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 528
+        },
+        {
+          "name": "pca",
+          "model_bytes": 367056,
+          "rank": 6,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 792
+        },
+        {
+          "name": "pca",
+          "model_bytes": 419492,
+          "rank": 7,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "pca",
+          "model_bytes": 471928,
+          "rank": 8,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "pca",
+          "model_bytes": 681672,
+          "rank": 12,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1584
+        },
+        {
+          "name": "pca",
+          "model_bytes": 838980,
+          "rank": 15,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "pca",
+          "model_bytes": 891416,
+          "rank": 16,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2112
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1310904,
+          "rank": 24,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3168
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1677956,
+          "rank": 31,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1730392,
+          "rank": 32,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4224
+        },
+        {
+          "name": "pca",
+          "model_bytes": 2569368,
+          "rank": 48,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6336
+        },
+        {
+          "name": "pca",
+          "model_bytes": 3303472,
+          "rank": 62,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8184
+        }
+      ],
+      "16384": [
+        {
+          "name": "pca",
+          "model_bytes": 104876,
+          "rank": 1,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 132
+        },
+        {
+          "name": "pca",
+          "model_bytes": 157312,
+          "rank": 2,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 264
+        },
+        {
+          "name": "pca",
+          "model_bytes": 209748,
+          "rank": 3,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 396
+        },
+        {
+          "name": "pca",
+          "model_bytes": 262184,
+          "rank": 4,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 528
+        },
+        {
+          "name": "pca",
+          "model_bytes": 367056,
+          "rank": 6,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 792
+        },
+        {
+          "name": "pca",
+          "model_bytes": 419492,
+          "rank": 7,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 924
+        },
+        {
+          "name": "pca",
+          "model_bytes": 471928,
+          "rank": 8,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1056
+        },
+        {
+          "name": "pca",
+          "model_bytes": 681672,
+          "rank": 12,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1584
+        },
+        {
+          "name": "pca",
+          "model_bytes": 838980,
+          "rank": 15,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1980
+        },
+        {
+          "name": "pca",
+          "model_bytes": 891416,
+          "rank": 16,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2112
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1310904,
+          "rank": 24,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3168
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1677956,
+          "rank": 31,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4092
+        },
+        {
+          "name": "pca",
+          "model_bytes": 1730392,
+          "rank": 32,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4224
+        },
+        {
+          "name": "pca",
+          "model_bytes": 2569368,
+          "rank": 48,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6336
+        },
+        {
+          "name": "pca",
+          "model_bytes": 3303472,
+          "rank": 62,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8184
+        },
+        {
+          "name": "pca",
+          "model_bytes": 3408344,
+          "rank": 64,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8448
+        },
+        {
+          "name": "pca",
+          "model_bytes": 5086296,
+          "rank": 96,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 12672
+        },
+        {
+          "name": "pca",
+          "model_bytes": 6554504,
+          "rank": 124,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 16368
+        }
+      ]
+    },
+    "haar_dwt": {
+      "2048": [
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 1,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 330
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 2,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 594
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 3,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 858
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 4,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1122
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 6,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1650
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 7,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1914
+        }
+      ],
+      "4096": [
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 1,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 330
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 2,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 594
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 3,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 858
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 4,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1122
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 6,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1650
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 7,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1914
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 8,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2178
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 12,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3234
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 15,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4026
+        }
+      ],
+      "8192": [
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 1,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 330
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 2,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 594
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 3,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 858
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 4,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1122
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 6,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1650
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 7,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1914
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 8,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2178
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 12,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3234
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 15,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4026
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 16,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4290
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 24,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6402
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 30,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 7986
+        }
+      ],
+      "16384": [
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 1,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 330
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 2,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 594
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 3,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 858
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 4,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1122
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 6,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1650
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 7,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 1914
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 8,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 2178
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 12,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 3234
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 15,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4026
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 16,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 4290
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 24,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 6402
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 30,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 7986
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 31,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8250
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 32,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 8580
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 48,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 12804
+        },
+        {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 61,
+          "padded_length": 16384,
+          "selection_basis": "fixed or conservative worst-case packet bound; no label or test access",
+          "maximum_guaranteed_bytes_per_record": 16236
+        }
+      ]
+    }
+  },
+  "raw_int16_reference": {
+    "model_bytes": 8,
+    "conditions": {
+      "D04": {
+        "n_healthy_records": 81,
+        "n_damage_records": 161,
+        "roc_auc": 0.9572118702553486,
+        "roc_auc_ci95": [
+          0.9172571121846484,
+          0.9898914960509164
+        ],
+        "temperature_matched": {
+          "n_pairs": 81,
+          "temperature_abs_difference_celsius": {
+            "median": 0.014000000000010004,
+            "p95": 0.05449999999999733,
+            "maximum": 0.07450000000000045
+          },
+          "damage_higher_win_rate": 0.9753086419753086,
+          "tie_rate": 0.0,
+          "win_rate_ci95": [
+            0.9382716049382716,
+            1.0
+          ]
+        },
+        "healthy_payload": {
+          "mean_bytes_per_record": 1730256.0,
+          "median_bytes_per_record": 1730256.0,
+          "p95_bytes_per_record": 1730256.0,
+          "maximum_bytes_per_record": 1730256.0,
+          "mean_bits_per_original_sample": 16.0
+        },
+        "damage_payload": {
+          "mean_bytes_per_record": 1730256.0,
+          "median_bytes_per_record": 1730256.0,
+          "p95_bytes_per_record": 1730256.0,
+          "maximum_bytes_per_record": 1730256.0,
+          "mean_bits_per_original_sample": 16.0
+        }
+      },
+      "D24": {
+        "n_healthy_records": 81,
+        "n_damage_records": 161,
+        "roc_auc": 0.8954067939575185,
+        "roc_auc_ci95": [
+          0.8433766582317307,
+          0.9438846714209033
+        ],
+        "temperature_matched": {
+          "n_pairs": 81,
+          "temperature_abs_difference_celsius": {
+            "median": 0.012500000000002842,
+            "p95": 0.061499999999995225,
+            "maximum": 0.1075000000000017
+          },
+          "damage_higher_win_rate": 0.9629629629629629,
+          "tie_rate": 0.0,
+          "win_rate_ci95": [
+            0.9135802469135802,
+            1.0
+          ]
+        },
+        "healthy_payload": {
+          "mean_bytes_per_record": 1730256.0,
+          "median_bytes_per_record": 1730256.0,
+          "p95_bytes_per_record": 1730256.0,
+          "maximum_bytes_per_record": 1730256.0,
+          "mean_bits_per_original_sample": 16.0
+        },
+        "damage_payload": {
+          "mean_bytes_per_record": 1730256.0,
+          "median_bytes_per_record": 1730256.0,
+          "p95_bytes_per_record": 1730256.0,
+          "maximum_bytes_per_record": 1730256.0,
+          "mean_bits_per_original_sample": 16.0
+        }
+      }
+    }
+  },
+  "test_results": {
+    "sod_transition_bounded": [
+      {
+        "target_payload_bytes_per_record": 2048,
+        "hard_capacity_guaranteed_bytes_per_record": 2046,
+        "selected_from_healthy_validation_only": {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 30
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5516448125143777,
+            "roc_auc_ci95": [
+              0.4783260486159037,
+              0.6325971934667587
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.5925925925925926,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.48148148148148145,
+                0.691358024691358
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1993.8271604938273,
+              "median_bytes_per_record": 1994.0,
+              "p95_bytes_per_record": 2004.0,
+              "maximum_bytes_per_record": 2006.0,
+              "mean_bits_per_original_sample": 0.018437291688571653
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1992.7080745341616,
+              "median_bytes_per_record": 1993.0,
+              "p95_bytes_per_record": 2003.0,
+              "maximum_bytes_per_record": 2009.0,
+              "mean_bits_per_original_sample": 0.01842694329194442
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5541752933057281,
+            "roc_auc_ci95": [
+              0.47356606088490144,
+              0.633239398819109
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.5679012345679012,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.4567901234567901,
+                0.6790123456790124
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1993.8271604938273,
+              "median_bytes_per_record": 1994.0,
+              "p95_bytes_per_record": 2004.0,
+              "maximum_bytes_per_record": 2006.0,
+              "mean_bits_per_original_sample": 0.018437291688571653
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1993.0869565217392,
+              "median_bytes_per_record": 1993.0,
+              "p95_bytes_per_record": 2003.0,
+              "maximum_bytes_per_record": 2009.0,
+              "mean_bits_per_original_sample": 0.01843044688436152
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 4096,
+        "hard_capacity_guaranteed_bytes_per_record": 4092,
+        "selected_from_healthy_validation_only": {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 61
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5350816655164481,
+            "roc_auc_ci95": [
+              0.45248447204968945,
+              0.6082528180354267
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.6172839506172839,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.5185185185185185,
+                0.7160493827160493
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5575492676941953,
+            "roc_auc_ci95": [
+              0.4760198604401503,
+              0.6358561460010735
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.5679012345679012,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.4567901234567901,
+                0.6666666666666666
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 8192,
+        "hard_capacity_guaranteed_bytes_per_record": 8184,
+        "selected_from_healthy_validation_only": {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 64,
+          "max_path_payload_bytes": 123
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5454336323901542,
+            "roc_auc_ci95": [
+              0.4643029675638371,
+              0.6204355494210567
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.5679012345679012,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.4567901234567901,
+                0.6790123456790124
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5807836822329577,
+            "roc_auc_ci95": [
+              0.5067767042404724,
+              0.6543900007668122
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.6049382716049383,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.49382716049382713,
+                0.7037037037037037
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8183.993788819876,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567891723601479
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 16384,
+        "hard_capacity_guaranteed_bytes_per_record": 16368,
+        "selected_from_healthy_validation_only": {
+          "name": "sod_transition_bounded",
+          "model_bytes": 14,
+          "delta_codes": 1,
+          "max_path_payload_bytes": 246
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.5443600950847328,
+            "roc_auc_ci95": [
+              0.46751782838739364,
+              0.6180085882984434
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.5555555555555556,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.4444444444444444,
+                0.654320987654321
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16314.641975308641,
+              "median_bytes_per_record": 16314.0,
+              "p95_bytes_per_record": 16324.0,
+              "maximum_bytes_per_record": 16328.0,
+              "mean_bits_per_original_sample": 0.15086453773599875
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16314.223602484471,
+              "median_bytes_per_record": 16314.0,
+              "p95_bytes_per_record": 16324.0,
+              "maximum_bytes_per_record": 16330.0,
+              "mean_bits_per_original_sample": 0.15086066896444894
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.546277125987271,
+            "roc_auc_ci95": [
+              0.466682002913887,
+              0.6235008818342151
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.5679012345679012,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.4691358024691358,
+                0.6666666666666666
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16314.641975308641,
+              "median_bytes_per_record": 16314.0,
+              "p95_bytes_per_record": 16324.0,
+              "maximum_bytes_per_record": 16328.0,
+              "mean_bits_per_original_sample": 0.15086453773599875
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16314.372670807454,
+              "median_bytes_per_record": 16314.0,
+              "p95_bytes_per_record": 16325.0,
+              "maximum_bytes_per_record": 16331.0,
+              "mean_bits_per_original_sample": 0.15086204742703926
+            }
+          }
+        }
+      }
+    ],
+    "uniform_linear": [
+      {
+        "target_payload_bytes_per_record": 2048,
+        "hard_capacity_guaranteed_bytes_per_record": 1980,
+        "selected_from_healthy_validation_only": {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 937
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9480101219231654,
+            "roc_auc_ci95": [
+              0.9062111801242235,
+              0.9822885514914501
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8686450425580861,
+            "roc_auc_ci95": [
+              0.81205429031516,
+              0.918413081818879
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9256172839506173,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 4096,
+        "hard_capacity_guaranteed_bytes_per_record": 4092,
+        "selected_from_healthy_validation_only": {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 437
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9386550111187792,
+            "roc_auc_ci95": [
+              0.8942546583850931,
+              0.9747910436316232
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8695652173913044,
+            "roc_auc_ci95": [
+              0.8142013649260026,
+              0.924240855762595
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9256172839506173,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 8192,
+        "hard_capacity_guaranteed_bytes_per_record": 8184,
+        "selected_from_healthy_validation_only": {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 215
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9545280269917951,
+            "roc_auc_ci95": [
+              0.914651867188099,
+              0.9880492293535772
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8931830381105743,
+            "roc_auc_ci95": [
+              0.8364331723027376,
+              0.9396557012499043
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9135802469135802,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 16384,
+        "hard_capacity_guaranteed_bytes_per_record": 16368,
+        "selected_from_healthy_validation_only": {
+          "name": "uniform_linear",
+          "model_bytes": 12,
+          "stride": 107
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9596656698105974,
+            "roc_auc_ci95": [
+              0.9207077678092171,
+              0.992184265010352
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8998543056514071,
+            "roc_auc_ci95": [
+              0.8422053523502799,
+              0.9447224139253125
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            }
+          }
+        }
+      }
+    ],
+    "pca": [
+      {
+        "target_payload_bytes_per_record": 2048,
+        "hard_capacity_guaranteed_bytes_per_record": 1980,
+        "selected_from_healthy_validation_only": {
+          "name": "pca",
+          "model_bytes": 838980,
+          "rank": 15
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9366612989801395,
+            "roc_auc_ci95": [
+              0.8927977148991642,
+              0.9754945939728548
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9135802469135802,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8702553485162181,
+            "roc_auc_ci95": [
+              0.8071754466682003,
+              0.9219480868031592
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1980.0,
+              "median_bytes_per_record": 1980.0,
+              "p95_bytes_per_record": 1980.0,
+              "maximum_bytes_per_record": 1980.0,
+              "mean_bits_per_original_sample": 0.0183094293561184
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 4096,
+        "hard_capacity_guaranteed_bytes_per_record": 4092,
+        "selected_from_healthy_validation_only": {
+          "name": "pca",
+          "model_bytes": 1677956,
+          "rank": 31
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9456330036040181,
+            "roc_auc_ci95": [
+              0.9022180047542365,
+              0.9830630319760755
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8845947396672035,
+            "roc_auc_ci95": [
+              0.8280787516294762,
+              0.9332163944482785
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 4092.0,
+              "median_bytes_per_record": 4092.0,
+              "p95_bytes_per_record": 4092.0,
+              "maximum_bytes_per_record": 4092.0,
+              "mean_bits_per_original_sample": 0.03783948733597803
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 8192,
+        "hard_capacity_guaranteed_bytes_per_record": 8184,
+        "selected_from_healthy_validation_only": {
+          "name": "pca",
+          "model_bytes": 3303472,
+          "rank": 62
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9488536155202822,
+            "roc_auc_ci95": [
+              0.9034506556245686,
+              0.9846752549651101
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8889655701249903,
+            "roc_auc_ci95": [
+              0.83467525496511,
+              0.9354459013879304
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9135802469135802,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 8184.0,
+              "median_bytes_per_record": 8184.0,
+              "p95_bytes_per_record": 8184.0,
+              "maximum_bytes_per_record": 8184.0,
+              "mean_bits_per_original_sample": 0.07567897467195606
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 16384,
+        "hard_capacity_guaranteed_bytes_per_record": 16368,
+        "selected_from_healthy_validation_only": {
+          "name": "pca",
+          "model_bytes": 6554504,
+          "rank": 124
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9494670654090944,
+            "roc_auc_ci95": [
+              0.9052852541982976,
+              0.9839793727474887
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.8901924699026148,
+            "roc_auc_ci95": [
+              0.8364389233954452,
+              0.9350509930220074
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9629629629629629,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9135802469135802,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 16368.0,
+              "median_bytes_per_record": 16368.0,
+              "p95_bytes_per_record": 16368.0,
+              "maximum_bytes_per_record": 16368.0,
+              "mean_bits_per_original_sample": 0.1513579493439121
+            }
+          }
+        }
+      }
+    ],
+    "haar_dwt": [
+      {
+        "target_payload_bytes_per_record": 2048,
+        "hard_capacity_guaranteed_bytes_per_record": 1914,
+        "selected_from_healthy_validation_only": {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 7,
+          "padded_length": 16384
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.964573268921095,
+            "roc_auc_ci95": [
+              0.9219327505559389,
+              0.9960911739897247
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1455.8395061728395,
+              "median_bytes_per_record": 1456.0,
+              "p95_bytes_per_record": 1459.0,
+              "maximum_bytes_per_record": 1462.0,
+              "mean_bits_per_original_sample": 0.013462419490968639
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1454.608695652174,
+              "median_bytes_per_record": 1455.0,
+              "p95_bytes_per_record": 1457.0,
+              "maximum_bytes_per_record": 1459.0,
+              "mean_bits_per_original_sample": 0.013451037956484349
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9234721263706771,
+            "roc_auc_ci95": [
+              0.876464611609539,
+              0.9674162257495591
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 1455.8395061728395,
+              "median_bytes_per_record": 1456.0,
+              "p95_bytes_per_record": 1459.0,
+              "maximum_bytes_per_record": 1462.0,
+              "mean_bits_per_original_sample": 0.013462419490968639
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 1455.2049689440994,
+              "median_bytes_per_record": 1455.0,
+              "p95_bytes_per_record": 1458.0,
+              "maximum_bytes_per_record": 1460.0,
+              "mean_bits_per_original_sample": 0.013456551806845686
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 4096,
+        "hard_capacity_guaranteed_bytes_per_record": 4026,
+        "selected_from_healthy_validation_only": {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 15,
+          "padded_length": 16384
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9631930066712676,
+            "roc_auc_ci95": [
+              0.9210873399279197,
+              0.9931753699869642
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 3048.5185185185187,
+              "median_bytes_per_record": 3047.0,
+              "p95_bytes_per_record": 3062.0,
+              "maximum_bytes_per_record": 3071.0,
+              "mean_bits_per_original_sample": 0.028190219422037144
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 3044.273291925466,
+              "median_bytes_per_record": 3044.0,
+              "p95_bytes_per_record": 3051.0,
+              "maximum_bytes_per_record": 3054.0,
+              "mean_bits_per_original_sample": 0.028150963019811782
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9168008588298443,
+            "roc_auc_ci95": [
+              0.8665727321524422,
+              0.9585998006287862
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 3048.5185185185187,
+              "median_bytes_per_record": 3047.0,
+              "p95_bytes_per_record": 3062.0,
+              "maximum_bytes_per_record": 3071.0,
+              "mean_bits_per_original_sample": 0.028190219422037144
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 3044.2298136645963,
+              "median_bytes_per_record": 3044.0,
+              "p95_bytes_per_record": 3049.0,
+              "maximum_bytes_per_record": 3051.0,
+              "mean_bits_per_original_sample": 0.028150560968222934
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 8192,
+        "hard_capacity_guaranteed_bytes_per_record": 7986,
+        "selected_from_healthy_validation_only": {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 30,
+          "padded_length": 16384
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9616593819492371,
+            "roc_auc_ci95": [
+              0.9190207806149835,
+              0.9927938808373592
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 6032.382716049383,
+              "median_bytes_per_record": 6031.0,
+              "p95_bytes_per_record": 6047.0,
+              "maximum_bytes_per_record": 6060.0,
+              "mean_bits_per_original_sample": 0.0557825682770585
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 6033.422360248447,
+              "median_bytes_per_record": 6033.0,
+              "p95_bytes_per_record": 6046.0,
+              "maximum_bytes_per_record": 6048.0,
+              "mean_bits_per_original_sample": 0.0557921820609061
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9094394601640979,
+            "roc_auc_ci95": [
+              0.8546871405567057,
+              0.9554654551031363
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 6032.382716049383,
+              "median_bytes_per_record": 6031.0,
+              "p95_bytes_per_record": 6047.0,
+              "maximum_bytes_per_record": 6060.0,
+              "mean_bits_per_original_sample": 0.0557825682770585
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 6029.614906832298,
+              "median_bytes_per_record": 6030.0,
+              "p95_bytes_per_record": 6039.0,
+              "maximum_bytes_per_record": 6044.0,
+              "mean_bits_per_original_sample": 0.055756973828911316
+            }
+          }
+        }
+      },
+      {
+        "target_payload_bytes_per_record": 16384,
+        "hard_capacity_guaranteed_bytes_per_record": 16236,
+        "selected_from_healthy_validation_only": {
+          "name": "haar_dwt",
+          "model_bytes": 16,
+          "top_k": 61,
+          "padded_length": 16384
+        },
+        "conditions": {
+          "D04": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9599723947550034,
+            "roc_auc_ci95": [
+              0.9166455793267386,
+              0.9917951077371367
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.014000000000010004,
+                "p95": 0.05449999999999733,
+                "maximum": 0.07450000000000045
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 12260.641975308641,
+              "median_bytes_per_record": 12236.0,
+              "p95_bytes_per_record": 12414.0,
+              "maximum_bytes_per_record": 12490.0,
+              "mean_bits_per_original_sample": 0.1133764434886735
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 12229.881987577639,
+              "median_bytes_per_record": 12228.0,
+              "p95_bytes_per_record": 12246.0,
+              "maximum_bytes_per_record": 12253.0,
+              "mean_bits_per_original_sample": 0.11309200014404934
+            }
+          },
+          "D24": {
+            "n_healthy_records": 81,
+            "n_damage_records": 161,
+            "roc_auc": 0.9027681926232651,
+            "roc_auc_ci95": [
+              0.8523081052066559,
+              0.9487788513150833
+            ],
+            "temperature_matched": {
+              "n_pairs": 81,
+              "temperature_abs_difference_celsius": {
+                "median": 0.012500000000002842,
+                "p95": 0.061499999999995225,
+                "maximum": 0.1075000000000017
+              },
+              "damage_higher_win_rate": 0.9753086419753086,
+              "tie_rate": 0.0,
+              "win_rate_ci95": [
+                0.9382716049382716,
+                1.0
+              ]
+            },
+            "healthy_payload": {
+              "mean_bytes_per_record": 12260.641975308641,
+              "median_bytes_per_record": 12236.0,
+              "p95_bytes_per_record": 12414.0,
+              "maximum_bytes_per_record": 12490.0,
+              "mean_bits_per_original_sample": 0.1133764434886735
+            },
+            "damage_payload": {
+              "mean_bytes_per_record": 12229.142857142857,
+              "median_bytes_per_record": 12229.0,
+              "p95_bytes_per_record": 12237.0,
+              "maximum_bytes_per_record": 12240.0,
+              "mean_bits_per_original_sample": 0.11308516526703893
+            }
+          }
+        }
+      }
+    ]
+  }
+}

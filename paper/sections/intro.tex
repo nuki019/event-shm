@@ -1,11 +1,11 @@
 Guided-wave structural health monitoring (SHM) relies on repeated waveform
 measurements, yet environmental variation can change the signal relative to a
-baseline. Temperature compensation is therefore an important consideration in
-many guided-wave monitoring workflows \cite{croxford2010}. At the same time,
-storing or transmitting every compensated waveform can be costly. These two
-facts motivate a narrow representation question: after compensation, can a
-sparse event stream retain the information needed for a record-level
-comparison without being given an accounting or selection advantage?
+baseline. Temperature compensation is a documented consideration in
+guided-wave SHM \cite{croxford2010}. At the same time, storing or transmitting
+every compensated waveform can be costly. These facts motivate a narrow
+representation question: after compensation, can a sparse event stream retain
+the information needed for a record-level comparison without being given an
+accounting or selection advantage?
 
 Send-on-delta (SoD) is an established event-based reporting strategy
 \cite{miskowicz2006}. It emits changes rather than a uniformly sampled
@@ -19,12 +19,14 @@ packet framing are charged, whether model side information is visible,
 whether test labels influence selection, and whether a reported alert is
 newly triggered after a future transition.
 
-This paper asks two testable questions. First, under a fixed per-record byte
-capacity, how does bounded SoD compare with uniform linear interpolation,
-PCA, and Haar discrete wavelet coding on held-out guided-wave records?
-Second, when a cold-start alarm is calibrated only on a healthy month, what
-false-call, newly started alarm-delay, and coverage outcomes appear on the
-following month? These questions do not ask whether SoD is a universal
+This paper asks three connected but non-pooled questions. First, under a fixed
+per-record byte capacity, how does bounded SoD compare with uniform linear
+interpolation, PCA, and Haar discrete wavelet coding on held-out guided-wave
+records? Second, when a cold-start alarm is calibrated only on a healthy
+month, what false-call, newly started alarm-delay, and coverage outcomes
+appear on the following month? Third, which applicability statements do those
+two distinct audits allow, and which generalization, deployment, and causal
+claims do they exclude? The questions do not ask whether SoD is a universal
 replacement for dense acquisition or whether one observed onset estimates a
 population probability of detection.
 
@@ -36,23 +38,25 @@ replay must fit its reference bank, normalization, event delta, and threshold
 grid before the future stream is scored. Finally, a persistent or pre-onset
 alert must not be counted as a new detection.
 
-We address these requirements with a frozen strict evaluation. The codec
-experiment uses date-separated healthy training, validation, and test
-periods, a training-only signed-16-bit residual contract, and four
-predeclared hard capacities. It serializes bounded SoD packets as well as
-uniform, PCA, and Haar packets and reports decoder model bytes separately.
-The alarm experiment calibrates on March 2021, scores all of April 2021
-before labels are read for reporting, and evaluates every one of nine
-March-derived thresholds for both dense residual energy and Level-A SoD
-event count.
+We address these requirements with a frozen strict evaluation and an explicit
+evidence-eligibility rule. The codec experiment uses date-separated healthy
+training, validation, and test periods, a training-only signed-16-bit
+residual contract, and four predeclared hard capacities. It serializes bounded
+SoD packets as well as uniform, PCA, and Haar packets and reports decoder
+model bytes separately. The alarm experiment calibrates on March 2021, scores
+all of April 2021 before labels are read for reporting, and evaluates every
+one of nine March-derived thresholds for both dense residual energy and
+Level-A SoD event count. The two completed audits are reported as separate
+scope-bounded results; historical exploratory and invalidated mechanism-chain
+artifacts do not enter selection, tables, figures, or conclusions.
 
 The paper makes three contributions. First, it specifies a reproducible
-evaluation protocol that prevents path pseudoreplication, uncharged payload,
+evaluation contract that prevents path pseudoreplication, uncharged payload,
 test-set operating-point selection, and label leakage. Second, it reports
 the complete all-capacity codec result: bounded SoD does not lead any tested
 capacity for either D04 or D24. Third, it reports the complete cold-start
-alarm grid without selecting a favourable threshold; the observed
-false-call, delay, and coverage outcomes do not support an operational alarm
-claim. The OGW resource and the long-term guided-wave dataset are public
-data sources documented by Moll et al.\ \cite{moll2019ogw} and Yang et
-al.\ \cite{yang2025dataset}, respectively.
+alarm grid without selecting a favourable threshold and states the resulting
+applicability boundary: the observed false-call, delay, and coverage outcomes
+do not support an operational-alarm claim. The OGW resource and the
+long-term guided-wave dataset are documented by Moll et al.\ \cite{moll2019ogw}
+and Yang et al.\ \cite{yang2025dataset}, respectively.
