@@ -1,0 +1,125 @@
+{
+  "manifest_id": "mechanism-v2-data-manifest-v1",
+  "created_utc": "2026-07-29",
+  "purpose": "Frozen source identities and expected archive checksums before any new waveform download or access.",
+  "data_sets": [
+    {
+      "dataset_id": "ogw_cfrp_temperature_udam",
+      "role": "preexisting_calibration_and_healthy_reference",
+      "access_state_at_freeze": "preexisting_e7_input",
+      "official": {
+        "article_id": 8108297,
+        "archive_filename": "OGW_CFRP_Temperature_udam.zip",
+        "size_bytes": 53609050314,
+        "official_checksum": {"algorithm": "md5", "value": "9dd1f7ad53bc1fb3c887370acd40e4ba"}
+      },
+      "allowed_use": "healthy training, validation, and held-out healthy reference only; it never supplies damaged confirmation labels"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d04",
+      "role": "mechanism_discovery_only",
+      "access_state_at_freeze": "already_observed_historical_discovery",
+      "official": {
+        "article_id": 8107889,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D04.zip"
+      },
+      "prohibited_from": ["configuration_selection", "confirmation_claim", "external_dataset_replacement"]
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d24",
+      "role": "mechanism_discovery_only",
+      "access_state_at_freeze": "already_observed_historical_discovery",
+      "official": {
+        "article_id": 8107880,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D24.zip"
+      },
+      "prohibited_from": ["configuration_selection", "confirmation_claim", "external_dataset_replacement"]
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d12",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_freeze": "not_downloaded",
+      "official": {
+        "collection_doi": "10.6084/m9.figshare.c.4488089",
+        "article_id": 8107886,
+        "article_doi": "10.6084/m9.figshare.8107886.v1",
+        "article_api_url": "https://api.figshare.com/v2/articles/8107886",
+        "file_id": 15122537,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D12.zip",
+        "download_url": "https://ndownloader.figshare.com/files/15122537",
+        "size_bytes": 26804610548,
+        "official_checksum": {"algorithm": "md5", "value": "c4d82a54f813c2863a8202a212116b01"}
+      },
+      "local_receipt_at_freeze": {"archive_sha256": null, "archive_md5_verified": false, "waveform_access_permitted": false}
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d16",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_freeze": "not_downloaded",
+      "official": {
+        "collection_doi": "10.6084/m9.figshare.c.4488089",
+        "article_id": 8107883,
+        "article_doi": "10.6084/m9.figshare.8107883.v1",
+        "article_api_url": "https://api.figshare.com/v2/articles/8107883",
+        "file_id": 15130364,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D16.zip",
+        "download_url": "https://ndownloader.figshare.com/files/15130364",
+        "size_bytes": 26804608838,
+        "official_checksum": {"algorithm": "md5", "value": "ea3e3c02679de9b4125c9cfbca398564"}
+      },
+      "local_receipt_at_freeze": {"archive_sha256": null, "archive_md5_verified": false, "waveform_access_permitted": false}
+    },
+    {
+      "dataset_id": "morpho_fod7",
+      "role": "primary_external_confirmation",
+      "access_state_at_freeze": "not_downloaded",
+      "official": {
+        "provider": "Zenodo",
+        "record_id": "14627730",
+        "concept_record_id": "14627729",
+        "doi": "10.5281/zenodo.14627730",
+        "record_revision": 4,
+        "license": "CC-BY-4.0",
+        "files": [
+          {"role": "primary_hdf5", "filename": "MORPHO_FOD7.h5", "download_url": "https://zenodo.org/api/records/14627730/files/MORPHO_FOD7.h5/content", "size_bytes": 8342365080, "official_checksum": {"algorithm": "md5", "value": "cbf1229179dabff4c628ee7ee8602706"}},
+          {"role": "readme", "filename": "ReadMe.pdf", "download_url": "https://zenodo.org/api/records/14627730/files/ReadMe.pdf/content", "size_bytes": 1210287, "official_checksum": {"algorithm": "md5", "value": "b72eec5d0a761dc392dbe469fed7b325"}},
+          {"role": "reader_example", "filename": "EXAMPLE_READ_DATA.m", "download_url": "https://zenodo.org/api/records/14627730/files/EXAMPLE_READ_DATA.m/content", "size_bytes": 4537, "official_checksum": {"algorithm": "md5", "value": "8f480cd4c50812f1099b675e39bec931"}}
+        ]
+      },
+      "schema_gate_at_freeze": "pending_post_download_metadata_inspection_before_waveform_scoring"
+    },
+    {
+      "dataset_id": "coqtel_corrosion",
+      "role": "material_independent_confirmation",
+      "access_state_at_freeze": "not_downloaded",
+      "official": {
+        "provider": "Zenodo",
+        "record_id": "14193336",
+        "doi": "10.5281/zenodo.14193336",
+        "record_revision": 4,
+        "license": "CC-BY-4.0",
+        "files": [
+          {"role": "experiment_hdf5", "filename": "Essai_Corrosion1.h5", "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion1.h5/content", "size_bytes": 48949304, "official_checksum": {"algorithm": "md5", "value": "debb706ee636b309866e33833513b5ae"}},
+          {"role": "experiment_hdf5", "filename": "Essai_Corrosion2.h5", "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion2.h5/content", "size_bytes": 77358250, "official_checksum": {"algorithm": "md5", "value": "b2726798b83a1a7cfe6f980a45b37f4d"}},
+          {"role": "reader_example", "filename": "Example_Read_Data.m", "download_url": "https://zenodo.org/api/records/14193336/files/Example_Read_Data.m/content", "size_bytes": 1539, "official_checksum": {"algorithm": "md5", "value": "429c4aff84468d6b24b4c48212876d0f"}}
+        ]
+      },
+      "schema_gate_at_freeze": "pending_post_download_metadata_inspection_before_waveform_scoring"
+    },
+    {
+      "dataset_id": "copv_schema_failure_fallback",
+      "role": "schema_failure_fallback_only",
+      "access_state_at_freeze": "not_downloaded",
+      "activation_rule": "only after a MORPHO or COQTEL schema failure recorded before any waveform scoring",
+      "official": {
+        "provider": "Zenodo",
+        "files": [
+          {"record_id": "17776240", "doi": "10.5281/zenodo.17776240", "role": "baseline", "filename": "Baseline.zip", "download_url": "https://zenodo.org/api/records/17776240/files/Baseline.zip/content", "size_bytes": 20109358425, "official_checksum": {"algorithm": "md5", "value": "c57efcd712d82c9f735dce969176699e"}},
+          {"record_id": "17782123", "doi": "10.5281/zenodo.17782123", "role": "reversible_damage", "filename": "Reversible_Damage.zip", "download_url": "https://zenodo.org/api/records/17782123/files/Reversible_Damage.zip/content", "size_bytes": 20410262593, "official_checksum": {"algorithm": "md5", "value": "928e331d7b8fd4b3b2ca2189d57c5f79"}},
+          {"record_id": "17782123", "doi": "10.5281/zenodo.17782123", "role": "irreversible_damage", "filename": "Irreversible_Damage.zip", "download_url": "https://zenodo.org/api/records/17782123/files/Irreversible_Damage.zip/content", "size_bytes": 20276822123, "official_checksum": {"algorithm": "md5", "value": "5bb46c4e92d5e873f2936e706001c366"}},
+          {"record_id": "17776240", "doi": "10.5281/zenodo.17776240", "role": "canonical_documentation", "filename": "Repository_Documentation_v1.pdf", "download_url": "https://zenodo.org/api/records/17776240/files/Repository_Documentation_v1.pdf/content", "size_bytes": 20442614, "official_checksum": {"algorithm": "md5", "value": "9cf3ce371c583d2414a8d996c7176e4c"}}
+        ]
+      }
+    }
+  ]
+}

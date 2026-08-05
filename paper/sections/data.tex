@@ -1,26 +1,25 @@
-\subsection{OGW CFRP temperature dataset}
-The Open Guided Waves temperature dataset \cite{moll2019ogw} records a
-$500\times500\times2$~mm quasi-isotropic CFRP plate with 12 co-cured
-piezoelectric transducers (all 66 pitch-catch pairs) in a climate
-chamber from 20 to $60\,^\circ$C in $0.5\,^\circ$C steps, at 12
-excitation frequencies (40--260~kHz in 20~kHz steps), each record
-holding the $66$ pitch-catch waveforms of $13\,108$ samples at
-10~MHz. Two undamaged temperature cycles (322 records total,
-20.6--60.9~$^\circ$C) and one cycle with a reversible surface-mounted
-disc at each of four collinear positions (D04, D12, D16, D24) are
-provided as HDF5; we access the archives directly without full
-extraction.
+\subsection{OGW codec data}
+The codec audit uses the public Open Guided Waves (OGW) temperature data
+\cite{moll2019ogw}. The available conditions are one CFRP plate under
+healthy and reversible disc states; consequently, paths within a record are
+features rather than independent observations, and the data do not represent
+multiple independent structures. The protocol fixes healthy training dates
+from 2018-12-13 through 2018-12-17 (168 records), healthy validation dates
+from 2018-12-18 through 2018-12-19 (73 records), and healthy test dates from
+2018-12-20 through 2018-12-22 (81 records). D04 and D24 are held-out damage
+conditions with 161 records each. The baseline pool is selected only from
+the healthy training dates.
 
-\subsection{Long-term outdoor aluminum dataset}
-The UF/Utah dataset \cite{yang2025dataset} records an aluminum plate
-with 8 transducers (8 pitch-catch paths) outdoors for 4.5 years
-($-12.2$ to $+52.5\,^\circ$C, rain/snow, sensor drift), with 13 staged
-damage events (reversible mass, dent, through-hole) interleaved with
-confounding events. It provides the level-B validation stage (C4).
+\subsection{Long-term alarm data}
+The cold-start audit uses selected months from the public long-term
+guided-wave dataset \cite{yang2025dataset}. March 2021 supplies 15,554
+healthy calibration records. April 2021 supplies 15,069 future records; its
+labelled change begins at source index 8,401 at
+2021-04-17T17:32:16. This is one observed transition, not a collection of
+independent failures. The April temperature support check also finds 831 of
+15,069 records (5.5\%) outside the March calibration temperature range.
 
-\paragraph{Note on material split.}
-The long-term dataset is (isotropic) aluminum, while the
-temperature-controlled dataset is (quasi-isotropic) CFRP; claims are
-therefore stated per-dataset rather than globally, and anisotropy
-(direction-dependent event patterns) is assessed conservatively on the
-CFRP data only.
+\paragraph{Scope.}
+The two data sources support a software representation and replay audit only.
+They do not establish performance on unseen installations, sensors,
+materials, damage morphologies, field interference, or hardware platforms.

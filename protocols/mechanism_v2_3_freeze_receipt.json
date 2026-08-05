@@ -1,0 +1,114 @@
+{
+  "receipt_id": "mechanism-v2.3-pre-access-freeze-v1",
+  "created_utc": "2026-07-30T01:59:54Z",
+  "protocol_id": "mechanism-v2.3",
+  "protocol_path": "protocols\\mechanism_v2_3.json",
+  "protocol_sha256": "f9a4bea4fd3e1034b4e4a440e65a3ec746a47ea3d501ba24d56d8151b05c42ae",
+  "data_manifest_path": "protocols\\mechanism_v2_3_data_manifest.json",
+  "data_manifest_sha256": "c2455f6fe2b9fc1ac2c0843ba343d8fe5ba4973fbdb2575329f97ac24b4e5a3a",
+  "predecessor_invalidation_receipt": "protocols\\mechanism_v2_2_invalidation_receipt.json",
+  "predecessor_invalidation_sha256": "6e3a7b134674984e57c0c6ee84b6ac0bf55f73b53eece6f795d50f2f6703f3ae",
+  "inherited_protocol_sha256": "a6fcfcbd7b6f53fa2a550ecf18513c45751fdf06f5551a096e0d006382d21641",
+  "inherited_manifest_sha256": "f14f538cef3a52f206ac9d6d0fdfaf73efced06e464086a653a95f70283506a3",
+  "code_revision_at_freeze": "9f6124cd50e37440286fb3937df1a637a47da45e",
+  "frozen_source_files": [
+    "src/data/ogw_loader.py",
+    "src/data/ranged_download.py",
+    "src/data/mechanism_hdf5_schema.py",
+    "src/data/mechanism_hdf5_schema_v2_2.py",
+    "src/methods/strict_codecs.py",
+    "src/methods/mechanism_v2.py",
+    "src/experiments/e7_strict_codec_benchmark.py",
+    "src/experiments/audit_mechanism_v2.py",
+    "src/experiments/e9_mechanism_v2_ogw.py",
+    "src/experiments/download_mechanism_v2_data.py",
+    "src/experiments/mechanism_v2_2_successor.py",
+    "src/experiments/audit_mechanism_hdf5_schema_v2_2.py",
+    "src/experiments/download_mechanism_v2_2_data.py",
+    "src/experiments/e9_mechanism_v2_2_ogw.py",
+    "src/experiments/audit_mechanism_v2_2.py",
+    "src/experiments/mechanism_v2_3_successor.py",
+    "src/experiments/audit_mechanism_hdf5_schema_v2_3.py",
+    "src/experiments/download_mechanism_v2_3_data.py",
+    "src/experiments/e9_mechanism_v2_3_ogw.py",
+    "src/experiments/audit_mechanism_v2_3.py",
+    "src/experiments/freeze_mechanism_v2_3.py"
+  ],
+  "frozen_source_sha256": {
+    "src/data/ogw_loader.py": "8dfb9249e401dde7efc82d912685aebda0c9dfd9747d443bbd03f99a45c15c96",
+    "src/data/ranged_download.py": "f921635b3157b1435b2e9c9a526d4841499f1742480f6144de5efd114d3ec73e",
+    "src/data/mechanism_hdf5_schema.py": "1491b9a17bcd33c61b5dcc6aba188b9827a05b6921ba27fef2319be12c18dd3c",
+    "src/data/mechanism_hdf5_schema_v2_2.py": "03f98143840bcd755b33043b14c888662f92c642a52221b3f6ee44a65d083537",
+    "src/methods/strict_codecs.py": "66cb4f3f6dd9bbb081ea04795f6b925e29af323bdd7aa7db4dd9e21b151178ec",
+    "src/methods/mechanism_v2.py": "fe2ef289c7680df22a5d40bb556778e96dbc975660354e071ea28685e090059f",
+    "src/experiments/e7_strict_codec_benchmark.py": "67c1d50a1d21cb23ff8791ca0d61252fd7343b43a0b1825a6d94c38ba1d9779d",
+    "src/experiments/audit_mechanism_v2.py": "ec99bdb703398b2875402cae7a932d33cf0dab3e493778e43986a606efd1d2ab",
+    "src/experiments/e9_mechanism_v2_ogw.py": "1012eb95185464dd66978f68d3909d71cd1ddc9407c2cc8e88cc291dda223b39",
+    "src/experiments/download_mechanism_v2_data.py": "4cf6e1e2738fc43134a146882febf1045c2132d63463b6cab775dc7838e0a6df",
+    "src/experiments/mechanism_v2_2_successor.py": "4b73f08273f31c533f0909bfb4e4ebd4cb3296218fbc9a441cd5e6d497c42457",
+    "src/experiments/audit_mechanism_hdf5_schema_v2_2.py": "7c9ead61913ed5a7d7466fade09b0307ebb807a39869c484ee792a50fed58aa5",
+    "src/experiments/download_mechanism_v2_2_data.py": "96f535c9a5edfcafaa4d057b03f71b99306e4361b8c21f6ac066ff0fa68382f5",
+    "src/experiments/e9_mechanism_v2_2_ogw.py": "e7481ba82c50c3de984011b7854e9834df070c7fd35c54d361ab0b56ff5b6112",
+    "src/experiments/audit_mechanism_v2_2.py": "55caa236dc604936ed8d181c7e2e4504ddade40078166ed8c7845281915d43e8",
+    "src/experiments/mechanism_v2_3_successor.py": "0855e76245be2f99073ca512cd2c116f9273bb57b761659fce7b0b9a327b1dcf",
+    "src/experiments/audit_mechanism_hdf5_schema_v2_3.py": "02f62d2ae4633e5cdcde55b324997fd3430f9ffae9206d6ab7fb04874b0a44e8",
+    "src/experiments/download_mechanism_v2_3_data.py": "2112e1c6ead37dfe98724985c9991f65a8a123c641990ef2b1b33ed71c8d2c4a",
+    "src/experiments/e9_mechanism_v2_3_ogw.py": "5445223de2e4222aba960daced29948009cce56ae54f58c2c5502ab3cd5b118f",
+    "src/experiments/audit_mechanism_v2_3.py": "0bce96e27036ec88a43204ec1dd6200e4fcb5ff6c15379e80d056873c6ec7abc",
+    "src/experiments/freeze_mechanism_v2_3.py": "74fea93e9cff3619c517c4b98e5a5b870b1dce772d8fd3daf5cd834803ecf5ba"
+  },
+  "frozen_coqtel_mapping_id": "mechanism-v2.3-coqtel-hierarchical-schema-v1",
+  "frozen_coqtel_mapping_sha256": "f914a9a4325a51cf8a7764a1dc72274bfaec6d730881834e02284196ae14351c",
+  "new_waveform_access_before_receipt": false,
+  "predecessor_metadata_only_access": "COQTEL hierarchy and official reader-example text were inspected under invalidated v2.1 before any waveform-array dereference. The same structural mapping is re-declared in v2.3; no v2.2 receipt, gate, cache, score, or confirmation result is reused.",
+  "datasets_at_freeze": [
+    {
+      "dataset_id": "ogw_cfrp_temperature_udam",
+      "role": "preexisting_calibration_and_healthy_reference",
+      "access_state_at_v2_1_freeze": "preexisting_e7_input",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d04",
+      "role": "mechanism_discovery_only",
+      "access_state_at_v2_1_freeze": "already_observed_historical_discovery",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d24",
+      "role": "mechanism_discovery_only",
+      "access_state_at_v2_1_freeze": "already_observed_historical_discovery",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d12",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_v2_1_freeze": "downloaded_no_waveform_arrays_opened_pending_successor_verification",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d16",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_v2_1_freeze": "downloaded_no_waveform_arrays_opened_pending_successor_verification",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "morpho_fod7",
+      "role": "primary_external_confirmation",
+      "access_state_at_v2_1_freeze": "downloaded_no_waveform_arrays_opened_pending_successor_verification",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "coqtel_corrosion",
+      "role": "material_independent_confirmation",
+      "access_state_at_v2_1_freeze": "downloaded_no_waveform_arrays_opened_pending_successor_verification",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    },
+    {
+      "dataset_id": "copv_schema_failure_fallback",
+      "role": "schema_failure_fallback_only",
+      "access_state_at_v2_1_freeze": "not_downloaded",
+      "v2_3_requirement": "v2.3 MD5/SHA receipt required before metadata or waveform access"
+    }
+  ]
+}

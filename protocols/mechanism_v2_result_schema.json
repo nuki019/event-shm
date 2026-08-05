@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "mechanism-v2 result artifact",
+  "type": "object",
+  "required": [
+    "protocol_id",
+    "protocol_sha256",
+    "data_manifest_sha256",
+    "code_revision",
+    "outcome_type",
+    "data",
+    "selection_receipt",
+    "configuration"
+  ],
+  "properties": {
+    "protocol_id": {"const": "mechanism-v2"},
+    "protocol_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "data_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "code_revision": {"type": "string", "minLength": 1},
+    "outcome_type": {"enum": ["confirmation", "schema_ineligible"]},
+    "data": {"type": "object"},
+    "selection_receipt": {"type": "object"},
+    "configuration": {"type": "object"},
+    "group_split": {"type": "object"},
+    "grid_results": {"type": "array"},
+    "mechanism_probes": {"type": "array"},
+    "control_injections": {"type": "array"},
+    "exclusion_reason": {"type": "string"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"outcome_type": {"const": "confirmation"}}},
+      "then": {"required": ["group_split", "grid_results", "mechanism_probes", "control_injections"]}
+    },
+    {
+      "if": {"properties": {"outcome_type": {"const": "schema_ineligible"}}},
+      "then": {"required": ["exclusion_reason"]}
+    }
+  ]
+}

@@ -1,20 +1,14 @@
-We introduced send-on-delta event-based acquisition to guided-wave SHM,
-with two-level eventization (within-record level-crossing events and
-across-record damage-index events). The central findings are: (i)
-classical temperature compensation is fragile outside its baseline range
-($7.0\times$ residual inflation on healthy records), motivating
-compensation-free structure; (ii) SoD eventization retains the
-damage-scattering transient at $\leq 10^{-3}$ of the raw data rate,
-preserving detection (D04 AUC $1.000$ at $\approx 5000\times$
-compression) and coarse structure where matched-rate uniform decimation
-and SVD/PCA compression degrade (event $0.950$ vs.\ PCA $0.825$ at
-rate $2\times10^{-3}$); and (iii) the temporal structure of the
-event stream---globally coherent for temperature, path-localized for
-damage---separates the two without a learned temperature model
-(CV AUC $0.814$) and yields a measurable directional signature
-(CV $0.69$). Event-based acquisition is thus a viable and complementary
-alternative to both temperature compensation and post-hoc compression
-for long-term, resource-constrained guided-wave monitoring. Making the
-long-term level-B channel robust to cross-month sensor drift---e.g.\ by
-coupling it with drift-robust references---is the main direction for
-future work.
+This work replaces exploratory sample-count comparisons with a strict
+post-compensation codec benchmark and a cross-month cold-start alarm replay.
+All configurations are selected without test labels, all record packets are
+charged by serialized bytes, and all predeclared capacities and threshold
+grids are reported. On the held-out OGW conditions, bounded SoD does not
+outperform uniform linear interpolation, PCA, or Haar DWT at any tested
+capacity. On the March-to-April replay, neither tested alarm feature provides
+an operational result under the reported false-call, newly started delay, and
+coverage outcomes.
+
+These are scope-bounded negative findings, not evidence about general
+deployment, hardware cost, or population probability of detection. Future
+work requires independent structures and transitions together with measured
+endpoint performance under a preregistered protocol.

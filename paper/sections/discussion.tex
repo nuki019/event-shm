@@ -1,41 +1,35 @@
-\paragraph{Why eventization helps beyond compression.}
-Post-hoc compression reduces what is \emph{stored}; acquisition-side
-eventization reduces what is \emph{sensed and transmitted}, which is
-the binding constraint for battery-powered and wireless SHM nodes
-\cite{henkmann2025tinyml}. Our Pareto comparison (E2) quantifies
-whether the information lost by event sampling exceeds that lost by
-transform coding at the same rate.
+\paragraph{A substantive negative codec result.}
+The strict comparison yields a clear decision within its scope: bounded SoD
+is not the preferred codec among the four tested implementations. This is not
+an absence of a conclusion. The conclusion follows because the same
+date-separated protocol, hard-cap accounting, record-level metric, and
+all-capacity reporting are applied to each codec, yet SoD is lower in held-out
+AUC at every capacity for both D04 and D24. It would be incorrect to restore
+the historical matched-count comparison as a headline because sample counts
+do not charge SoD timestamp framing or establish parity with general codecs.
 
-\paragraph{Event structure as a physical feature.}
-The coherence--burstiness separation rests on physics: temperature is a
-global, slow boundary condition, whereas damage is a local, persistent
-scatterer. This makes the discriminator interpretable and, unlike
-learned compensators, free of a training distribution over temperature.
+\paragraph{What the alarm audit says.}
+The cold-start replay is also unfavorable. Across both frozen feature grids,
+false calls remain nonzero on the future healthy prefix, the first new
+post-onset alarm is delayed by roughly 42.6--43.1 hours, and post-onset
+record exceedance is sparse. Reporting this joint outcome is more informative
+than reporting one threshold with the smallest false-call rate or the largest
+coverage. It does not establish a calibrated field false-alarm rate, and it
+does not estimate probability of detection from a single transition.
 
-\paragraph{Limitations.}
-(i) The level-A residual quality still depends on compensation; level B
-provides an independent channel but at coarser time resolution.
-(ii) The OGW damage cases are reversible surface-mounted discs, not
-grown defects; conclusions about small real cracks require caution.
-(iii) The CFRP plate is quasi-isotropic, so directional (anisotropy)
-claims are stated conservatively. (iv) Eight of thirteen damage stages
-of the long-term dataset are confounded with sensor-drift events; we
-report those separately rather than merging them into headline metrics.
+\paragraph{Evaluation boundaries.}
+The result is tied to a post-compensation software representation, one CFRP
+plate with reversible disc conditions, two damage labels, and the implemented
+codec families. The April replay has a 5.5\% temperature-support gap relative
+to March and one labelled onset. None of those data measure acquisition-side
+sampling, embedded memory, energy, real-time latency, sensor ageing, packet
+loss, or industrial interference. The reported PCA model sizes also caution
+against interpreting a per-record payload alone as a full deployment cost.
 
-\paragraph{Threats to validity.}
-Synthetic-to-real gap: pipeline sanity checks used a simplified
-dispersion/temperature model; all headline numbers are from the two
-public real datasets.
-
-\paragraph{Long-term level-B in practice.}
-On the outdoor aluminum data the level-A event counts are dominated by
-temperature drift, so naive DI thresholds false-alarm; the
-path-isolation score recovers detection but with long latency for the
-reversible mass. Cross-month and cross-year baseline drift (sensor
-ageing, coupling changes) further raises the level-A event floor on
-permanent-damage months. Long-term level-B eventization therefore
-benefits from pairing with a drift-robust reference (e.g.\ long
-short-term PCA \cite{yang2022ltpca})---a combination we leave to future
-work. This is an honest limitation rather than a failure of the
-eventization itself, which succeeds on the temperature-controlled OGW
-data (E2, E3).
+\paragraph{Next evidence.}
+The next defensible step is a preregistered multi-structure study with
+independent calibration and future test periods, the same hard-cap accounting,
+and predeclared alert criteria. A hardware claim would additionally require
+measured firmware memory, throughput, energy, and end-to-end latency. Those
+experiments could change the scope of the conclusion, but they cannot be
+inferred from the present replay.

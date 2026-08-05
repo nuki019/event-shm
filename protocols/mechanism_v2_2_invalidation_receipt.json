@@ -1,0 +1,29 @@
+{
+  "receipt_id": "mechanism-v2.2-pre-access-invalidation-v1",
+  "created_utc": "2026-07-30T01:48:48Z",
+  "invalidated_protocol_id": "mechanism-v2.2",
+  "invalidated_protocol_sha256": "82a3d33b3aba5ac16dd4854e9834646dd5ea61c5110f66c2a64da31d0f3c1da3",
+  "invalidated_data_manifest_sha256": "fd96d3109dedbbec02f54f33339c51778c6e8f342c2cdfca2f9c7ad1bab7d564",
+  "invalidated_source": {
+    "path": "src/data/mechanism_hdf5_schema_v2_2.py",
+    "sha256": "a5ad8c7a423185a4d1ca8f74793cd1983cb56f2f41f1da0afe06b4eed54e8985"
+  },
+  "failure": {
+    "stage": "compile/import smoke passed, then synthetic metadata-only schema regression test before any v2.2 source receipt, HDF5 metadata audit, waveform-array dereference, score, cache, or confirmation output",
+    "exception": "NameError: name 'false' is not defined",
+    "root_cause": "The new Python hierarchical schema module used JSON lowercase boolean literals in a Python result dictionary. The same pre-access coding pattern was found in the successor downloader and schema-audit writer."
+  },
+  "evidence_boundary": {
+    "v2_2_waveform_arrays_opened": false,
+    "v2_2_hdf5_metadata_audited": false,
+    "v2_2_source_receipts_written": false,
+    "v2_2_schema_results_written": false,
+    "v2_2_confirmation_results_written": false
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.3",
+    "keep_mechanism_v2_2_and_its_manifest_immutable": true,
+    "fix": "Replace all Python JSON-literal booleans with Python booleans, run compile/import and synthetic hierarchical-schema tests before freezing the successor, then re-bind all sources under v2.3.",
+    "restart_policy": "No v2.2 artifact may authorize later data access or be reused as a schema or confirmation result."
+  }
+}

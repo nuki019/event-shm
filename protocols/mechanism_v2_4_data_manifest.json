@@ -1,0 +1,323 @@
+{
+  "manifest_id": "mechanism-v2.4-data-manifest-v1",
+  "manifest_schema": "mechanism-v2.4-data-manifest-v1",
+  "created_utc": "2026-07-31",
+  "purpose": "Fresh source identities and raw-byte verification targets for mechanism-v2.4. Earlier v2.1-v2.3 receipts are integrity history only and never authorize v2.4 waveform access, schema decisions, cache reuse, or results.",
+  "predecessor_invalidation": {
+    "receipt_path": "protocols/mechanism_v2_3_invalidation_receipt.json",
+    "receipt_sha256": "6aa5b587c5d3b4e2fe0522d46e751e196ec1438c732df62fa8739a05a74ecc8d"
+  },
+  "source_receipt_policy": {
+    "required_datasets": [
+      "ogw_cfrp_temperature_dam_d12",
+      "ogw_cfrp_temperature_dam_d16",
+      "morpho_fod7",
+      "coqtel_corrosion"
+    ],
+    "all_required_files_must_pass_official_md5_and_fresh_sha256": true,
+    "hashing_mode": "raw bytes only; archive entries, HDF5 dataset values, attributes values, labels, and waveform scores are not dereferenced by source verification",
+    "local_candidates_are_verified_before_any_redownload": true,
+    "mismatched_local_candidates_are_preserved": true,
+    "redownload_destination": "data/external/mechanism_v2_4",
+    "receipt_overwrite_prohibited": true
+  },
+  "data_sets": [
+    {
+      "dataset_id": "ogw_cfrp_temperature_udam",
+      "role": "preexisting_calibration_and_healthy_reference",
+      "access_state_at_v2_4_freeze": "immutable_E7_input_rebound_by_a_new_v2_4_calibration_receipt_only",
+      "allowed_use": "The exact frozen E7 healthy training/validation/test representation and strict-cache manifest may calibrate D12/D16. It is not a new confirmation result and does not authorize changes to E7/E8.",
+      "official": {
+        "article_id": 8108297,
+        "archive_filename": "OGW_CFRP_Temperature_udam.zip",
+        "size_bytes": 53609050314,
+        "official_checksum": {
+          "algorithm": "md5",
+          "value": "9dd1f7ad53bc1fb3c887370acd40e4ba"
+        },
+        "files": [
+          {
+            "filename": "OGW_CFRP_Temperature_udam.zip",
+            "size_bytes": 53609050314,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "9dd1f7ad53bc1fb3c887370acd40e4ba"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d04",
+      "role": "mechanism_discovery_only",
+      "access_state_at_v2_4_freeze": "immutable_already_observed_historical_discovery",
+      "official": {
+        "article_id": 8107889,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D04.zip"
+      },
+      "prohibited_from": [
+        "configuration_selection",
+        "confirmation_claim",
+        "external_dataset_replacement",
+        "v2_4_source_receipt_or_e9_input"
+      ]
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d24",
+      "role": "mechanism_discovery_only",
+      "access_state_at_v2_4_freeze": "immutable_already_observed_historical_discovery",
+      "official": {
+        "article_id": 8107880,
+        "archive_filename": "OGW_CFRP_Temperature_dam_D24.zip"
+      },
+      "prohibited_from": [
+        "configuration_selection",
+        "confirmation_claim",
+        "external_dataset_replacement",
+        "v2_4_source_receipt_or_e9_input"
+      ]
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d12",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_v2_4_freeze": "local_archive_requires_fresh_v2_4_md5_sha256_receipt_before_direct_zip_access",
+      "official": {
+        "collection_doi": "10.6084/m9.figshare.c.4488089",
+        "article_id": 8107886,
+        "article_doi": "10.6084/m9.figshare.8107886.v1",
+        "files": [
+          {
+            "filename": "OGW_CFRP_Temperature_dam_D12.zip",
+            "download_url": "https://ndownloader.figshare.com/files/15122537",
+            "size_bytes": 26804610548,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "c4d82a54f813c2863a8202a212116b01"
+            }
+          }
+        ]
+      },
+      "files": [
+        {
+          "filename": "OGW_CFRP_Temperature_dam_D12.zip",
+          "download_url": "https://ndownloader.figshare.com/files/15122537",
+          "size_bytes": 26804610548,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "c4d82a54f813c2863a8202a212116b01"
+          },
+          "local_candidate_paths": [
+            "data/raw/OGW_CFRP_Temperature_dam_D12.zip"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d16",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_v2_4_freeze": "local_archive_requires_fresh_v2_4_md5_sha256_receipt_before_direct_zip_access",
+      "official": {
+        "collection_doi": "10.6084/m9.figshare.c.4488089",
+        "article_id": 8107883,
+        "article_doi": "10.6084/m9.figshare.8107883.v1",
+        "files": [
+          {
+            "filename": "OGW_CFRP_Temperature_dam_D16.zip",
+            "download_url": "https://ndownloader.figshare.com/files/15130364",
+            "size_bytes": 26804608838,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "ea3e3c02679de9b4125c9cfbca398564"
+            }
+          }
+        ]
+      },
+      "files": [
+        {
+          "filename": "OGW_CFRP_Temperature_dam_D16.zip",
+          "download_url": "https://ndownloader.figshare.com/files/15130364",
+          "size_bytes": 26804608838,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "ea3e3c02679de9b4125c9cfbca398564"
+          },
+          "local_candidate_paths": [
+            "data/raw/OGW_CFRP_Temperature_dam_D16.zip"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "morpho_fod7",
+      "role": "primary_external_confirmation",
+      "access_state_at_v2_4_freeze": "local_files_require_fresh_v2_4_md5_sha256_receipt_then_metadata_only_gate",
+      "official": {
+        "provider": "Zenodo",
+        "record_id": "14627730",
+        "concept_record_id": "14627729",
+        "doi": "10.5281/zenodo.14627730",
+        "record_revision": 4,
+        "license": "CC-BY-4.0",
+        "files": [
+          {
+            "filename": "MORPHO_FOD7.h5",
+            "download_url": "https://zenodo.org/api/records/14627730/files/MORPHO_FOD7.h5/content",
+            "size_bytes": 8342365080,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "cbf1229179dabff4c628ee7ee8602706"
+            }
+          },
+          {
+            "filename": "ReadMe.pdf",
+            "download_url": "https://zenodo.org/api/records/14627730/files/ReadMe.pdf/content",
+            "size_bytes": 1210287,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "b72eec5d0a761dc392dbe469fed7b325"
+            }
+          },
+          {
+            "filename": "EXAMPLE_READ_DATA.m",
+            "download_url": "https://zenodo.org/api/records/14627730/files/EXAMPLE_READ_DATA.m/content",
+            "size_bytes": 4537,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "8f480cd4c50812f1099b675e39bec931"
+            }
+          }
+        ]
+      },
+      "files": [
+        {
+          "filename": "MORPHO_FOD7.h5",
+          "download_url": "https://zenodo.org/api/records/14627730/files/MORPHO_FOD7.h5/content",
+          "size_bytes": 8342365080,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "cbf1229179dabff4c628ee7ee8602706"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2/MORPHO_FOD7.h5"
+          ]
+        },
+        {
+          "filename": "ReadMe.pdf",
+          "download_url": "https://zenodo.org/api/records/14627730/files/ReadMe.pdf/content",
+          "size_bytes": 1210287,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "b72eec5d0a761dc392dbe469fed7b325"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2/ReadMe.pdf"
+          ]
+        },
+        {
+          "filename": "EXAMPLE_READ_DATA.m",
+          "download_url": "https://zenodo.org/api/records/14627730/files/EXAMPLE_READ_DATA.m/content",
+          "size_bytes": 4537,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "8f480cd4c50812f1099b675e39bec931"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2/EXAMPLE_READ_DATA.m"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "coqtel_corrosion",
+      "role": "material_independent_confirmation",
+      "access_state_at_v2_4_freeze": "local_files_require_fresh_v2_4_md5_sha256_receipt_then_metadata_only_gate",
+      "official": {
+        "provider": "Zenodo",
+        "record_id": "14193336",
+        "doi": "10.5281/zenodo.14193336",
+        "record_revision": 4,
+        "license": "CC-BY-4.0",
+        "files": [
+          {
+            "filename": "Essai_Corrosion1.h5",
+            "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion1.h5/content",
+            "size_bytes": 48949304,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "debb706ee636b309866e33833513b5ae"
+            }
+          },
+          {
+            "filename": "Essai_Corrosion2.h5",
+            "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion2.h5/content",
+            "size_bytes": 77358250,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "b2726798b83a1a7cfe6f980a45b37f4d"
+            }
+          },
+          {
+            "filename": "Example_Read_Data.m",
+            "download_url": "https://zenodo.org/api/records/14193336/files/Example_Read_Data.m/content",
+            "size_bytes": 1539,
+            "official_checksum": {
+              "algorithm": "md5",
+              "value": "429c4aff84468d6b24b4c48212876d0f"
+            }
+          }
+        ]
+      },
+      "files": [
+        {
+          "filename": "Essai_Corrosion1.h5",
+          "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion1.h5/content",
+          "size_bytes": 48949304,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "debb706ee636b309866e33833513b5ae"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2_1/coqtel/Essai_Corrosion1.h5"
+          ]
+        },
+        {
+          "filename": "Essai_Corrosion2.h5",
+          "download_url": "https://zenodo.org/api/records/14193336/files/Essai_Corrosion2.h5/content",
+          "size_bytes": 77358250,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "b2726798b83a1a7cfe6f980a45b37f4d"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2_1/coqtel/Essai_Corrosion2.h5"
+          ]
+        },
+        {
+          "filename": "Example_Read_Data.m",
+          "download_url": "https://zenodo.org/api/records/14193336/files/Example_Read_Data.m/content",
+          "size_bytes": 1539,
+          "official_checksum": {
+            "algorithm": "md5",
+            "value": "429c4aff84468d6b24b4c48212876d0f"
+          },
+          "local_candidate_paths": [
+            "data/external/mechanism_v2_1/coqtel/Example_Read_Data.m"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset_id": "copv_schema_failure_fallback",
+      "role": "schema_failure_fallback_only",
+      "access_state_at_v2_4_freeze": "not_downloaded_and_not_activated",
+      "activation_rule": "Only after a recorded MORPHO or COQTEL metadata schema failure before every waveform value, score, AUC, event cache, or result audit. A passed but poorly performing source can never trigger COPV.",
+      "official": {
+        "provider": "Zenodo",
+        "record_ids": [
+          "17776240",
+          "17782123"
+        ]
+      }
+    }
+  ]
+}

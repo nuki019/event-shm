@@ -1,99 +1,109 @@
-\subsection{E1: baseline reproduction and the extrapolation problem}
-On OGW (100~kHz, OBS+BSS over a baseline pool at $\leq 40\,^\circ$C), the compensated residual energy of \emph{healthy} records rises from $0.043 \pm 0.014$ within the baseline range to $0.303 \pm 0.623$ in the extrapolated $40$--$60\,^\circ$C range---a $7.0\times$ inflation that drives false alarms (Fig.~
-ef{fig:extrap}). This reproduces, on real data, the known fragility of compensation outside the baseline temperature range and motivates compensation-free discrimination (C2).
+\subsection{E7: bounded SoD does not lead the hard-cap comparison}
+All observed packets satisfy their declared record capacity. The
+training-fitted signal quantizer clips no samples in training, validation,
+D04, or D24 and clips two of 70,075,368 healthy test samples. Temperature
+matching yields 81 unique pairs for each condition; the largest matched
+temperature difference is 0.075~$^\circ$C for D04 and 0.108~$^\circ$C for
+D24, both below the 0.25~$^\circ$C protocol limit. Across capacities,
+bounded SoD has damage-higher paired win rates of 0.556--0.617 for D04 and
+0.568--0.605 for D24, whereas every general-codec/condition combination is
+0.963--0.975. Thus, the ordering also holds in the predeclared
+temperature-matched diagnostic; this remains a within-plate comparison, not
+an independent structural replication.
+
+Table~\ref{tab:codec} reports every predeclared capacity. Bounded SoD has
+D04 AUC 0.535--0.552 and D24 AUC 0.546--0.581. Uniform linear interpolation,
+PCA, and Haar DWT have higher point AUC at every capacity for both conditions.
+This is a negative result for SoD under the declared comparison; it is not a
+claim that any tested codec is universally optimal. PCA model bytes are
+listed separately because the fitted decoder is substantial even though it is
+not amortized into a per-record packet.
+
+\begin{table*}[t]
+\centering
+\caption{Held-out record AUC under every hard capacity. Brackets are
+record-level stratified-bootstrap 95\% intervals, which quantify resampling
+within these conditions rather than across-structure generalization. Maximum
+packet is the largest observed packet across D04 and D24. Model bytes are
+reported separately and are not amortized into a record packet.}
+\label{tab:codec}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+Codec & Capacity (B) & D04 AUC [95\% CI] & D24 AUC [95\% CI] & Maximum packet (B) & Model (B) \\
+\midrule
+Bounded SoD & 2,048  & 0.552 [0.478, 0.633] & 0.554 [0.474, 0.633] & 2,009  & 14 \\
+Bounded SoD & 4,096  & 0.535 [0.452, 0.608] & 0.558 [0.476, 0.636] & 4,092  & 14 \\
+Bounded SoD & 8,192  & 0.545 [0.464, 0.620] & 0.581 [0.507, 0.654] & 8,184  & 14 \\
+Bounded SoD & 16,384 & 0.544 [0.468, 0.618] & 0.546 [0.467, 0.624] & 16,331 & 14 \\
+\midrule
+Uniform linear & 2,048  & 0.948 [0.906, 0.982] & 0.869 [0.812, 0.918] & 1,980  & 12 \\
+Uniform linear & 4,096  & 0.939 [0.894, 0.975] & 0.870 [0.814, 0.924] & 4,092  & 12 \\
+Uniform linear & 8,192  & 0.955 [0.915, 0.988] & 0.893 [0.836, 0.940] & 8,184  & 12 \\
+Uniform linear & 16,384 & 0.960 [0.921, 0.992] & 0.900 [0.842, 0.945] & 16,368 & 12 \\
+\midrule
+PCA & 2,048  & 0.937 [0.893, 0.975] & 0.870 [0.807, 0.922] & 1,980  & 838,980 \\
+PCA & 4,096  & 0.946 [0.902, 0.983] & 0.885 [0.828, 0.933] & 4,092  & 1,677,956 \\
+PCA & 8,192  & 0.949 [0.903, 0.985] & 0.889 [0.835, 0.935] & 8,184  & 3,303,472 \\
+PCA & 16,384 & 0.949 [0.905, 0.984] & 0.890 [0.836, 0.935] & 16,368 & 6,554,504 \\
+\midrule
+Haar DWT & 2,048  & 0.965 [0.922, 0.996] & 0.923 [0.876, 0.967] & 1,462  & 16 \\
+Haar DWT & 4,096  & 0.963 [0.921, 0.993] & 0.917 [0.867, 0.959] & 3,071  & 16 \\
+Haar DWT & 8,192  & 0.962 [0.919, 0.993] & 0.909 [0.855, 0.955] & 6,060  & 16 \\
+Haar DWT & 16,384 & 0.960 [0.917, 0.992] & 0.903 [0.852, 0.949] & 12,490 & 16 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.6\linewidth]{e1_extrapolation.png}
-\caption{Healthy-record compensated residual energy vs.\ temperature (OGW, 100~kHz, baseline pool $\leq 40\,^\circ$C). The residual inflates $7.0\times$ in the extrapolated range $>40\,^\circ$C.}
-\label{fig:extrap}
+\includegraphics[width=\linewidth]{e7_strict_codec_benchmark_v1.png}
+\caption{All-capacity held-out codec AUC. Each marker is the
+healthy-validation-selected configuration for the declared capacity; no
+marker is selected from test AUC.}
+\label{fig:codec}
 \end{figure}
 
-\subsection{E2: detection Pareto at the sensitive frequency}
-At the damage-sensitive frequency (40~kHz, Section~E6), the full-resolution baseline reaches per-record AUC $0.953$ (D04) and $0.851$ (D24). SoD eventization preserves this detection at extreme compression: at rate $2\times10^{-4}$ events/sample ($\approx 5000\times$) D04 is detected at AUC $1.000$, and at $10^{-3}$ D24 at $0.928$---in both cases \emph{above} matched-rate uniform decimation ($0.991$ and $0.804$), with a clear optimum at intermediate threshold $\delta$ (Fig.~
-ef{fig:pareto}). This is the headline result: acquisition-side eventization retains detection at three orders of magnitude below the raw rate. This advantage grows with compression: against SVD/PCA
-compression \cite{yang2023compression} at equal rate, eventization is
-comparable at high rate but pulls ahead below $10^{-2}$ (AUC $0.950$
-vs.\ $0.825$ at rate $2	imes10^{-3}$, Fig.~
-ef{fig:pareto})---
-acquisition-side eventization beats storage-side transform coding for
-the scattering transient.
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.6\linewidth]{e2_c3_pca.png}
-\caption{Acquisition-side eventization vs.\ storage-side PCA
-compression \cite{yang2023compression} at equal data rate (D04,
-40~kHz). Eventization pulls ahead as compression increases.}
-\label{fig:c3}
-\end{figure}
+\subsection{E8: neither alarm feature yields an operational result}
+The April replay has 8,401 labelled healthy-prefix records, corresponding to
+16.72 days of healthy exposure. Across all threshold settings, no
+pre-onset incident remains active at the labelled onset, so the reported
+delay is always a newly started post-onset incident. Table~\ref{tab:alarm}
+shows the complete grid range for each feature. Every threshold was derived
+from March only; a range in the table is a range over nine frozen operating
+points, not an uncertainty interval or a chosen working point.
 
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.95\linewidth]{e2_pareto_40kHz.png}
-\caption{Detection Pareto at 40~kHz: AUC vs.\ event rate for SoD eventization (blue) vs.\ matched-rate uniform decimation (orange); dotted line = full-resolution AUC. Eventization retains detection at $\leq 10^{-3}$ events/sample and exceeds decimation at low rate.}
-\label{fig:pareto}
-\end{figure}
-
-\subsection{E2b: eventization preserves the scattering transient}
-At matched data rate we compare SoD eventization against uniform decimation on \emph{how well the damage-scattering envelope is preserved} (correlation against the full-resolution envelope in the high-energy window). On real OGW records (100~kHz, both D04 and D24), the two are equivalent at high rate, but below $\sim 10^{-2}$ events/sample the SoD reconstruction keeps fidelity $\approx 0.6$ while uniform decimation collapses to $\approx 0.06$---a $10\times$ advantage (Fig.~
-ef{fig:fidelity}). On synthetic OGW-like data the same advantage appears in coarse localization (error $31$~mm event vs $54$~mm uniform at rate $10^{-3}$). Detection of the weak surface-disc damage remains hard at these rates (AUC $\approx 0.6$), which is precisely the regime where the level-B structure channel (below) is needed.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.95\linewidth]{e2_fidelity.png}
-\caption{Scattering-envelope fidelity vs.\ data rate (real OGW, 100~kHz). Below $\sim 10^{-2}$ events/sample SoD reconstruction keeps fidelity $\approx 0.6$ while uniform decimation collapses to $\approx 0.06$.}
-\label{fig:fidelity}
-\end{figure}
-
-\subsection{E3: temperature--damage discrimination}
-Using only event-stream structure (cross-path coherence, localization, event count, arrival-time spread) at 40~kHz, a logistic discriminator separates healthy-temperature-drift records from damage records with cross-validated AUC $0.814$; the event count alone gives $0.846$ and coherence $0.789$. Temperature produces high-coherence events (many paths active together), damage a localized subset---confirming the structural prior on real data.
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.55\linewidth]{e3_scatter.png}
-\caption{Event-structure separation at 40~kHz: healthy temperature-drift
-records (blue) vs.\ D24 damage records (red) in the coherence--event-count
-plane.}
-\label{fig:e3}
-\end{figure}
-without any learned temperature model.
-
-\subsection{E4: long-term level-B validation}
-On the 2021-04 outdoor month (reversible-mass onset at record 8401 of 15069), level-A event counts are eventized per path and a path-isolation score (max-path minus median-path event activity) separates damage from temperature: the damage segment scores $3.5\times$ the healthy one. At a false-alarm rate of $\approx 0.1\%$ (8 false events over 8401 healthy records) the mass is detected with a latency of $5509$ records ($\approx 269$~h). The reversible mass is deliberately subtle; permanent damage (dent, through-hole) produces a larger persistent step. Confounded sensor-drift segments are reported separately, not merged into these metrics.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.7\linewidth]{e4_detection.png}
-\caption{Long-term level-B detection (2021-04): path 5-1 level-A event count (top) and the path-isolation score (bottom) with the 99.9\% healthy threshold; the reversible-mass onset is marked.}
-\label{fig:e4}
-\end{figure}
-
-\subsection{E5: directional analysis}
-Binning the 66 paths by propagation direction, the damage-induced event activity is concentrated at $15^\circ$ and $105^\circ$ (directional coefficient of variation $0.69$, versus $0$ for an isotropic response)---a measurable directional dependence even in the quasi-isotropic layup, consistent with layup-detail anisotropy. We state this conservatively as direction-resolved event structure rather than strong anisotropy validation.
-
-\subsection{E6: frequency selection and ablation}
-Detection of the weak surface discs is strongly frequency-dependent (Fig.~
-ef{fig:freq}): both D04 and D24 are detected near-perfectly at 40~kHz (AUC $1.000$ and $0.953$) but fall toward chance by $\geq 120$~kHz (AUC $\approx 0.44$--$0.48$). Compensation quality dominates the detection chain (Table~
-ef{tab:ablation}): at 40~kHz, no compensation gives AUC $0.583$, OBS alone $0.843$, and OBS+BSS $1.000$.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.55\linewidth]{e6_freqscan.png}
-\caption{Frequency selection: weak-disc detection AUC vs.\ excitation frequency. Both damage positions are detected near-perfectly at 40~kHz and fall toward chance by $\geq 120$~kHz.}
-\label{fig:freq}
-\end{figure}
+Dense residual energy produces 0.897--5.144 false calls/day, and Level-A SoD
+event count produces 0.897--4.964 false calls/day. Their first newly started
+post-onset alarms occur 2,556.2--2,584.8 minutes after onset, while record
+exceedance coverage remains at most 25.6\%. These observations do not support
+an operational alarm claim. They also do not estimate a population
+probability of detection because April contributes one observed labelled
+transition.
 
 \begin{table}[t]
 \centering
-\caption{Ablation: compensation method vs.\ detection AUC (D04, 40~kHz).}
-\label{tab:ablation}
-\begin{tabular}{lc}
+\caption{Cold-start alarm outcomes over all nine March-derived thresholds.
+Each range is minimum--maximum over the frozen grid; no point is selected for
+reporting.}
+\label{tab:alarm}
+\scriptsize
+\begin{tabular}{lccccc}
 \toprule
-Compensation & AUC \\
+Feature & Threshold grid & False calls/day & New-alarm delay (min) & Record coverage (\%) & Day coverage (\%) \\
 \midrule
-None & 0.583 \\
-OBS & 0.843 \\
-OBS+BSS & 1.000 \\
+Dense residual energy & 3.2035--6.8928 & 0.897--5.144 & 2556.2--2584.8 & 2.6--25.6 & 42.9--71.4 \\
+Level-A SoD count & 1.6002--2.5949 & 0.897--4.964 & 2556.2--2584.8 & 3.0--25.6 & 42.9--71.4 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{e8_cold_start_alarm_v1.png}
+\caption{All frozen April alarm points. Left: false calls/day versus delay
+to a newly started post-onset incident. Right: false calls/day versus
+post-onset record exceedance coverage.}
+\label{fig:alarm}
+\end{figure}

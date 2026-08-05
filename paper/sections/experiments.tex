@@ -1,35 +1,25 @@
-\paragraph{E1: baseline reproduction.}
-On OGW we reproduce the classic OBS+BSS + damage-index pipeline and the
-feature-ML pipeline of \cite{schnur2022} to establish a trustworthy
-anchor (target: near their reported leave-group-out accuracy).
+\subsection{Protocol gates}
+The protocol file \texttt{strict\_evaluation\_v1.json} is frozen before the
+full evaluations. It forbids test labels from codec fitting, signal-quantizer
+fitting, codec operating-point selection, alarm baseline construction, alarm
+score calibration, and alarm threshold selection. A fixed random seed is
+used only for the declared bootstrap procedure. Historical E2--E4 scripts
+remain repository diagnostics; their outputs are not used for selection and
+are not paper results.
 
-\paragraph{E2: level-A eventization Pareto.}
-For each frequency and damage position we sweep the SoD threshold
-$\delta$ and record detection ROC/AUC against the event rate
-(events per raw sample), producing the main Pareto front. At each rate
-we compare against (i) uniform decimation and (ii) SVD/PCA compression
-\cite{yang2023compression} at equal effective rate.
+\subsection{E7: strict codec benchmark}
+E7 applies all four codecs to the date-separated OGW split. Candidate
+configurations are first filtered by a proven per-record bound and then
+selected using healthy validation data as specified in Section~3. The four
+capacities are all reported, rather than reducing the result to one chosen
+point. The primary outcome is held-out record ROC AUC for D04 and D24, with
+serialized payload summaries, decoder model bytes, and temperature-matched
+checks retained in the audit JSON.
 
-\paragraph{E3: temperature--damage discrimination.}
-Without explicit compensation, the discriminator of
-Section~\ref{sec:disc} separates temperature- from damage-induced
-events; we additionally evaluate a temperature-extrapolation protocol
-(baselines from 20--$40\,^\circ$C, test 40--$60\,^\circ$C) where
-compensation-based pipelines degrade.
-
-\paragraph{E4: long-term level-B validation.}
-On the 4.5-year outdoor dataset we eventize the per-path DI series
-(level B) and measure detection latency and false-alarm rate for the
-three damage onsets (mass, dent, through-hole), reporting confounded
-segments separately.
-
-\paragraph{E5: directional analysis (CFRP).}
-The 66 paths are binned by propagation direction; we assess whether
-direction-dependent event-cluster strength/arrival carries usable
-information for coarse localization, stated conservatively given the
-quasi-isotropic layup.
-
-\paragraph{E6: ablation.}
-We ablate $\delta$, hysteresis, frequency selection, and compensation
-quality (BSS vs.\ OBS vs.\ none) to map the sensitivity chain of the
-eventization pipeline.
+\subsection{E8: cold-start alarm audit}
+E8 calibrates both feature families on the complete healthy March 2021
+month. The predeclared threshold grid contains the 0.90, 0.95, 0.975, 0.99,
+0.995, 0.9975, 0.999, 0.9995, and 0.9999 quantiles of March calibration
+scores. April is fully scored before its labels are accessed. The paper
+reports the range over all nine thresholds for each feature, not a threshold
+selected after inspecting false calls, delay, or coverage.

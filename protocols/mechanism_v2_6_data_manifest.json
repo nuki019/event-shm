@@ -1,0 +1,146 @@
+{
+  "manifest_id": "mechanism-v2.6-data-manifest-v1",
+  "protocol_id": "mechanism-v2.6",
+  "created_utc": "2026-08-05",
+  "purpose": "Frozen data source registry for mechanism-v2.6. Every entry must pass its predeclared gate before waveform values are read.",
+  "sources": {
+    "ogw_cfrp_temperature_udam": {
+      "role": "immutable_calibration_provenance",
+      "dataset_family": "OGW",
+      "doi": "10.1038/s41597-019-0208-1",
+      "figshare_article_id": "8108297",
+      "file": {
+        "name": "OGW_CFRP_Temperature_udam.zip",
+        "size_bytes": 53609050314,
+        "official_md5": "9dd1f7ad53bc1fb3c887370acd40e4ba",
+        "download_url": "https://ndownloader.figshare.com/files/15129185"
+      },
+      "v2_6_use": "E7 healthy train/validation/test dates are immutable calibration provenance for D16 only. The quantizer, baseline pool, and OBS+BSS contract are frozen from E7. No new waveform extraction from udam is performed in v2.6.",
+      "pre_access_gate": "Local archive MD5 must match official MD5. A source receipt with SHA-256 of the local file must be produced before any runner uses it.",
+      "existing_receipt": "results/mechanism_v2_ogw_udam_source_receipt.json"
+    },
+    "ogw_cfrp_temperature_dam_d16": {
+      "role": "same_plate_blind_confirmation",
+      "dataset_family": "OGW",
+      "doi": "10.1038/s41597-019-0208-1",
+      "figshare_article_id": "8107883",
+      "file": {
+        "name": "OGW_CFRP_Temperature_dam_D16.zip",
+        "size_bytes": 26804608838,
+        "official_md5": "ea3e3c02679de9b4125c9cfbca398564",
+        "download_url": "https://ndownloader.figshare.com/files/15130364"
+      },
+      "v2_6_use": "One-shot blind confirmation on the same CFRP plate with a larger reversible disc (16mm). Replaces the retired D12. Uses the frozen E7 calibration (quantizer, baseline pool, stretch factors) without refitting.",
+      "pre_access_gate": [
+        "Official MD5 match",
+        "SHA-256 source receipt",
+        "capacity-aware terminal-hold pre-access test passed for all applicable (capacity, delta) cells"
+      ],
+      "prohibited": [
+        "rerun after any result inspection",
+        "substitution for a failed external confirmation",
+        "threshold or configuration selection after scoring"
+      ]
+    },
+    "morpho_fod7": {
+      "role": "primary_external_confirmation",
+      "dataset_family": "MORPHO",
+      "doi": "10.5281/zenodo.14627730",
+      "local_path": "data/external/mechanism_v2/MORPHO_FOD7.h5",
+      "estimated_size_bytes": 8330000000,
+      "v2_6_use": "Cross-structure confirmation. Fatigue degradation blocks on a composite structure independent of OGW. Provides block-level group bootstrap and independent replication.",
+      "pre_access_gate": [
+        "Fresh v2.6 source receipt with SHA-256 of local file",
+        "Metadata-only schema gate: sortable fatigue-block path tokens, Healthy_Clamped/Healthy_Unclamped baseline tokens, Status attribute name, recoverable waveform paths and sample axes",
+        "Same-block repeat components must not cross splits"
+      ],
+      "schema_failure_action": "If schema gate fails, record schema_ineligible with reason. Do not score. COPV may be activated only under the frozen fallback rule."
+    },
+    "coqtel_corrosion": {
+      "role": "material_independent_schema_qualification_only",
+      "dataset_family": "COQTEL",
+      "doi": "10.5281/zenodo.14193336",
+      "local_paths": [
+        "data/external/mechanism_v2_1/coqtel/Essai_Corrosion1.h5",
+        "data/external/mechanism_v2_1/coqtel/Essai_Corrosion2.h5"
+      ],
+      "estimated_size_bytes": 124000000,
+      "v2_6_use": "Schema qualification only. No ROC/AUC scoring because no official binary healthy-versus-corroded cutoff exists in the frozen documentation. The schema gate result itself is a valid artifact.",
+      "pre_access_gate": [
+        "Fresh v2.6 source receipt with SHA-256 of local files",
+        "Metadata-only schema gate: EC_time array aligns with State_n groups, both campaign identifiers present, recoverable waveform paths and sample axes, adjacent states not treated as independent"
+      ],
+      "v2_6_policy": "If schema passes, report qualification success. If schema fails, record schema_ineligible. Under no circumstance invent a binary cutoff from temporal percentiles, visual trends, or signal scores."
+    },
+    "longterm_2018_03": {
+      "role": "alarm_migration_assessment",
+      "dataset_family": "UF_Utah_longterm",
+      "doi": "10.6084/m9.figshare.c.6920627",
+      "figshare_file_id": "51425792",
+      "file": {
+        "name": "measurements 2018_03.pickle",
+        "size_bytes": 599491623,
+        "official_md5": "6305f47161b3d2db78632da1e14c6741",
+        "download_url": "https://ndownloader.figshare.com/files/51425792"
+      },
+      "v2_6_use": "Cross-period threshold stability assessment. Tests E8's March-2021-calibrated thresholds on an independent healthy period from 2018. Reports false calls/day and coverage only. No damage scoring.",
+      "pre_access_gate": [
+        "Official MD5 match",
+        "SHA-256 source receipt"
+      ],
+      "prohibited": [
+        "healthy_to_damage_confirmation",
+        "threshold_selection_after_inspection",
+        "pod_estimation",
+        "operational_alarm_claim"
+      ]
+    },
+    "longterm_2018_04": {
+      "role": "alarm_migration_assessment",
+      "dataset_family": "UF_Utah_longterm",
+      "doi": "10.6084/m9.figshare.c.6920627",
+      "figshare_file_id": "51425798",
+      "file": {
+        "name": "measurements 2018_04.pickle",
+        "size_bytes": 1920246668,
+        "official_md5": "a58cf316cda09e2802f0717a6e86395d",
+        "download_url": "https://ndownloader.figshare.com/files/51425798"
+      },
+      "v2_6_use": "Same as 2018_03. Two independent months provide a minimal cross-period stability check.",
+      "pre_access_gate": [
+        "Official MD5 match",
+        "SHA-256 source receipt"
+      ],
+      "prohibited": [
+        "healthy_to_damage_confirmation",
+        "threshold_selection_after_inspection",
+        "pod_estimation",
+        "operational_alarm_claim"
+      ]
+    }
+  },
+  "source_receipt_schema": {
+    "required_fields": [
+      "dataset_id",
+      "manifest_id",
+      "download_timestamp_utc",
+      "local_path",
+      "local_sha256",
+      "official_md5",
+      "md5_match",
+      "file_size_bytes"
+    ],
+    "refusal_conditions": [
+      "md5_match is false",
+      "file_size differs from official",
+      "local_path is a .part file",
+      "receipt already exists at the target path"
+    ]
+  },
+  "immutable_boundary": {
+    "ogw_d04_d24": "Discovery set only. Cannot enter any v2.6 selection, confirmation, or conclusion path.",
+    "ogw_d12": "Retired. v2.5 consumed it in a one-shot run that was invalidated. Must not be rerun, recast, or reused.",
+    "ogw_d16": "Untouched before v2.6 freeze. One-shot only. Cannot be rerun after result inspection.",
+    "longterm_2021_05_06_2022_07_08": "Ineligible for healthy-to-damage confirmation. May be used only under a separate future protocol, not v2.6."
+  }
+}

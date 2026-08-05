@@ -1,0 +1,24 @@
+{
+  "manifest_id": "mechanism-v2.3-data-manifest-overlay-v1",
+  "manifest_schema": "mechanism-v2-successor-overlay-v1",
+  "inherits": {
+    "manifest_path": "protocols/mechanism_v2_1_data_manifest.json",
+    "manifest_sha256": "f14f538cef3a52f206ac9d6d0fdfaf73efced06e464086a653a95f70283506a3"
+  },
+  "predecessor_invalidation": {
+    "receipt_path": "protocols/mechanism_v2_2_invalidation_receipt.json",
+    "receipt_sha256": "6e3a7b134674984e57c0c6ee84b6ac0bf55f73b53eece6f795d50f2f6703f3ae",
+    "required_boundary": "No v2.2 source receipt, schema decision, confirmation grid, score, cache, or conclusion is reusable. The COQTEL structural mapping is re-declared under v2.3 only from the metadata-only provenance recorded in the invalidated v2.1 receipt."
+  },
+  "successor_access_policy": {
+    "all_waveform_access_requires_successor_receipt": true,
+    "predecessor_receipts_are_integrity_history_only": [
+      "results/mechanism_v2_1_ogw_d12_access_receipt.json",
+      "results/mechanism_v2_1_ogw_d16_access_receipt.json",
+      "results/mechanism_v2_1_coqtel_access_receipt.json"
+    ],
+    "v2_2_artifacts_reused_for_access_or_results": false,
+    "coqtel_metadata_inspection_under_v2_1": "Recorded only in the v2.1 invalidation receipt; no array values, scores, labels-for-scoring, cache, or confirmation result were accessed."
+  },
+  "data_set_overrides": {}
+}

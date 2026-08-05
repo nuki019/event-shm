@@ -1,0 +1,28 @@
+{
+  "receipt_id": "mechanism-v2.4-morpho-metadata-discovery-freeze-v1",
+  "created_utc": "2026-07-31T01:01:03Z",
+  "protocol_id": "mechanism-v2.4-morpho-metadata-discovery",
+  "protocol_path": "protocols\\mechanism_v2_4_morpho_metadata_discovery.json",
+  "protocol_sha256": "5f541f121751c3f9bebd0170b9714a53ef5b3eb81e048faa9acd9e11af60faac",
+  "predecessor_invalidation_path": "protocols\\mechanism_v2_3_invalidation_receipt.json",
+  "predecessor_invalidation_sha256": "6aa5b587c5d3b4e2fe0522d46e751e196ec1438c732df62fa8739a05a74ecc8d",
+  "integrity_history_receipt_path": "results\\mechanism_v2_3_morpho_access_receipt.json",
+  "integrity_history_receipt_sha256": "c59d25397a9bb4642bb2b54f875cfb13a76cd42bcf8e7da4a906f05c39ec2cfe",
+  "hdf5_path": "data\\external\\mechanism_v2\\MORPHO_FOD7.h5",
+  "hdf5_expected_sha256": "86fc04cf07bbb165974c7095dc384bcf3ff1ff6b14d89c7e902b3ace1311499e",
+  "frozen_source_files": [
+    "src/data/mechanism_hdf5_metadata_safe_v2_4.py",
+    "src/experiments/mechanism_v2_4_metadata_discovery.py",
+    "src/experiments/freeze_mechanism_v2_4_morpho_discovery.py",
+    "src/experiments/discover_mechanism_v2_4_morpho_metadata.py"
+  ],
+  "frozen_source_sha256": {
+    "src/data/mechanism_hdf5_metadata_safe_v2_4.py": "a4acedffcdaa0c1a6e78a2102ef67cf2609d51c574cff6dbba94a014822b78f1",
+    "src/experiments/mechanism_v2_4_metadata_discovery.py": "78a73fe7350850b0f2c214e750f4552bf822954a299d7ef034064c926e03ed31",
+    "src/experiments/freeze_mechanism_v2_4_morpho_discovery.py": "59911aa863a91c05fcf9f7857fe4163bbd7313d0c8924af2b7dcf91285508ef2",
+    "src/experiments/discover_mechanism_v2_4_morpho_metadata.py": "214ed9acae9333fca04d9d384f87748281e6db30fe288af41448866afa0de857"
+  },
+  "metadata_discovery_only": true,
+  "waveform_values_read_before_receipt": false,
+  "attribute_values_read_before_receipt": false
+}

@@ -1,0 +1,46 @@
+{
+  "protocol_id": "mechanism-v2.4-morpho-metadata-discovery",
+  "protocol_schema": "mechanism-v2.4-metadata-discovery-v1",
+  "status": "frozen_before_morpho_metadata_access",
+  "purpose": "Recover from the v2.3 protocol omission by recording MORPHO's structural HDF5 metadata before any final v2.4 mapping, schema eligibility decision, waveform-array access, scoring, cache construction, or confirmation run.",
+  "predecessor_invalidation": {
+    "receipt_path": "protocols/mechanism_v2_3_invalidation_receipt.json",
+    "receipt_sha256": "6aa5b587c5d3b4e2fe0522d46e751e196ec1438c732df62fa8739a05a74ecc8d",
+    "required_boundary": "v2.3 is immutable and invalidated. Its source receipts are integrity history only; its COQTEL schema gate is not a reusable eligibility result."
+  },
+  "input_integrity_history": {
+    "receipt_path": "results/mechanism_v2_3_morpho_access_receipt.json",
+    "receipt_sha256": "c59d25397a9bb4642bb2b54f875cfb13a76cd42bcf8e7da4a906f05c39ec2cfe",
+    "historical_only": true,
+    "hdf5": {
+      "path": "data/external/mechanism_v2/MORPHO_FOD7.h5",
+      "size_bytes": 8342365080,
+      "sha256": "86fc04cf07bbb165974c7095dc384bcf3ff1ff6b14d89c7e902b3ace1311499e"
+    }
+  },
+  "metadata_access_contract": {
+    "allowed": [
+      "raw-byte SHA-256 verification before HDF5 open",
+      "HDF5 object paths and object kinds",
+      "dataset shape, rank, dtype, chunks, and compression metadata",
+      "attribute names and HDF5 attribute dtype/shape metadata obtained through AttributeManager.get_id"
+    ],
+    "forbidden": [
+      "dataset indexing, slicing, conversion, or any H5Dread payload access",
+      "AttributeManager.__getitem__ or any attribute value materialization",
+      "reading a label, fatigue-block, time, health, degradation, or waveform value",
+      "selecting a mapping, declaring schema eligibility, computing a signal metric, training, scoring, caching, E9, or auditing a confirmation result"
+    ]
+  },
+  "output_contract": {
+    "path": "results/mechanism_v2_4_morpho_metadata_discovery.json",
+    "must_include": [
+      "protocol and freeze hashes",
+      "input HDF5 SHA-256",
+      "full structural inventory and fingerprint",
+      "all no-value access flags",
+      "no schema eligibility decision and no mapping-selection receipt"
+    ],
+    "output_is_mapping_provenance_only": true
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "protocol_id": "mechanism-v2.3",
+  "protocol_schema": "mechanism-v2-successor-overlay-v1",
+  "status": "frozen_before_new_waveform_access",
+  "inherits": {
+    "protocol_path": "protocols/mechanism_v2_1.json",
+    "protocol_sha256": "a6fcfcbd7b6f53fa2a550ecf18513c45751fdf06f5551a096e0d006382d21641"
+  },
+  "predecessor_invalidation": {
+    "receipt_path": "protocols/mechanism_v2_2_invalidation_receipt.json",
+    "receipt_sha256": "6e3a7b134674984e57c0c6ee84b6ac0bf55f73b53eece6f795d50f2f6703f3ae",
+    "required_boundary": "No v2.2 source receipt, schema decision, confirmation grid, score, cache, or conclusion is reusable. The COQTEL structural mapping is re-declared under v2.3 only from the metadata-only provenance recorded in the invalidated v2.1 receipt."
+  },
+  "successor_overrides": {
+    "protocol_id": "mechanism-v2.3",
+    "status": "frozen_before_new_waveform_access",
+    "external_schema_mappings": {
+      "coqtel_corrosion": {
+        "mapping_id": "mechanism-v2.3-coqtel-hierarchical-schema-v1",
+        "mapping_scope": "metadata-only eligibility; no waveform values, score, binary label cutoff, or result-dependent choice",
+        "campaigns": {
+          "Essai_Corrosion1.h5": "coqtel_campaign_1",
+          "Essai_Corrosion2.h5": "coqtel_campaign_2"
+        },
+        "state_group_path_regex": "^/State_(?P<state_id>[1-9][0-9]*)$",
+        "waveform_dataset_path_regex": "^/State_(?P<state_id>[1-9][0-9]*)/200kHz_5cycles/Actionneur(?P<actuator_id>[1-4])/measured_data_rep_1\\.mat$",
+        "waveform_shape": [5, 2000],
+        "sample_axis": 1,
+        "required_actionneur_ids": [1, 2, 3, 4],
+        "sampling_rate_attribute_template": "attr:/State_{state_id}/200kHz_5cycles:fs",
+        "state_time_relation": "The official Example_Read_Data.m indexes /EC_data/EC_time, EC_potential, and EC_current with n_state, where the waveform path begins /State_n_state/.",
+        "ec_metadata_paths": ["/EC_data/EC_time", "/EC_data/EC_potential", "/EC_data/EC_current"],
+        "measurement_uid_template": "{campaign_id}:state:{state_id}:actuator:{actuator_id}:rep:1",
+        "campaign_block_template": "{campaign_id}:state:{state_id}",
+        "repeat_definition": "The four actuator datasets at one campaign/state are components of one monitoring block, not independent records; the HDF5 path exposes one measured_data_rep_1 dataset per actuator.",
+        "eligibility_scope": "Passes only structural/time/campaign recoverability. A later scoring protocol must predeclare any chronological health/degradation partition without inspecting signal values or event scores."
+      }
+    },
+    "successor_evidence_boundary": {
+      "predecessor_metadata_only_access_permitted_as_mapping_provenance": true,
+      "new_waveform_access_requires_mechanism_v2_3_receipt": true,
+      "v2_2_artifacts_not_reused_as_authorization_or_result": true,
+      "copv_activation_remains_prohibited_without_a_real_external_schema_failure": true
+    }
+  }
+}

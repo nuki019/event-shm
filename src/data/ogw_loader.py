@@ -20,8 +20,8 @@ RAW = os.path.join(os.path.dirname(__file__), '../../data/raw')
 class OGWSetZip:
     """Random access to an OGW zip without full extraction."""
 
-    def __init__(self, zip_name):
-        self.zip_path = os.path.join(RAW, zip_name)
+    def __init__(self, zip_name, raw_dir=None):
+        self.zip_path = os.path.join(raw_dir or RAW, zip_name)
         self.zf = zipfile.ZipFile(self.zip_path)
         self.prefix = zip_name.replace('.zip', '') + '/'
         names = [n for n in self.zf.namelist() if n.endswith('.h5')]

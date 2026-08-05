@@ -1,0 +1,90 @@
+{
+  "protocol_id": "strict-evaluation-v1",
+  "created_utc": "2026-07-29",
+  "purpose": "Freeze data access, parameter selection, payload accounting, and outcome reporting before the revised codec and alarm experiments run.",
+  "global_rules": {
+    "test_labels_forbidden_for": [
+      "codec fitting",
+      "signal quantizer fitting",
+      "codec operating-point selection",
+      "alarm baseline construction",
+      "alarm score calibration",
+      "alarm threshold selection"
+    ],
+    "unit_of_analysis": "monitoring record; paths are features within a record and are never resampled as independent observations",
+    "random_seed": 20260729,
+    "historical_exploration": "Existing E2/E4/PCA outputs are exploratory only and cannot be used to select a reported operating point."
+  },
+  "codec_benchmark": {
+    "system_boundary": "Post-compensation waveform coding. The benchmark measures payload for residual records reconstructed by software. It does not measure ADC acquisition power, MCU execution time, or hardware energy.",
+    "input": "40 kHz high-pass, unit-energy-normalized OBS+BSS residuals",
+    "healthy_train_dates": ["20181213", "20181214", "20181215", "20181216", "20181217"],
+    "healthy_validation_dates": ["20181218", "20181219"],
+    "healthy_test_dates": ["20181220", "20181221", "20181222"],
+    "damage_test_sets": ["D04", "D24"],
+    "baseline_pool": {
+      "source": "healthy training dates only",
+      "count": 32,
+      "selection": "temperature-stratified deterministic selection",
+      "stretch_factors": [0.985, 0.9875, 0.99, 0.9925, 0.995, 0.9975, 1.0, 1.0025, 1.005, 1.0075, 1.01, 1.0125, 1.015]
+    },
+    "quantization": {
+      "source_representation": "signed 16-bit fixed point",
+      "scale_fit": "maximum absolute residual value over healthy training residuals only",
+      "saturation_reporting": "report the fraction of samples clipped in every split and condition"
+    },
+    "codecs": ["sod_transition_bounded", "uniform_linear", "pca", "haar_dwt"],
+    "payload_accounting": {
+      "per_record": "serialize actual codec packets and report bytes per 66-path record and bits per original sample",
+      "hard_capacity_contract": "At every target, every serialized healthy and damaged record packet must be no larger than the target. SoD reserves an equal per-path packet cap including its timestamp/level framing and stops only at an event boundary; a decoder then holds the final transmitted level.",
+      "model_side_information": "report decoder model bytes separately; do not amortize them into the per-record payload",
+      "raw_reference": "the fixed 16-bit residual representation; this is a storage contract, not an assertion about the source ADC"
+    },
+    "target_payload_bytes_per_record": [2048, 4096, 8192, 16384],
+    "operating_point_selection": "For each codec and target, retain only predeclared candidates with a proven worst-case packet bound no greater than the target. Fixed-configuration uniform, PCA, and Haar candidates use the closest proven bound. Bounded-SoD uses healthy-validation mean payload closest to the target; payload ties use lower code-domain reconstruction MSE on 8 chronologically evenly spaced healthy-validation records, then frozen candidate order. No labels or test records are used.",
+    "paired_temperature_analysis": {
+      "matching": "one-to-one Hungarian assignment using absolute temperature difference only",
+      "maximum_difference_celsius": 0.25,
+      "no_record_reuse": true
+    },
+    "metrics": [
+      "test ROC AUC with record-level stratified bootstrap confidence interval",
+      "temperature-matched paired win rate",
+      "mean, median, 95th-percentile, and maximum serialized payload",
+      "decoder model bytes",
+      "signal quantizer saturation fraction",
+      "reconstruction-energy score"
+    ]
+  },
+  "cold_start_alarm": {
+    "system_boundary": "Software replay of an OBS+BSS plus event-count alarm. It is not a hardware deployment claim.",
+    "calibration_month": "2021_03",
+    "blind_test_month": "2021_04",
+    "test_label_change_record": 8401,
+    "test_label_change_time": "2021-04-17T17:32:16",
+    "reference_bank": {
+      "source": "2021_03 healthy records only",
+      "temperature_bin_celsius": 1.0,
+      "prototypes_per_nonempty_bin": 8,
+      "selection": "chronologically evenly spaced records within each temperature bin",
+      "nearest_temperature_candidates": 8,
+      "stretch_factors": [0.996, 0.998, 1.0, 1.002, 1.004],
+      "leave_self_out_when_scoring_calibration": true
+    },
+    "level_a_event_count": {
+      "delta_fit": "per-path 95th percentile of absolute March residual samples at deterministic stride 16",
+      "delta_quantile": 0.95,
+      "sample_stride": 16
+    },
+    "alarm_calibration": "robust per-path normalization and all threshold-grid values fitted on 2021_03 only",
+    "feature_comparators": ["dense_residual_energy", "level_a_sod_event_count"],
+    "incident_dedup_minutes": 30,
+    "primary_metrics": [
+      "false calls per day on the healthy 2021_04 prefix",
+      "first post-onset delay of a newly started alarm incident; a pre-onset active incident is reported but is not credited as detection",
+      "post-onset record and day exceedance coverage",
+      "fraction of target records outside the calibration temperature support"
+    ],
+    "prohibited_term": "Do not label the one observed onset as a statistically estimated probability of detection."
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "receipt_id": "mechanism-v2.5-post-d12-audit-invalidation-v1",
+  "created_utc": "2026-07-31T04:17:04Z",
+  "invalidated_protocol_id": "mechanism-v2.5",
+  "invalidated_protocol_sha256": "f465bf781d6ae9af5d8f0e4cb9d77ac49302f6c38ca3724050cf90549eb5a91a",
+  "invalidated_data_manifest_sha256": "82b3b553e03cccfb12c639d8e44839c9b47f2530adea542f0ba0324850696bbc",
+  "invalidated_freeze_receipt_sha256": "376432dc5c1e2e97ed923791c57edfa64210a8ab0bbf96618c2422eb0ed23451",
+  "failure": {
+    "stage": "after fresh v2.5 source receipts, metadata-only external schema gates, E7 calibration binding, pre-experiment audit, and the once-only D12 direct-ZIP confirmation; before D16 or MORPHO waveform scoring, cache construction, confirmation result, or result audit",
+    "root_cause": "The frozen canonical terminal-hold probe and its audit contract require both probe traces to reach the hard cap for every declared capacity and delta. At the declared 8192-byte capacity, the generated first trace does not reach that cap while the divergent second trace does. The result therefore has matching serialized payload and decoded output but fails the frozen saturation precondition. Treating this as passed, changing the generator length, or relaxing the audit after D12 access would alter the frozen protocol and create a post-hoc repair.",
+    "deterministic_evidence": {
+      "audit_command": "C:\\ProgramData\\anaconda3\\python.exe src/experiments/audit_mechanism_v2_5_ogw.py --result results/mechanism_v2_5_ogw_d12_confirmation.json",
+      "audit_failure": "8192/1 terminal_hold did not pass",
+      "failed_probe_key_count": 8,
+      "failed_probe_keys": [
+        "8192/1/terminal_hold",
+        "8192/8/terminal_hold",
+        "8192/64/terminal_hold",
+        "8192/512/terminal_hold",
+        "8192/4096/terminal_hold",
+        "8192/8192/terminal_hold",
+        "8192/16384/terminal_hold",
+        "8192/32767/terminal_hold"
+      ],
+      "all_failed_keys_have_same_serialized_payload": true,
+      "all_failed_keys_have_same_decoded_output": true,
+      "all_failed_keys_first_cap_saturated": false,
+      "all_failed_keys_second_cap_saturated": true,
+      "frozen_runner_sha256": "5ca24e7ad32fbdeec2a5d9329175901e6b193812b1d66d82e4c9d8deff9f897a",
+      "frozen_ogw_auditor_sha256": "ac104b381541fa91a2eca63a1012c0b0380a72e07a02b1ff9f6499321093c576",
+      "frozen_probe_implementation_sha256": "fe2ef289c7680df22a5d40bb556778e96dbc975660354e071ea28685e090059f"
+    }
+  },
+  "artifact_hashes": {
+    "results/mechanism_v2_5_ogw_d12_source_receipt.json": "3b30a2083e1c6e12a57385d9b64e876a106c5af86aaf7dfae215175fdf596a7a",
+    "results/mechanism_v2_5_ogw_d16_source_receipt.json": "fe274dd6765c8a112dd618bf2e5b9a815fce381a329c27c90562177efa91e384",
+    "results/mechanism_v2_5_morpho_source_receipt.json": "38619cf6a57987e7f50d62db7dc99e9b38060531615b0e3cb6d5d060e72f27f5",
+    "results/mechanism_v2_5_coqtel_source_receipt.json": "7953813cbfcba2b27b196cc55699ed600bf22c0eca935a41f8f9c9aa23a4296e",
+    "results/mechanism_v2_5_morpho_schema_gate.json": "3e783ed1235450a1f2ae7e7f7e844776e4d5a377db233ee9837eb5f71a3a54be",
+    "results/mechanism_v2_5_coqtel_schema_gate.json": "0d6f7e49353a52c1ef7aaf06790226aaaa56c0499239438af58088d35a925302",
+    "results/mechanism_v2_5_ogw_udam_calibration_binding.json": "77c5815bb63cbb84dd167765e810a652e1a62a2961b5c85bc089df14785519c2",
+    "results/mechanism_v2_5_preexperiment_audit.json": "b73e10cb98d5f9a6de379c63b8870174c2da4445a182f5c79b4b39b9ab070570",
+    "results/mechanism_v2_5_ogw_d12_confirmation.json": "37c743ad3a77dc16b898ca21fe15efbc41e184f0f490ec6416a42a2bf147da0b"
+  },
+  "evidence_boundary": {
+    "d12_once_only_confirmation_completed": true,
+    "d12_result_audit_attempted": true,
+    "d12_result_audit_status": "failed",
+    "d12_result_is_not_eligible_for_a_mechanism_conclusion": true,
+    "d16_direct_zip_waveform_access": false,
+    "d16_event_cache_written": false,
+    "d16_confirmation_result_written": false,
+    "morpho_hdf5_waveform_values_read": false,
+    "morpho_event_cache_written": false,
+    "morpho_confirmation_result_written": false,
+    "coqtel_waveform_values_read": false,
+    "coqtel_binary_scoring_or_copv_activation": false,
+    "d04_or_d24_opened_for_selection_or_confirmation": false,
+    "pod_or_field_far_reported": false,
+    "hardware_power_realtime_or_deployment_claim_made": false
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.6",
+    "keep_mechanism_v2_5_protocol_manifest_freeze_receipt_receipts_cache_and_d12_result_immutable": true,
+    "v2_5_d12_result_is_invalidation_evidence_only_not_a_confirmation_or_negative_mechanism_result": true,
+    "d12_must_not_be_rerun_or_recast_as_a_blind_confirmation": true,
+    "d16_and_morpho_must_not_be_started_under_v2_5": true,
+    "requirement": "Before any successor waveform scoring, independently specify and test a capacity-aware terminal-hold probe whose saturation precondition is auditable for every declared capacity/delta, or predeclare an explicit non-saturation status and a separate saturation-only proposition. Freeze the corrected runner and auditor before access. Because v2.5 consumed D12 in a one-shot run, do not reuse D12 as fresh blind confirmation or use its output for selection. Decide the successor's untouched confirmation sources and evidence threshold before any new waveform access; do not activate COPV merely because v2.5 was invalidated."
+  }
+}

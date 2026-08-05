@@ -1,0 +1,53 @@
+{
+  "schema_id": "mechanism-v2.5-result-schema-v1",
+  "protocol_id": "mechanism-v2.5",
+  "purpose": "Auditable result contract for the once-only OGW and MORPHO confirmations. This schema records required evidence fields; it does not authorize source access or scoring.",
+  "top_level_required": [
+    "protocol_id",
+    "protocol_sha256",
+    "data_manifest_sha256",
+    "freeze_receipt_sha256",
+    "result_schema_sha256",
+    "code_revision",
+    "outcome_type",
+    "data",
+    "selection_receipt",
+    "configuration",
+    "group_split",
+    "grid_results",
+    "mechanism_probes",
+    "control_injections"
+  ],
+  "source_identity_required": [
+    "data.dataset_id",
+    "data.data_role",
+    "data.archive_and_content_hashes",
+    "data.schema_gate"
+  ],
+  "configuration_required": [
+    "capacity_bytes_per_record",
+    "delta_codes",
+    "event_features",
+    "aggregation_heads",
+    "control_injection_grid_sha256"
+  ],
+  "external_morpho_required": [
+    "data.external_execution_contract_sha256",
+    "data.component_packet_definition",
+    "group_split.fit",
+    "group_split.held_out_normal",
+    "group_split.degradation",
+    "grid_results[].block_score_records",
+    "grid_results[].cap_evidence.bytes_per_monitoring_block",
+    "grid_results[].cap_evidence.mean_bytes_per_component_packet",
+    "grid_results[].cap_evidence.bits_per_original_sample",
+    "limitations.one_held_out_healthy_block"
+  ],
+  "prohibited_claims": [
+    "probability_of_detection",
+    "calibrated_field_false_alarm_rate",
+    "hardware_power",
+    "real_time_or_embedded_deployment"
+  ],
+  "audit_policy": "A result is eligible only when every predeclared capacity, delta, event head, waveform metric, mechanism proposition, and healthy-control grid condition is present. Audits reject missing or duplicate grid cells and any group/component split overlap."
+}

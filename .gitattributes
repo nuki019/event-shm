@@ -1,0 +1,38 @@
+# New prose and non-frozen source retain a stable LF representation.
+*.md text eol=lf
+*.json text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf
+*.ps1 text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Frozen receipts hash these historical source and protocol bytes. Preserve
+# them on every platform instead of applying checkout or check-in conversion.
+protocols/** -text
+src/data/mechanism*.py -text
+src/experiments/audit_mechanism*.py -text
+src/experiments/bind_mechanism*.py -text
+src/experiments/discover_mechanism*.py -text
+src/experiments/download_mechanism*.py -text
+src/experiments/e9_mechanism*.py -text
+src/experiments/freeze_mechanism*.py -text
+src/experiments/mechanism_v2*.py -text
+src/experiments/test_mechanism*.py -text
+src/experiments/verify_mechanism*.py -text
+src/methods/mechanism_v2.py -text
+src/methods/strict_*.py -text
+tests/test_mechanism*.py -text
+
+# Dataset and rendered assets must never undergo text conversion.
+*.h5 binary
+*.hdf5 binary
+*.npy binary
+*.npz binary
+*.png binary
+*.pdf binary
+*.zip binary
+*.part binary

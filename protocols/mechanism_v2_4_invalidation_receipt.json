@@ -1,0 +1,57 @@
+{
+  "receipt_id": "mechanism-v2.4-pre-experiment-invalidation-v1",
+  "created_utc": "2026-07-31T01:48:42Z",
+  "invalidated_protocol_id": "mechanism-v2.4",
+  "invalidated_protocol_sha256": "cb23468c892de32e4121fd219400feb10240ca3874a0cefa8abfcbe8ed0e1bd9",
+  "invalidated_data_manifest_sha256": "1c7479142729b3358b03de91fd71f12fc4e772eec8894aaf55724b8420f5ddc3",
+  "invalidated_freeze_receipt_sha256": "e873753445fbd161acb1857dec7da5a27dde8eb2388b5a36f8e8402b5e23488b",
+  "failure": {
+    "stage": "after fresh v2.4 raw-byte source receipts, both metadata-only external schema gates, E7 calibration binding, and pre-experiment audit; before any D12/D16 E9 direct-ZIP access, external waveform value dereference, signal metric, event cache, confirmation result, or result audit",
+    "root_cause": "The v2.4 freeze bundle contains the D12/D16 OGW E9 runner and the external metadata-only schema runner, but it contains no frozen external one-shot scoring runner for the primary eligible MORPHO mapping. The pre-experiment audit text refers to a separately frozen external score runner that does not exist in the frozen source list. Adding that runner after freeze would create the same post-freeze code gap that invalidated v2.3.",
+    "deterministic_evidence": {
+      "frozen_source_files_omit": "src/experiments/e9_mechanism_v2_4_external.py",
+      "frozen_source_files_include_only_external_metadata_gate": "src/experiments/audit_mechanism_v2_4_external_schema.py",
+      "morpho_mapping_is_present": "mechanism-v2.4-morpho-fod7-active-fatigue-v1",
+      "morpho_schema_gate_status": "passed",
+      "preexperiment_audit_external_next_action": "Only begin the separately frozen external score runner after its required v2.4 schema receipt is passed",
+      "no_frozen_external_score_runner_or_auditor_exists": true
+    }
+  },
+  "artifact_hashes": {
+    "results/mechanism_v2_4_ogw_d12_source_receipt.json": "4aaee507c3e14bc52657ac482d3f3dd6de3ec4fd7a649f235fc546ed4c12707f",
+    "results/mechanism_v2_4_ogw_d16_source_receipt.json": "344fbbb93438d9ae457cd4226e20c3fc86b2695028741fc1b47a7c3d07864596",
+    "results/mechanism_v2_4_morpho_source_receipt.json": "a3b2cf3f04141e7321ff014012e863aedd9b56acef31362eaa387b480e012af4",
+    "results/mechanism_v2_4_coqtel_source_receipt.json": "001286febbbebf89bd73ce10fc0217c38f9533c57dd34663a0d9db2a55868ff1",
+    "results/mechanism_v2_4_ogw_udam_calibration_binding.json": "9a524542a4d727ec6a5e0bce8b4c9a51db9428f0e0fed24d2e1849d37d8bc14f",
+    "results/mechanism_v2_4_morpho_schema_gate.json": "73328da2c5024fc644daa9cddd05741f27242560d0cc631ea64d6149769811ab",
+    "results/mechanism_v2_4_coqtel_schema_gate.json": "d90dadce0484fa3e3442641e503fd8c270b5acafca14ea60da2193fab54c5539",
+    "results/mechanism_v2_4_preexperiment_audit.json": "700835b9c4a256daeb8da21e3395781dd9c8018a75db4c58ab0275d96cea0100"
+  },
+  "evidence_boundary": {
+    "source_hashing_decoded_or_dereferenced_waveform_values": false,
+    "morpho_hdf5_opened_only_for_structural_metadata": true,
+    "coqtel_hdf5_opened_only_for_structural_metadata": true,
+    "morpho_hdf5_waveform_values_read": false,
+    "coqtel_hdf5_waveform_values_read": false,
+    "any_external_attribute_value_read": false,
+    "any_signal_metric_computed": false,
+    "any_label_read_for_scoring": false,
+    "any_event_cache_written": false,
+    "any_e9_confirmation_result_written": false,
+    "any_mechanism_result_audit_written": false,
+    "d04_or_d24_opened_for_selection_or_confirmation": false,
+    "pod_or_field_far_reported": false,
+    "hardware_power_or_deployment_claim_made": false
+  },
+  "coqtel_boundary": {
+    "metadata_schema_gate": "passed",
+    "binary_scoring_eligibility": "metadata_schema_pass_only_no_official_binary_cutpoint_frozen",
+    "copv_activation": "prohibited because this is not a metadata schema failure"
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.5",
+    "keep_mechanism_v2_4_protocol_manifest_freeze_and_all_receipts_immutable": true,
+    "v2_4_source_receipts_and_schema_gates_are_integrity_history_only": true,
+    "requirement": "Before any successor waveform value access or score, implement and test a complete MORPHO one-shot external runner plus result auditor: fixed component-packet definition, healthy-only quantizer/diagnostic fitting, block-level aggregation, group-disjoint split receipt, all capacity/delta/metric/probe/control grids, cap evidence, and group bootstrap. Freeze those sources with the successor protocol, then create fresh v2.5 source receipts and metadata-only gates. Do not activate COPV unless a real successor metadata schema gate fails before all waveform scoring."
+  }
+}

@@ -3,6 +3,7 @@ __pycache__/
 data/raw/
 data/interim/
 data/processed/
+data/external/
 *.h5
 *.hdf5
 *.pkl
@@ -10,7 +11,13 @@ data/processed/
 figures/*.png
 !figures/.gitkeep
 results/*.json
+results/*.log
+results/logs/
 !results/.gitkeep
+tmp/
+tmp_*.py
+.claude/*.lock
+s3_url_*.txt
 paper/*.aux
 paper/*.log
 paper/*.out

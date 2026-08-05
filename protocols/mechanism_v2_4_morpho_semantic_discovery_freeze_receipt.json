@@ -1,0 +1,33 @@
+{
+  "receipt_id": "mechanism-v2.4-morpho-semantic-discovery-freeze-v1",
+  "created_utc": "2026-07-31T01:06:24Z",
+  "protocol_id": "mechanism-v2.4-morpho-semantic-discovery",
+  "protocol_path": "protocols\\mechanism_v2_4_morpho_semantic_discovery.json",
+  "protocol_sha256": "9edcfe427fe4835fcd128ae8028cbde2c524eb17f3c74c37c25a7e029bb1290d",
+  "structural_result_path": "results\\mechanism_v2_4_morpho_metadata_discovery.json",
+  "structural_result_sha256": "5cbc6c7037abbdbc4db1400ee2468a91285b63aa8e11439a9b511667bd55f3ad",
+  "structural_freeze_receipt_sha256": "d841a9607542f15c0aadb5668ebcf0e991e257a5b3c6fb12db96557f598c0fd4",
+  "document_paths": {
+    "readme_pdf": "data\\external\\mechanism_v2\\ReadMe.pdf",
+    "reader_example": "data\\external\\mechanism_v2\\EXAMPLE_READ_DATA.m"
+  },
+  "document_expected_sha256": {
+    "readme_pdf": "fd76d00deab5d61744b9969f4921e6a1d4375685ddaa0f9334738c539875251a",
+    "reader_example": "4956759ab73e5d1cd9353a3a1ecba4cef5e81c83e91acb8034ee369004e922a5"
+  },
+  "frozen_source_files": [
+    "src/experiments/mechanism_v2_4_metadata_discovery.py",
+    "src/experiments/mechanism_v2_4_morpho_semantic_discovery.py",
+    "src/experiments/freeze_mechanism_v2_4_morpho_semantic_discovery.py",
+    "src/experiments/discover_mechanism_v2_4_morpho_semantics.py"
+  ],
+  "frozen_source_sha256": {
+    "src/experiments/mechanism_v2_4_metadata_discovery.py": "78a73fe7350850b0f2c214e750f4552bf822954a299d7ef034064c926e03ed31",
+    "src/experiments/mechanism_v2_4_morpho_semantic_discovery.py": "8c8a4bba9a6c28496a889ebf45bb5dea05de485b102573174661f4705ce79ec3",
+    "src/experiments/freeze_mechanism_v2_4_morpho_semantic_discovery.py": "6c00f8d4c8db208199b19793e913c2eb353c0cd4489e9459fd1844cabd4a762e",
+    "src/experiments/discover_mechanism_v2_4_morpho_semantics.py": "8775b4fc72a3d7c0d4b365c6d5ec8f287bd9338fbdd8fb8fc5a3b5c4a64c3884"
+  },
+  "document_semantics_only": true,
+  "waveform_values_read_before_receipt": false,
+  "hdf5_opened_by_semantic_discovery": false
+}

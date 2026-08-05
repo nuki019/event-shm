@@ -1,0 +1,124 @@
+{
+  "receipt_id": "mechanism-v2.6-post-partial-morpho-invalidation-v1",
+  "created_utc": "2026-08-05T05:37:16Z",
+  "invalidated_protocol_id": "mechanism-v2.6",
+  "invalidated_protocol_sha256": "7bd859e25d3af74775ddb8943471ea331e0b913cdf30a36d91056b1fee0c87bd",
+  "invalidated_data_manifest_sha256": "e99c9494a9c5a4e61cb8946ab79e4ed36ef65827f7107b38fd1a6cf6529e422e",
+  "invalidated_result_schema_sha256": "a5473b54f486e5dfc811d862db16d66138011bcb4149eb8049908ca74a948b90",
+  "invalidated_freeze_receipt_sha256": "635c2c69252754d5cfad76dd0c984549ae49a84f7c6fbeeee1e9e91a60514ef5",
+  "predecessor_invalidation": {
+    "path": "protocols/mechanism_v2_5_invalidation_receipt.json",
+    "sha256": "71c96b4444f951f2c4bdfc181cf0c05847ce62d2f03434f2daff55d2559308a5"
+  },
+  "invalidation_status": "invalidated_after_pre_freeze_d16_output_and_interrupted_morpho_waveform_access",
+  "failure": {
+    "stage": "After the v2.6 protocol, manifest, result schema, terminal-hold receipt, external schema gate, and MORPHO source receipt were created; after a D16 output and after the MORPHO runner created its interim namespace and packet inventory; before a complete MORPHO result or matching read-only audit existed.",
+    "root_causes": [
+      {
+        "id": "d16_output_precedes_freeze_receipt",
+        "statement": "The D16 output was created before the v2.6 freeze receipt, although the frozen contract requires the freeze to exist before new waveform scoring. The D16 output is therefore historical integrity evidence only, not a confirmation result."
+      },
+      {
+        "id": "morpho_attempt_interrupted_without_auditable_resume",
+        "statement": "The MORPHO runner wrote RUN_STARTED and COMPONENT_PACKET_INVENTORY but no COMPLETE marker, final result, failure receipt, or result audit. Its code rejects any existing cache or output namespace and has no checkpoint or resume contract, so an in-place continuation or alternate-directory rerun would be a prohibited second access rather than a recovery."
+      },
+      {
+        "id": "frozen_executable_and_audit_chain_incomplete",
+        "statement": "The freeze receipt pins only the protocol, manifest, and result schema. The actual MORPHO runner was not pinned by it; the required src/experiments/audit_mechanism_v2_6.py is absent; and the runner output is not compatible with the frozen result schema. Completing the old run would not create an auditable v2.6 conclusion."
+      },
+      {
+        "id": "source_receipt_field_encoding_defect",
+        "statement": "The MORPHO source receipt field named v2_5_receipt_sha256 contains a path string rather than a SHA-256 value. This is recorded as an additional receipt-chain defect and must not be silently corrected in v2.6."
+      }
+    ],
+    "observed_filesystem_timeline_utc": [
+      {
+        "artifact": "protocols/mechanism_v2_6_data_manifest.json",
+        "created_utc": "2026-08-04T16:36:44Z"
+      },
+      {
+        "artifact": "protocols/mechanism_v2_6_result_schema.json",
+        "created_utc": "2026-08-04T16:37:46Z"
+      },
+      {
+        "artifact": "protocols/mechanism_v2_6.json",
+        "created_utc": "2026-08-04T16:38:40Z"
+      },
+      {
+        "artifact": "results/mechanism_v2_6_ogw_d16_confirmation.json",
+        "created_utc": "2026-08-04T17:32:43Z"
+      },
+      {
+        "artifact": "protocols/mechanism_v2_6_freeze_receipt.json",
+        "created_utc": "2026-08-04T17:46:59Z"
+      },
+      {
+        "artifact": "results/mechanism_v2_6_morpho_source_receipt.json",
+        "created_utc": "2026-08-04T17:51:29Z"
+      },
+      {
+        "artifact": "data/interim/mechanism_v2_6_morpho/RUN_STARTED.json",
+        "created_utc": "2026-08-05T00:05:35Z"
+      },
+      {
+        "artifact": "data/interim/mechanism_v2_6_morpho/COMPONENT_PACKET_INVENTORY.json",
+        "created_utc": "2026-08-05T00:05:37Z"
+      }
+    ],
+    "current_terminal_state": {
+      "matching_writer_process_observed": false,
+      "morpho_run_started_marker_exists": true,
+      "morpho_packet_inventory_exists": true,
+      "morpho_complete_marker_exists": false,
+      "morpho_final_result_exists": false,
+      "morpho_failure_receipt_exists": false,
+      "morpho_result_audit_exists": false,
+      "partial_console_progress_is_not_result_evidence": true
+    }
+  },
+  "artifact_hashes": {
+    "protocols/mechanism_v2_5_invalidation_receipt.json": "71c96b4444f951f2c4bdfc181cf0c05847ce62d2f03434f2daff55d2559308a5",
+    "protocols/mechanism_v2_6.json": "7bd859e25d3af74775ddb8943471ea331e0b913cdf30a36d91056b1fee0c87bd",
+    "protocols/mechanism_v2_6_data_manifest.json": "e99c9494a9c5a4e61cb8946ab79e4ed36ef65827f7107b38fd1a6cf6529e422e",
+    "protocols/mechanism_v2_6_result_schema.json": "a5473b54f486e5dfc811d862db16d66138011bcb4149eb8049908ca74a948b90",
+    "protocols/mechanism_v2_6_freeze_receipt.json": "635c2c69252754d5cfad76dd0c984549ae49a84f7c6fbeeee1e9e91a60514ef5",
+    "results/mechanism_v2_6_terminal_hold_preaccess_test.json": "2be1bcf19fa20a3da563b42c3923066799cd08cb0c5d5c968a80833fbabdb2c1",
+    "results/mechanism_v2_6_external_schema_gate.json": "34103f5ccbd1ee7d7b71839ecf4eb949a6883295a83af6208f5c59bcce66b11b",
+    "results/mechanism_v2_6_morpho_source_receipt.json": "6f12283f1b1f294310fb524a87c64fba5576f152598904556a715946796c7cc3",
+    "results/mechanism_v2_6_ogw_d16_confirmation.json": "7e4523da8b648dcdd4b3cb7bfe3a572a9f76dca44880087607127addd51a0977",
+    "data/interim/mechanism_v2_6_morpho/RUN_STARTED.json": "a76199ba1e50aabe8a32ca1295481ae19575384c37108d07d76c1da7e99807b9",
+    "data/interim/mechanism_v2_6_morpho/COMPONENT_PACKET_INVENTORY.json": "13bcd2eb981b82251c76285585185df1cf72e4eb6cb63eadccfda543c087862c",
+    "src/experiments/e9_mechanism_v2_6_morpho.py": "bb2fa7764d10201b88f0e87891b53d6cf4ad2cd818b8a93744c8967ebe1e7734",
+    "src/experiments/mechanism_v2_6_successor.py": "fecb72f46e314af0202f6d393e3a77d058317342718e3b6e9c29ccbfbc2d0e60",
+    "src/experiments/test_mechanism_v2_6_terminal_hold.py": "482ce2a1719040814a662b20af0efae4fb60fc63a66de652d75e315901a5dad1",
+    "src/methods/mechanism_v2.py": "fe2ef289c7680df22a5d40bb556778e96dbc975660354e071ea28685e090059f",
+    "src/methods/strict_codecs.py": "66cb4f3f6dd9bbb081ea04795f6b925e29af323bdd7aa7db4dd9e21b151178ec"
+  },
+  "source_integrity_as_declared_by_v2_6_source_receipt": {
+    "MORPHO_FOD7.h5_sha256": "86fc04cf07bbb165974c7095dc384bcf3ff1ff6b14d89c7e902b3ace1311499e",
+    "ReadMe.pdf_sha256": "fd76d00deab5d61744b9969f4921e6a1d4375685ddaa0f9334738c539875251a",
+    "EXAMPLE_READ_DATA.m_sha256": "4956759ab73e5d1cd9353a3a1ecba4cef5e81c83e91acb8034ee369004e922a5",
+    "verification_scope": "Referenced from the existing v2.6 source receipt; raw MORPHO payloads were not rehashed while writing this invalidation receipt."
+  },
+  "evidence_boundary": {
+    "v2_6_d16_output_is_historical_integrity_evidence_only": true,
+    "v2_6_terminal_hold_receipt_is_not_mechanism_performance_evidence": true,
+    "v2_6_external_schema_gate_is_not_external_confirmation_evidence": true,
+    "morpho_waveform_access_is_treated_as_consumed": true,
+    "morpho_is_not_an_untouched_blind_confirmation_source_for_any_successor": true,
+    "morpho_auc_reconstruction_loss_control_injection_or_partial_grid_claims_are_not_eligible": true,
+    "d16_and_morpho_must_not_be_resumed_rerun_overwritten_or_recast": true,
+    "d04_d24_remain_discovery_only": true,
+    "e7_e8_remain_independent_strict_negative_result_evidence": true,
+    "pod_field_far_hardware_power_realtime_and_deployment_claims_remain_prohibited": true
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.7",
+    "no_successor_waveform_access_is_authorized_by_this_receipt": true,
+    "new_confirmation_source_requirement": "A successor must use a source that is demonstrably unaccessed by v2.6 and must assign its role before any waveform or scoring access. D12, D16, MORPHO, and D04/D24 are ineligible as fresh confirmation sources.",
+    "freeze_requirement": "Before any successor waveform access, freeze and hash-bind the protocol, data manifest, result schema, source-receipt writer, schema gate, runner, independent read-only auditor, terminal-hold implementation, shared methods, environment lock, and tests.",
+    "resume_requirement": "A successor may permit resume only through a pre-registered attempt identifier, exclusive writer lock, atomic hash-chained checkpoints, deterministic work order, input and code hash checks, no final result, confirmed dead writer, and a passing checkpoint audit. Otherwise it must invalidate rather than rerun.",
+    "audit_requirement": "The auditor must exist before freezing, reject missing or mismatched fields and hashes, reject time-order violations, reject incomplete or duplicate grid cells, reject split leakage and consumed-source reuse, and emit a separate immutable audit receipt.",
+    "preservation_requirement": "Do not delete, move, rename, overwrite, or resume the v2.6 MORPHO interim namespace. Preserve all v2.6 artifacts as invalidation history."
+  }
+}

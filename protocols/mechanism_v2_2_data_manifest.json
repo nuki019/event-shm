@@ -1,0 +1,23 @@
+{
+  "manifest_id": "mechanism-v2.2-data-manifest-overlay-v1",
+  "manifest_schema": "mechanism-v2-successor-overlay-v1",
+  "inherits": {
+    "manifest_path": "protocols/mechanism_v2_1_data_manifest.json",
+    "manifest_sha256": "f14f538cef3a52f206ac9d6d0fdfaf73efced06e464086a653a95f70283506a3"
+  },
+  "predecessor_invalidation": {
+    "receipt_path": "protocols/mechanism_v2_1_invalidation_receipt.json",
+    "receipt_sha256": "f42245c9bb8be2a3b7b4fb67aeea5b1de0d408caa208fd18af5aaac3de595e34",
+    "required_boundary": "No v2.1 schema decision, confirmation grid, score, or conclusion is reusable. Metadata-only hierarchy evidence may be used only to specify the successor mapping."
+  },
+  "successor_access_policy": {
+    "all_waveform_access_requires_successor_receipt": true,
+    "predecessor_receipts_are_integrity_history_only": [
+      "results/mechanism_v2_1_ogw_d12_access_receipt.json",
+      "results/mechanism_v2_1_ogw_d16_access_receipt.json",
+      "results/mechanism_v2_1_coqtel_access_receipt.json"
+    ],
+    "coqtel_metadata_inspection_under_v2_1": "Recorded only in the v2.1 invalidation receipt; no array values, scores, labels-for-scoring, cache, or confirmation result were accessed."
+  },
+  "data_set_overrides": {}
+}

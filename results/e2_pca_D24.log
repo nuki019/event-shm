@@ -3,3 +3,6 @@ rate=0.0435 AUC_event=0.846 AUC_pca=0.842
 rate=0.0162 AUC_event=0.846 AUC_pca=0.844
 rate=0.0076 AUC_event=0.890 AUC_pca=0.845
 rate=0.0031 AUC_event=0.914 AUC_pca=0.845
+rate=0.0009 AUC_event=0.882 AUC_pca=0.834
+rate=0.0003 AUC_event=0.691 AUC_pca=0.797
+saved

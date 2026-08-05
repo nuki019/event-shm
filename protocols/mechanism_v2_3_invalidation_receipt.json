@@ -1,0 +1,51 @@
+{
+  "receipt_id": "mechanism-v2.3-pre-waveform-invalidation-v1",
+  "created_utc": "2026-07-30T02:21:28Z",
+  "invalidated_protocol_id": "mechanism-v2.3",
+  "invalidated_protocol_sha256": "f9a4bea4fd3e1034b4e4a440e65a3ec746a47ea3d501ba24d56d8151b05c42ae",
+  "invalidated_data_manifest_sha256": "c2455f6fe2b9fc1ac2c0843ba343d8fe5ba4973fbdb2575329f97ac24b4e5a3a",
+  "invalidated_freeze_receipt_sha256": "437d381202b97cff3c8960b0af397e1cc493cb37f2c3211f7803be68ab7be78c",
+  "failure": {
+    "stage": "after v2.3 source-integrity receipts for D12, D16, MORPHO, and COQTEL and after the COQTEL metadata-only hierarchy gate; before MORPHO HDF5 metadata inspection, waveform-array dereference, signal metric, label-for-scoring access, cache construction, E9 confirmation, or audit output",
+    "root_cause": "The frozen v2.3 successor protocol declares an auditable hierarchical mapping only for coqtel_corrosion. It has no predeclared external_schema_mappings entry or version-bound metadata-only gate for morpho_fod7, despite MORPHO being the primary external confirmation dataset. Running a MORPHO metadata gate would therefore require a post-freeze mapping or runner change.",
+    "deterministic_evidence": {
+      "resolved_external_schema_mapping_keys": ["coqtel_corrosion"],
+      "missing_required_dataset_mapping": "morpho_fod7",
+      "generic_schema_runner_requires_a_frozen_semantic_mapping": true
+    }
+  },
+  "artifact_hashes": {
+    "results/mechanism_v2_3_ogw_d12_access_receipt.json": "dffa072d8f5ae543cd40cc0e7eec4761494ef4ae634dbf4dd332330caa8d6941",
+    "results/mechanism_v2_3_ogw_d16_access_receipt.json": "a8ce58ea28a3e0aa41c455863c3e65aab8bf3aa53dcdc02b985d3b3da2a0c553",
+    "results/mechanism_v2_3_morpho_access_receipt.json": "c59d25397a9bb4642bb2b54f875cfb13a76cd42bcf8e7da4a906f05c39ec2cfe",
+    "results/mechanism_v2_3_coqtel_access_receipt.json": "d45a00a2780a8b753ceebd088238a7307374b95003a0353502d2e7eaa89d1edd",
+    "results/mechanism_v2_3_coqtel_schema_gate.json": "c6761809fe63495aa90bc4184f4cfe316957221fc7c2562b03657747dbd251f0"
+  },
+  "evidence_boundary": {
+    "v2_3_source_receipts_written": {
+      "ogw_d12": true,
+      "ogw_d16": true,
+      "morpho": true,
+      "coqtel": true
+    },
+    "source_hashing_decoded_or_dereferenced_waveform_values": false,
+    "coqtel_hdf5_metadata_only_gate_written": true,
+    "coqtel_hdf5_waveform_values_read": false,
+    "coqtel_hdf5_metadata_values_read": false,
+    "morpho_hdf5_metadata_inspected": false,
+    "morpho_hdf5_waveform_values_read": false,
+    "any_signal_metric_computed": false,
+    "any_label_read_for_scoring": false,
+    "any_event_cache_written": false,
+    "any_e9_confirmation_result_written": false,
+    "any_mechanism_result_audit_written": false,
+    "d04_or_d24_opened_for_selection_or_confirmation": false
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.4",
+    "keep_mechanism_v2_3_protocol_manifest_freeze_and_outputs_immutable": true,
+    "v2_3_source_receipts_are_integrity_history_only": true,
+    "v2_3_coqtel_schema_gate_is_metadata_mapping_provenance_only_not_a_reusable_schema_decision": true,
+    "requirement": "Before any successor waveform access or score, establish a fully auditable MORPHO metadata mapping and runner path, freeze the successor, and re-bind every source used by that successor to new MD5/SHA receipts. Do not treat this defect as a MORPHO schema failure and do not activate COPV."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "receipt_id": "mechanism-v2-pre-scoring-invalidation-v1",
+  "created_utc": "2026-07-30T00:13:08Z",
+  "invalidated_protocol_id": "mechanism-v2",
+  "invalidated_protocol_sha256": "33c0144d9d421b9e862ca54e41eb263f8c5ca8f163a2b1180b811379ddb24847",
+  "invalidated_data_manifest_sha256": "99923d283daebaa86f2759af3e58817af75e3f0fb697513f731924cf1254ab06",
+  "invalidated_source": {
+    "path": "src/experiments/download_mechanism_v2_data.py",
+    "sha256": "3d57e0afeb18d65eee15eba4ff27b8ff154c558531520dcee5be4ea46914c898"
+  },
+  "failure": {
+    "stage": "post-MD5/SHA archive verification, before receipt serialization and before waveform-array access",
+    "reproducible_invocations": [
+      "python src/experiments/download_mechanism_v2_data.py --dataset ogw_cfrp_temperature_dam_d12 --destination data\\raw --receipt results\\mechanism_v2_ogw_d12_download_receipt.json",
+      "python src/experiments/download_mechanism_v2_data.py --dataset coqtel_corrosion --destination data\\external\\mechanism_v2 --receipt results\\mechanism_v2_coqtel_download_receipt.json"
+    ],
+    "exception": "ValueError: relative final_path cannot be made relative_to absolute workspace ROOT",
+    "root_cause": "The frozen downloader accepts a relative --destination but constructs a relative final path, then calls final_path.relative_to(ROOT)."
+  },
+  "evidence_boundary": {
+    "new_waveform_arrays_opened": false,
+    "signal_metrics_computed": false,
+    "labels_read_for_scoring": false,
+    "confirmation_results_written": false,
+    "archive_bytes_hashed_for_integrity_only": [
+      "OGW_CFRP_Temperature_dam_D12.zip",
+      "Essai_Corrosion1.h5"
+    ]
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.1",
+    "keep_mechanism_v2_and_its_manifest_immutable": true,
+    "fix": "Resolve and constrain CLI paths to the workspace before producing receipt-relative paths.",
+    "restart_policy": "Re-verify all archives under the successor receipt before any waveform-array access; no v2 result may be recovered or reused."
+  }
+}

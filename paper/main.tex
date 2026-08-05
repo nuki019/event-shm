@@ -1,9 +1,8 @@
 % !TeX program = xelatex
 \documentclass[11pt,a4paper]{article}
 
-% ---- XeTeX fonts & languages ----
 \usepackage{fontspec}
-\usepackage{xeCJK}              % Chinese support where needed
+\usepackage{xeCJK}
 \setmainfont{TeX Gyre Termes}
 \setsansfont{TeX Gyre Heros}
 \setmonofont{TeX Gyre Cursor}
@@ -11,17 +10,12 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{subcaption}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 \usepackage{geometry}
 \geometry{margin=2.5cm}
 \usepackage{siunitx}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
 
-\title{Event-Based Guided Wave Structural Health Monitoring:\
-Separating Temperature Drift from Damage by the Temporal Structure\
-of Send-on-Delta Event Streams}
+\title{A Strict Evaluation of Send-on-Delta Eventization for Guided-Wave Structural Health Monitoring}
 \author{Anonymous}
 \date{\today}
 
@@ -29,28 +23,27 @@ of Send-on-Delta Event Streams}
 \maketitle
 
 \begin{abstract}
-Long-term guided-wave structural health monitoring (SHM) produces vast
-continuous data streams although ``nothing happens'' most of the time.
-We introduce \emph{send-on-delta} (SoD) event-based acquisition to
-guided-wave SHM for the first time, at two levels: (A) level-crossing
-events of the within-record compensated residual, and (B) SoD events of
-the across-record damage-index series. Temperature drift and damage
-imprint fundamentally different spatio-temporal event patterns---slow,
-globally coherent versus fast, path-localized bursts---enabling
-discrimination \emph{without explicit temperature compensation}.
-On the public OGW CFRP dataset we show that classical compensation
-inflates healthy residuals $7.0\times$ outside its temperature
-range, and that level-crossing eventization retains detection of weak
-surface-disc damage at $\leq 10^{-3}$ of the raw data rate
-(D04 AUC $1.000$ at $\approx 5000\times$ compression), beating
-matched-rate uniform decimation and SVD/PCA compression
-($0.950$ vs.\ $0.825$). The event stream's structure alone separates
-temperature from damage (CV AUC $0.814$) and carries a directional
-signature (CV $0.69$). On 4.5 years of outdoor aluminum data, level-B
-eventization compresses the stream while keeping temperature events
-globally coherent. Event-based acquisition is a viable, complementary
-alternative to temperature compensation and post-hoc compression for
-resource-constrained long-term guided-wave monitoring.
+Send-on-delta (SoD) eventization is a sparse representation that may reduce
+the stored content of a compensated guided-wave residual. Whether it remains
+competitive after exact byte accounting and frozen operating-point selection
+is an empirical question. We define a strict post-compensation software
+evaluation with date-separated fitting, healthy-only validation selection,
+actual serialized packets, and hard record capacities of 2,048, 4,096, 8,192,
+and 16,384 bytes. Bounded SoD is compared with uniform linear interpolation,
+PCA, and Haar discrete wavelet coding on held-out records from the public
+OGW data. We also replay two alarm features in a cold-start protocol: all
+parameters and a nine-value threshold grid are fitted on healthy March 2021
+records before the complete April 2021 stream is scored. At every declared
+capacity and for both D04 and D24 conditions, bounded SoD has lower held-out
+record AUC than the three general codecs. Across the frozen alarm grids, the
+two features produce 0.897--5.144 false calls per day, first newly started
+post-onset alarms 2,556--2,585 minutes after the labelled transition, and
+2.6--25.6\% post-onset record exceedance coverage. Thus, within this public
+data and software-only scope, SoD is neither the preferred codec among the
+tested alternatives nor evidence of an operational alarm. The contribution
+is a reproducible negative-result audit that prevents payload undercounting,
+label leakage, and post-hoc selection from being mistaken for compression or
+monitoring evidence.
 \end{abstract}
 
 \section{Introduction}

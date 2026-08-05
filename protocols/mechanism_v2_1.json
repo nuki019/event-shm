@@ -1,0 +1,185 @@
+{
+  "protocol_id": "mechanism-v2.1",
+  "created_utc": "2026-07-30",
+  "status": "frozen_before_new_waveform_access",
+  "purpose": "Successor to the pre-scoring-invalidated mechanism-v2 protocol. Test the predeclared mechanisms by which hard-capped level-crossing eventization preserves or loses guided-wave information without changing the original grid or evidence boundary.",
+  "successor_of": {
+    "protocol_id": "mechanism-v2",
+    "protocol_sha256": "33c0144d9d421b9e862ca54e41eb263f8c5ca8f163a2b1180b811379ddb24847",
+    "invalidation_receipt": "protocols/mechanism_v2_invalidation_receipt.json",
+    "reason": "Receipt serialization failed for documented relative destination paths before any waveform-array access or score computation."
+  },
+  "global_rules": {
+    "system_boundary": "Post-compensation software representation only. No MCU, ADC, acquisition power, embedded latency, energy, deployment, calibrated field FAR, or probability-of-detection claim is permitted.",
+    "unit_of_analysis": "monitoring record; paths, receivers, and repeat waveforms are components of a record and never independent samples",
+    "random_seed": 20260729,
+    "test_labels_forbidden_for": [
+      "quantizer fitting",
+      "event delta selection",
+      "capacity selection",
+      "event feature selection",
+      "aggregation-head selection",
+      "waveform metric selection",
+      "external dataset replacement",
+      "split construction",
+      "control-injection grid selection"
+    ],
+    "discovery_data": {
+      "datasets": ["OGW_D04", "OGW_D24"],
+      "role": "mechanism_discovery_only",
+      "prohibited_uses": [
+        "select any configuration",
+        "support a new confirmation claim",
+        "change conclusion strength",
+        "replace a failed confirmation dataset"
+      ]
+    },
+    "predecessor_integrity_only_access": "D12 and COQTEL C1 archive bytes were hashed by the invalidated v2 receipt writer; no HDF5 waveform dataset, signal metric, label-for-scoring, cache, or confirmation output was opened or computed.",
+    "confirmation_rule": "D12/D16 and an eligible external dataset are scored once under this successor's frozen grid. A code-invalidating defect requires an explicit invalidation receipt and a versioned successor protocol, never a silent rerun.",
+    "historical_boundary": "E7 and E8 remain immutable historical evidence. The aluminum 2021_03 to 2021_04 replay remains E8 only; 2021_06, 2022_07, and 2022_08 are ineligible for a healthy-to-damage confirmation claim."
+  },
+  "ogw_representation_contract": {
+    "source": "same 40 kHz high-pass, unit-energy-normalized OBS+BSS residual representation as strict-evaluation-v1",
+    "frequency_khz": 40,
+    "sampling_rate_hz": 10000000,
+    "healthy_train_dates": ["20181213", "20181214", "20181215", "20181216", "20181217"],
+    "healthy_validation_dates": ["20181218", "20181219"],
+    "healthy_test_dates": ["20181220", "20181221", "20181222"],
+    "baseline_pool": {
+      "source": "healthy training dates only",
+      "count": 32,
+      "selection": "temperature-stratified deterministic selection",
+      "stretch_factors": [0.985, 0.9875, 0.99, 0.9925, 0.995, 0.9975, 1.0, 1.0025, 1.005, 1.0075, 1.01, 1.0125, 1.015]
+    },
+    "quantization": {
+      "source_representation": "signed 16-bit fixed point",
+      "scale_fit": "maximum absolute residual value over healthy training residuals only",
+      "saturation_reporting": "report every split and condition"
+    },
+    "payload_accounting": {
+      "capacity_bytes_per_record": [2048, 4096, 8192, 16384],
+      "capacity_allocation": "equal per-path cap including variable-length framing; choose the largest integer path cap whose framed 66-path worst-case total does not exceed the record capacity",
+      "charge": "actual serialized path timestamp gaps, signed level changes, path framing, and full record packet bytes",
+      "report": ["bytes_per_record", "bits_per_original_sample", "decoder_model_bytes_separately"],
+      "cap_decoder_behavior": "stop before the first event that would exceed the path cap and hold the final transmitted quantized level for the remaining samples"
+    }
+  },
+  "eventization_grid": {
+    "delta_codes": [1, 8, 64, 512, 4096, 8192, 16384, 32767],
+    "event_features": [
+      "event_density",
+      "signed_total_variation",
+      "event_time_centroid",
+      "event_time_spread",
+      "cap_hold_fraction"
+    ],
+    "diagnostic": {
+      "fit_data": "healthy training records only",
+      "normalization": "per-feature median and MAD with a 1e-12 scale floor",
+      "heads": ["global", "max_path"],
+      "head_reporting": "always report both heads; neither may be selected after scoring"
+    },
+    "waveform_metrics": {
+      "all_required": [
+        "waveform_correlation_mean",
+        "relative_error_mean",
+        "peak_cross_correlation_delay_samples_median",
+        "peak_cross_correlation_delay_samples_mean_absolute",
+        "frequency_band_retention",
+        "event_density",
+        "cap_hold_fraction"
+      ],
+      "frequency_bands_as_nyquist_fractions": [[0.004, 0.012], [0.012, 0.024], [0.024, 0.05], [0.05, 0.1]],
+      "peak_cross_correlation_max_lag_fraction_of_record": 0.02,
+      "aggregation": "record-level deterministic path aggregation defined in src.methods.mechanism_v2.record_waveform_metrics"
+    },
+    "loss_decomposition": {
+      "quantization_only": "input compared with unbounded quantized-level reconstruction",
+      "hard_cap_truncation": "unbounded quantized-level reconstruction compared with bounded decoded reconstruction",
+      "score_head_mismatch": "healthy-normalized dense/reconstructed waveform energy and the fixed event-native score are reported without labels"
+    },
+    "representation_propositions": {
+      "quantization_collision": "When two code paths have identical quantized level sequences, their SoD event time/level streams and serialized payload are identical. A canonical nonzero integer sub-level probe is reported as not applicable for delta_codes less than or equal to two.",
+      "terminal_hold": "After a hard path cap rejects an event, suffix waveform differences that do not alter the already serialized prefix cannot pass to the decoder; canonical divergent suffix evidence is required for every capacity and delta."
+    }
+  },
+  "healthy_control_injections": {
+    "source": "chronologically evenly spaced healthy training records only",
+    "record_count": 3,
+    "path_indices": [0, 22, 43, 65],
+    "families": {
+      "sparse_abrupt": {
+        "amplitude_delta_multipliers": [1.0, 2.0, 4.0],
+        "width_fraction_of_record": [0.0001, 0.001],
+        "position_fraction": [0.25, 0.5, 0.75],
+        "phase_shift_samples": [0]
+      },
+      "smooth_subthreshold": {
+        "amplitude_delta_multipliers": [0.1, 0.25, 0.45],
+        "width_fraction_of_record": [0.01, 0.05, 0.1],
+        "position_fraction": [0.25, 0.5, 0.75],
+        "phase_shift_samples": [0]
+      },
+      "phase_shift": {
+        "amplitude_delta_multipliers": [0.0],
+        "width_fraction_of_record": [1.0],
+        "position_fraction": [0.0],
+        "phase_shift_samples": [1, 4, 16]
+      }
+    },
+    "interpretation": "Representation probe only. It neither creates real damage evidence nor supports an operational or deployment claim. Combinations with no representable nonzero integer sub-level perturbation are retained with a not_applicable reason."
+  },
+  "statistics": {
+    "binary_labeling": "Official healthy stage is 0; official degradation, corrosion, damaged, or failed stage is 1. Mixed-label groups are invalid for group bootstrap.",
+    "group_bootstrap": {
+      "replicates": 1000,
+      "confidence_interval": "percentile 95%",
+      "unit": "predeclared campaign/block or monitoring record group, never path/receiver/repeat waveform"
+    },
+    "report": ["ROC AUC", "group bootstrap interval", "paired group-resampled AUC difference"],
+    "single_transition_metrics": "If a single onset is reported, use only false calls/day, new-alarm delay, and coverage. Do not call it probability of detection or calibrated field FAR."
+  },
+  "external_data_policy": {
+    "morpho": {
+      "role": "primary_external_confirmation",
+      "doi": "10.5281/zenodo.14627730",
+      "schema_gate": [
+        "sortable official fatigue-block metadata",
+        "official healthy-stage metadata",
+        "official degradation or failure-stage metadata",
+        "ten repeats from one fatigue block remain in one split",
+        "raw waveform path, sample axis, sampling rate, and measurement UID are recoverable"
+      ],
+      "split": "chronological contiguous official fatigue blocks; healthy calibration/validation blocks precede held-out healthy and degradation blocks; no random repeat split"
+    },
+    "coqtel": {
+      "role": "material_independent_confirmation",
+      "doi": "10.5281/zenodo.14193336",
+      "schema_gate": [
+        "official time or corrosion-stage metadata",
+        "official experiment identifier for both experiments",
+        "raw waveform path, sample axis, sampling rate, and measurement UID are recoverable",
+        "a deterministic campaign-block grouping can be formed before waveform scoring"
+      ],
+      "split": "chronological within experiment/campaign-block; adjacent 10-second records never become independent samples"
+    },
+    "copv": {
+      "role": "schema_failure_fallback_only",
+      "activation": "permitted only when MORPHO or COQTEL fails its schema gate before any waveform scoring; record the failed gate and activation time",
+      "prohibited_activation": ["after any signal metric", "after any AUC", "after any event score", "because an eligible dataset performs poorly"]
+    }
+  },
+  "required_result_invariants": [
+    "protocol_sha256",
+    "data_manifest_sha256",
+    "data_role",
+    "archive_and_content_hashes",
+    "schema_gate_or_exclusion_reason",
+    "disjoint_group_split",
+    "complete_capacity_delta_feature_head_injection_grid",
+    "cap_evidence",
+    "complete_metrics",
+    "label_access_and_selection_receipt"
+  ],
+  "go_no_go": "A high-level mechanism submission requires D12/D16 and at least one external dataset to pass the predeclared schema gate and finish one once-only confirmation. Otherwise retain a rigorous negative-result audit for a standard SHM venue."
+}

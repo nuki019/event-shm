@@ -1,0 +1,68 @@
+{
+  "receipt_id": "mechanism-v2-pre-access-freeze-v1",
+  "created_utc": "2026-07-29T13:55:41Z",
+  "protocol_path": "protocols\\mechanism_v2.json",
+  "protocol_sha256": "33c0144d9d421b9e862ca54e41eb263f8c5ca8f163a2b1180b811379ddb24847",
+  "data_manifest_path": "protocols\\mechanism_v2_data_manifest.json",
+  "data_manifest_sha256": "99923d283daebaa86f2759af3e58817af75e3f0fb697513f731924cf1254ab06",
+  "code_revision_at_freeze": "9f6124cd50e37440286fb3937df1a637a47da45e",
+  "frozen_source_files": [
+    "src/methods/strict_codecs.py",
+    "src/methods/mechanism_v2.py",
+    "src/data/mechanism_hdf5_schema.py",
+    "src/experiments/audit_mechanism_v2.py",
+    "src/experiments/e9_mechanism_v2_ogw.py",
+    "src/experiments/download_mechanism_v2_data.py"
+  ],
+  "new_waveform_access_before_receipt": false,
+  "datasets_at_freeze": [
+    {
+      "dataset_id": "ogw_cfrp_temperature_udam",
+      "role": "preexisting_calibration_and_healthy_reference",
+      "access_state_at_freeze": "preexisting_e7_input"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d04",
+      "role": "mechanism_discovery_only",
+      "access_state_at_freeze": "already_observed_historical_discovery"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d24",
+      "role": "mechanism_discovery_only",
+      "access_state_at_freeze": "already_observed_historical_discovery"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d12",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_freeze": "not_downloaded"
+    },
+    {
+      "dataset_id": "ogw_cfrp_temperature_dam_d16",
+      "role": "same_plate_blind_confirmation",
+      "access_state_at_freeze": "not_downloaded"
+    },
+    {
+      "dataset_id": "morpho_fod7",
+      "role": "primary_external_confirmation",
+      "access_state_at_freeze": "not_downloaded"
+    },
+    {
+      "dataset_id": "coqtel_corrosion",
+      "role": "material_independent_confirmation",
+      "access_state_at_freeze": "not_downloaded"
+    },
+    {
+      "dataset_id": "copv_schema_failure_fallback",
+      "role": "schema_failure_fallback_only",
+      "access_state_at_freeze": "not_downloaded"
+    }
+  ],
+  "frozen_source_sha256": {
+    "src/methods/strict_codecs.py": "66cb4f3f6dd9bbb081ea04795f6b925e29af323bdd7aa7db4dd9e21b151178ec",
+    "src/methods/mechanism_v2.py": "fe2ef289c7680df22a5d40bb556778e96dbc975660354e071ea28685e090059f",
+    "src/data/mechanism_hdf5_schema.py": "1491b9a17bcd33c61b5dcc6aba188b9827a05b6921ba27fef2319be12c18dd3c",
+    "src/experiments/audit_mechanism_v2.py": "6f91719149074e92b8ddbce585cc9c9c864d5067e2caebeba05237714385858b",
+    "src/experiments/e9_mechanism_v2_ogw.py": "e00f71ac398fe2a11df3ba12a12e204133df7d7bb33901ea7c079e201b9e046b",
+    "src/experiments/download_mechanism_v2_data.py": "3d57e0afeb18d65eee15eba4ff27b8ff154c558531520dcee5be4ea46914c898"
+  }
+}

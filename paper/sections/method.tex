@@ -1,74 +1,62 @@
-\subsection{Two-level send-on-delta eventization}
-Let $x_p^{(k)}(t)$ be the guided-wave record of path $p$ at monitoring
-epoch $k$, sampled at $f_s$. After temperature compensation against a
-baseline $\hat{x}_p^{(k)}$ (Section~\ref{sec:comp}), we form the
-residual $r_p^{(k)}(t) = x_p^{(k)}(t) - \hat{x}_p^{(k)}(t)$.
+\subsection{Scope and shared representation}
+The system boundary is post-compensation waveform coding. Each method receives
+the same 40~kHz, high-pass, unit-energy-normalized OBS+BSS residual record
+and reconstructs it in software. The benchmark does not measure original ADC
+acquisition, MCU execution time, energy, latency, packet loss, or embedded
+memory. A signed-16-bit quantizer is fitted from the maximum absolute healthy
+training residual; its scale is then fixed for validation, test, D04, and
+D24 records.
 
-\paragraph{Level A: within-record events.}
-SoD sampling of $r$ with threshold $\delta$: an event
-$e = (t_i, s_i)$ is emitted at sample $t_i$ whenever $r(t_i)$ crosses
-the last emitted level by $\pm\delta$, with sign
-$s_i = \mathrm{sgn}(\Delta r)$. Formally, with quantized level
-$q(t) = \lfloor r(t)/\delta + 1/2 \rfloor$, an event is emitted whenever
-$q$ changes (Algorithm~\ref{alg:sod}). A perfect compensation of a
-healthy record yields $r \approx 0$ and hence almost no events; a
-scattering wavepacket from damage produces a time-localized cluster of
-events whose arrival time encodes the damage--path geometry.
+\subsection{Hard-cap codecs}
+Each monitoring record contains 66 paths. The payload metric is the actual
+serialized byte length of the full record packet, not a count of retained
+samples. We compare four codecs.
 
-\begin{algorithm}[t]
-\caption{Send-on-delta eventization (level A)}
-\label{alg:sod}
-\begin{algorithmic}[1]
-\Require residual $r[0..N{-}1]$, threshold $\delta>0$
-\State $q_{\text{last}} \gets \lfloor r[0]/\delta + 1/2 \rfloor$
-\For{$i = 1$ \textbf{to} $N-1$}
-  \State $q \gets \lfloor r[i]/\delta + 1/2 \rfloor$
-  \If{$q \neq q_{\text{last}}$}
-    \State emit event $(t{=}i,\ \mathrm{sgn}(q-q_{\text{last}}),\ \text{levels } q_{\text{last}}{+}1..q)$
-    \State $q_{\text{last}} \gets q$
-  \EndIf
-\EndFor
-\end{algorithmic}
-\end{algorithm}
+\paragraph{Bounded SoD.}
+For each path, SoD writes an initial quantized level followed by variable
+length timestamp gaps and signed level changes. A target-dependent path
+budget includes the path framing. Encoding stops only before an event that
+would exceed that budget, and the decoder holds the final transmitted level
+for the remaining samples. Thus every bounded packet remains decodable and
+has a proven record-level upper bound.
 
-\paragraph{Level B: across-record events.}
-Each record is summarized by a damage index
-$\mathrm{DI}_p(k)$ (Section~\ref{sec:di}). SoD eventization of the
-slowly varying series $\mathrm{DI}_p(k)$ with threshold $\delta_B$
-emits an event only when the DI changes materially. A 4.5-year stream
-of $\sim 10^6$ records per path compresses to $10^2$--$10^4$ events, a
-$10^3$--$10^4\times$ reduction.
+\paragraph{Uniform linear interpolation, PCA, and Haar DWT.}
+The uniform codec stores a fixed-stride sequence and reconstructs it by
+linear interpolation. PCA uses a basis fitted from healthy training records
+only, while Haar DWT keeps a fixed number of transform coefficients. For
+these three codecs, only candidates with a proven packet bound no greater
+than the target are eligible. Decoder model bytes, including the PCA basis,
+are reported separately from the per-record payload rather than silently
+treated as free.
 
-\subsection{Temperature compensation (baseline)}
-\label{sec:comp}
-We use OBS+BSS \cite{croxford2010}: select the baseline minimizing
-residual energy from a pool (OBS), then stretch it in time by a factor
-$\alpha$ minimizing residual energy (BSS). Signals are high-passed
-(20~kHz) and per-path energy-normalized first. Importantly, level-B
-eventization does \emph{not} depend on within-record compensation
-quality, providing an independent detection channel.
+\subsection{Codec selection and scoring}
+The protocol fixes capacities of 2,048, 4,096, 8,192, and 16,384 bytes per
+record. For fixed-packet codecs, the eligible configuration closest to the
+target bound is selected. For bounded SoD, healthy-validation mean payload
+closest to the target is selected; a payload tie is resolved by
+code-domain reconstruction MSE on eight chronologically spaced healthy
+validation records, followed by the frozen candidate order. No damage labels
+or test records enter this selection.
 
-\subsection{Damage indices}
-\label{sec:di}
-We use the normalized residual energy
-$\mathrm{DI}_p(k) = \|r_p^{(k)}\|_2^2 \,/\, \|x_p^{(k)}\|_2^2$
-and, for eventized records, the energy of the zero-order-hold
-reconstruction of the residual from its SoD events.
+Each decoded record is summarized by residual reconstruction energy aggregated
+over all paths. We compute held-out record ROC AUC and a stratified bootstrap
+95\% interval. As a temperature-control diagnostic, healthy and damage
+records are matched one-to-one by temperature using a Hungarian assignment,
+with no record reuse and a maximum permitted difference of
+0.25~$^\circ$C. Matching is reported alongside, rather than substituted for,
+the full record-level AUC.
 
-\subsection{Temperature--damage discrimination from event structure}
-\label{sec:disc}
-Two scalar statistics of the per-record event counts
-$\{n_p\}_{p=1}^{P}$ across the $P$ paths capture the physics:
-\begin{itemize}
-\item \emph{Cross-path coherence}
-  $c = \frac{1}{P}\sum_p \mathbb{1}[n_p \geq \theta]$:
-  fraction of paths simultaneously active. Temperature acts globally
-  ($c \to 1$); damage is localized ($c \ll 1$).
-\item \emph{Path-localization index}
-  $\ell = \sum_{p \in \text{top-}10\%} n_p / \sum_p n_p$:
-  concentration of the event mass on a few paths.
-\end{itemize}
-At level B, damage shows a sudden, persistent rise of $\mathrm{DI}_p$
-events on a path subset (high \emph{path-isolation score}, max-path
-minus median-path), whereas temperature produces slow,
-seasonally-correlated events on all paths (low isolation).
+\subsection{Cold-start alarm replay}
+The alarm evaluation uses an independent software replay. A reference bank,
+per-path robust normalization, Level-A SoD deltas, and the complete
+nine-value threshold grid are fitted only from healthy March 2021 data.
+Dense residual energy and Level-A SoD event count are then scored over all
+April 2021 records before labels are read for reporting.
+
+An alarm incident is a run of threshold exceedances with gaps no larger than
+30 minutes. For every frozen threshold, we report false calls per day on the
+labelled healthy April prefix, the delay to the first newly started
+post-onset incident, and post-onset record and day exceedance coverage. An
+incident active before the onset is flagged and cannot be credited as a new
+detection. The single observed labelled transition is therefore not called a
+probability of detection.

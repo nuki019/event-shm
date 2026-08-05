@@ -1,0 +1,34 @@
+{
+  "receipt_id": "mechanism-v2.6-freeze-receipt-v1",
+  "protocol_id": "mechanism-v2.6",
+  "frozen_utc": "2026-08-05",
+  "purpose": "Freeze the protocol, data manifest, and result schema before any new waveform access. A hash mismatch after this point requires a new versioned protocol, never a silent continuation.",
+  "frozen_artifacts": {
+    "protocol": {
+      "path": "protocols/mechanism_v2_6.json",
+      "sha256": "7bd859e25d3af74775ddb8943471ea331e0b913cdf30a36d91056b1fee0c87bd"
+    },
+    "data_manifest": {
+      "path": "protocols/mechanism_v2_6_data_manifest.json",
+      "sha256": "e99c9494a9c5a4e61cb8946ab79e4ed36ef65827f7107b38fd1a6cf6529e422e"
+    },
+    "result_schema": {
+      "path": "protocols/mechanism_v2_6_result_schema.json",
+      "sha256": "a5473b54f486e5dfc811d862db16d66138011bcb4149eb8049908ca74a948b90"
+    }
+  },
+  "predecessor_boundary": {
+    "v2_5_invalidation_receipt": "protocols/mechanism_v2_5_invalidation_receipt.json",
+    "v2_5_invalidation_sha256": "71c96b4444f951f2c4bdfc181cf0c05847ce62d2f03434f2daff55d2559308a5",
+    "d12_status": "retired_consumed",
+    "d12_must_not_be_rerun": true
+  },
+  "immutable_rules": [
+    "These three files and their SHA-256 values are frozen. Any change requires a new protocol_id (e.g., mechanism-v2.6.1 or mechanism-v2.7).",
+    "No waveform value from D16, MORPHO, or COQTEL may be read before this receipt is produced and verified.",
+    "The capacity-aware terminal-hold pre-access test must pass before any result JSON is produced.",
+    "E7 and E8 remain immutable. D04/D24 remain discovery-only.",
+    "D12 remains retired."
+  ],
+  "verification_command": "powershell -Command \"Get-FileHash protocols\\mechanism_v2_6.json -Algorithm SHA256; Get-FileHash protocols\\mechanism_v2_6_data_manifest.json -Algorithm SHA256; Get-FileHash protocols\\mechanism_v2_6_result_schema.json -Algorithm SHA256\""
+}

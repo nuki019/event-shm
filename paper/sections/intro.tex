@@ -1,54 +1,58 @@
-Guided-wave structural health monitoring (SHM) is one of the most
-mature approaches for plate-like structures: a sparse network of
-piezoelectric transducers excites and receives ultrasonic Lamb waves,
-and scattering at damage is detected as a change relative to baseline
-records. Deployed long-term, however, the technique faces two coupled
-problems. First, the \emph{data deluge}: a monitoring system sampling
-continuously over months or years produces gigabytes of records although
-the structure is almost always in its nominal state
-\cite{yang2025dataset}. Second, \emph{environmental variation}---chiefly
-temperature---modifies wave speed, attenuation and transducer coupling
-so strongly that temperature-induced signal changes routinely exceed
-damage-induced ones \cite{croxford2010,clarke2010}.
+Guided-wave structural health monitoring (SHM) relies on repeated waveform
+measurements, yet environmental variation can change the signal relative to a
+baseline. Temperature compensation is therefore an important consideration in
+many guided-wave monitoring workflows \cite{croxford2010}. At the same time,
+storing or transmitting every compensated waveform can be costly. These two
+facts motivate a narrow representation question: after compensation, can a
+sparse event stream retain the information needed for a record-level
+comparison without being given an accounting or selection advantage?
 
-The dominant response to the second problem is \emph{temperature
-compensation}: baseline signal stretch (BSS) and optimal baseline
-selection (OBS) \cite{croxford2010}, physics-based models, and more
-recently learned compensators. The dominant response to the first is
-\emph{post-hoc compression} of the stored records, e.g.\ SVD/PCA-based
-reduction of the long-term data matrix \cite{yang2023compression}. Both
-leave the acquisition itself untouched: every record is sampled
-uniformly at full rate, whether or not it carries information.
+Send-on-delta (SoD) is an established event-based reporting strategy
+\cite{miskowicz2006}. It emits changes rather than a uniformly sampled
+sequence, which makes it a plausible representation for a compensated
+residual. That plausibility alone does not establish a codec advantage.
+Earlier project diagnostics compared SoD with a matched-count
+zero-order-hold baseline, selected thresholds from small sweeps, and used a
+long-term month without a disjoint alarm-calibration period. Those choices
+leave four review-critical questions unresolved: whether timestamps and
+packet framing are charged, whether model side information is visible,
+whether test labels influence selection, and whether a reported alert is
+newly triggered after a future transition.
 
-This paper asks a different question: what if the acquisition itself is
-\emph{event-based}? Neuromorphic vision has shown that send-on-delta
-(SoD) sampling---emitting an event only when the signal changes by a
-threshold $\delta$ \cite{miskowicz2006}---preserves task-relevant
-information at a small fraction of the data rate. Guided-wave SHM is a
-natural candidate: most records are ``nothing happened'', so the
-compensated residual is near zero most of the time and an event-based
-representation should be extremely sparse. More interestingly,
-temperature drift and damage are expected to produce
-\emph{qualitatively different event patterns}. Temperature drift is
-slow and affects all propagation paths coherently; damage appears
-suddenly, persists, and affects only the paths geometrically related to
-its location. This suggests that the \emph{temporal and spatial
-structure of the event stream}---not the compensated amplitude---can
-separate the two, sidestepping explicit temperature compensation.
+This paper asks two testable questions. First, under a fixed per-record byte
+capacity, how does bounded SoD compare with uniform linear interpolation,
+PCA, and Haar discrete wavelet coding on held-out guided-wave records?
+Second, when a cold-start alarm is calibrated only on a healthy month, what
+false-call, newly started alarm-delay, and coverage outcomes appear on the
+following month? These questions do not ask whether SoD is a universal
+replacement for dense acquisition or whether one observed onset estimates a
+population probability of detection.
 
-We make the following contributions:
-\begin{itemize}
-\item[\textbf{C1}] The first send-on-delta eventization of guided-wave
-SHM data, at two levels: within-record level-crossing events of the
-compensated residual (microsecond scale), and across-record SoD events
-of the damage-index series (day/month scale).
-\item[\textbf{C2}] A temperature--damage discrimination mechanism that
-uses only event-stream structure (cross-path coherence and burstiness),
-without explicit temperature compensation, complementary to the
-BSS/OBS paradigm.
-\item[\textbf{C3}] A controlled comparison of acquisition-side
-eventization against post-hoc compression at equal data rate.
-\item[\textbf{C4}] Validation on 4.5 years of real outdoor long-term
-data (rain, snow, $-12$ to $+52\,^\circ$C, sensor drift), a regime in
-which most guided-wave ML methods are never tested.
-\end{itemize}
+Answering them requires protocol rather than model complexity. The unit of
+analysis must be a monitoring record, not individual paths from the same
+record. Codec configurations must be selected without damage labels or test
+records, and packet sizes must be measured after serialization. The alarm
+replay must fit its reference bank, normalization, event delta, and threshold
+grid before the future stream is scored. Finally, a persistent or pre-onset
+alert must not be counted as a new detection.
+
+We address these requirements with a frozen strict evaluation. The codec
+experiment uses date-separated healthy training, validation, and test
+periods, a training-only signed-16-bit residual contract, and four
+predeclared hard capacities. It serializes bounded SoD packets as well as
+uniform, PCA, and Haar packets and reports decoder model bytes separately.
+The alarm experiment calibrates on March 2021, scores all of April 2021
+before labels are read for reporting, and evaluates every one of nine
+March-derived thresholds for both dense residual energy and Level-A SoD
+event count.
+
+The paper makes three contributions. First, it specifies a reproducible
+evaluation protocol that prevents path pseudoreplication, uncharged payload,
+test-set operating-point selection, and label leakage. Second, it reports
+the complete all-capacity codec result: bounded SoD does not lead any tested
+capacity for either D04 or D24. Third, it reports the complete cold-start
+alarm grid without selecting a favourable threshold; the observed
+false-call, delay, and coverage outcomes do not support an operational alarm
+claim. The OGW resource and the long-term guided-wave dataset are public
+data sources documented by Moll et al.\ \cite{moll2019ogw} and Yang et
+al.\ \cite{yang2025dataset}, respectively.

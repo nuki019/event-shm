@@ -1,32 +1,22 @@
-\paragraph{Temperature compensation.}
-The baseline-subtraction framework and its compensation strategies are
-defined by Croxford et al.\ \cite{croxford2010} (BSS/OBS) and Clarke et
-al.\ \cite{clarke2010} for long-term temperature cycling of complex
-structures. Physics-based \cite{rose2014} and learning-based
-compensators followed. Our method is complementary: rather than
-compensating temperature away, we exploit the fact that temperature and
-damage generate different event signatures.
+\paragraph{Temperature compensation and residual monitoring.}
+Temperature compensation has long been studied as part of guided-wave SHM
+\cite{croxford2010}. This paper does not propose a new compensation method:
+all codec inputs are post-compensation residuals. The role of compensation in
+the present work is a fixed upstream condition that must be isolated from
+claims about event representation.
 
-\paragraph{Guided-wave ML.}
-Feature-based ML reached 96.2\% under leave-group-out cross-validation
-on the OGW temperature dataset \cite{schnur2022}, with a
-$\sim 6\,^\circ$C temperature-extrapolation limit; convolutional
-networks on raw signals can exceed compensation outside the baseline
-range \cite{mariani2021}; TinyML deployment on microcontrollers has
-been demonstrated \cite{henkmann2025tinyml}. We do not compete on peak
-accuracy but on the data-rate/Robustness trade-off.
+\paragraph{Event reporting.}
+SoD was introduced as an event-based data-reporting strategy
+\cite{miskowicz2006}. Its established definition does not imply a
+guided-wave-specific mechanism or a hardware saving. Here it is treated as
+one packetized software codec whose timestamp gaps, level changes, and
+configuration bytes are made explicit.
 
-\paragraph{Data reduction.}
-Post-hoc SVD/PCA compression of long-term guided-wave matrices is
-quantified in \cite{yang2023compression}; long short-term PCA
-\cite{yang2022ltpca} targets the same 4.5-year dataset we use. These
-are storage-side transforms, not acquisition-side event sampling; we
-compare against them at equal data rate (C3).
-
-\paragraph{Event-based sensing.}
-Send-on-delta sampling \cite{miskowicz2006} is established in wireless
-sensing and neuromorphic vision, and level-crossing ADCs have been
-evaluated for ultrasound at the circuit level, but---to our
-knowledge---no prior work applies SoD/event-based acquisition to
-guided-wave SHM, nor uses event-stream temporal structure to separate
-temperature from damage. This is the gap we fill.
+\paragraph{Compression comparisons.}
+Guided-wave compression and denoising have also been studied with
+unsupervised sparse and low-rank representations \cite{yang2023compression}. Rather than
+arguing that a sparse representation should replace those approaches, the
+strict experiment compares SoD directly with a uniform interpolation codec,
+PCA, and Haar discrete wavelet coding under the same record-level capacity
+contract. The resulting comparison is limited to the frozen data split and
+the four implemented codecs.

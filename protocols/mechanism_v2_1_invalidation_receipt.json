@@ -1,0 +1,38 @@
+{
+  "receipt_id": "mechanism-v2.1-pre-scoring-invalidation-v1",
+  "created_utc": "2026-07-30T01:37:46Z",
+  "invalidated_protocol_id": "mechanism-v2.1",
+  "invalidated_protocol_sha256": "a6fcfcbd7b6f53fa2a550ecf18513c45751fdf06f5551a096e0d006382d21641",
+  "invalidated_data_manifest_sha256": "f14f538cef3a52f206ac9d6d0fdfaf73efced06e464086a653a95f70283506a3",
+  "invalidated_source": {
+    "path": "src/data/mechanism_hdf5_schema.py",
+    "sha256": "1491b9a17bcd33c61b5dcc6aba188b9827a05b6921ba27fef2319be12c18dd3c"
+  },
+  "failure": {
+    "stage": "after official COQTEL archive verification and metadata-only HDF5 structure inspection, before any waveform-array dereference, signal metric, label-for-scoring access, cache construction, schema pass/fail result, or confirmation output",
+    "root_cause": "The frozen v2.1 schema mapper accepts only one static waveform dataset path and static metadata fields. COQTEL stores waveforms under State_n/Actionneur_m hierarchy, derives monitoring-record identity from those paths, and relates State_n to EC_time through the official reader example. No frozen v2.1 mapping can express this without a post-inspection code or mapping change.",
+    "metadata_only_evidence": {
+      "Essai_Corrosion1.h5_schema_fingerprint_sha256": "162828b74ebc8c07a598c3bf41c57c15bc6c23bc73da352db519384cf7872151",
+      "Essai_Corrosion2.h5_schema_fingerprint_sha256": "80c9279d1a753768883869689cee93119cc98ebe27a1ad29d95d0f976f721dea",
+      "official_example_md5": "429c4aff84468d6b24b4c48212876d0f",
+      "observed_structure": "two campaign files; /EC_data/EC_time, EC_potential, and EC_current; State_n groups; per-state Actionneur1..4 waveform datasets; fs attribute on 200kHz_5cycles groups"
+    }
+  },
+  "evidence_boundary": {
+    "new_waveform_arrays_opened": false,
+    "signal_metrics_computed": false,
+    "labels_read_for_scoring": false,
+    "confirmation_results_written": false,
+    "metadata_only_files_inspected": [
+      "data/external/mechanism_v2_1/coqtel/Essai_Corrosion1.h5",
+      "data/external/mechanism_v2_1/coqtel/Essai_Corrosion2.h5",
+      "data/external/mechanism_v2_1/coqtel/Example_Read_Data.m"
+    ]
+  },
+  "required_recovery": {
+    "successor_protocol_id": "mechanism-v2.2",
+    "keep_mechanism_v2_1_and_its_manifest_immutable": true,
+    "fix": "Add a successor-only hierarchical metadata mapper and freeze its path-template mapping before any new waveform-array access. Re-bind every source used for scoring to successor receipts.",
+    "restart_policy": "No v2.1 confirmation, schema eligibility, grid, score, or conclusion may be recovered or reused. COQTEL is not marked schema-ineligible solely because v2.1 cannot represent its hierarchy; COPV remains inactive."
+  }
+}

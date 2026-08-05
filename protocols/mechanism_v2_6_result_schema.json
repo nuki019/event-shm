@@ -1,0 +1,130 @@
+{
+  "schema_id": "mechanism-v2.6-result-schema-v1",
+  "protocol_id": "mechanism-v2.6",
+  "created_utc": "2026-08-05",
+  "purpose": "Mandatory field contract for every v2.6 result JSON. The auditor rejects any result that violates this schema.",
+  "top_level_required_fields": {
+    "protocol_id": {"type": "string", "value": "mechanism-v2.6"},
+    "protocol_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "data_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "result_schema_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "freeze_receipt_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "created_utc": {"type": "string", "format": "iso8601"},
+    "runner_id": {"type": "string", "enum": ["mechanism-v2.6-e9-ogw-v1", "mechanism-v2.6-e9-morpho-v1", "mechanism-v2.6-e9-coqtel-v1", "mechanism-v2.6-alarm-migration-v1"]},
+    "data_role": {"type": "string", "enum": ["same_plate_blind_confirmation", "primary_external_confirmation", "material_independent_schema_qualification", "alarm_migration_assessment", "schema_ineligible", "retired_consumed"]},
+    "source_receipt_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "archive_path": {"type": "string"},
+    "archive_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "terminal_hold_pre_access_test": {
+      "type": "object",
+      "required": ["passed", "test_runner_id", "test_timestamp_utc", "grid_coverage"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "test_runner_id": {"type": "string"},
+        "test_timestamp_utc": {"type": "string", "format": "iso8601"},
+        "grid_coverage": {
+          "type": "object",
+          "required": ["capacities", "deltas", "applicable_cells", "not_applicable_cells"],
+          "properties": {
+            "capacities": {"type": "array", "items": {"type": "integer"}},
+            "deltas": {"type": "array", "items": {"type": "integer"}},
+            "applicable_cells": {"type": "integer", "minimum": 0},
+            "not_applicable_cells": {"type": "integer", "minimum": 0},
+            "not_applicable_reasons": {"type": "array", "items": {"type": "object"}}
+          }
+        },
+        "failed_cells": {"type": "array", "items": {"type": "object"}}
+      }
+    }
+  },
+  "grid_reporting_required": {
+    "description": "Every result must report the COMPLETE frozen grid. Missing cells are audit failures.",
+    "capacities": [2048, 4096, 8192, 16384],
+    "deltas": [1, 8, 64, 512, 4096, 8192, 16384, 32767],
+    "event_features": ["event_density", "signed_total_variation", "event_time_centroid", "event_time_spread", "cap_hold_fraction"],
+    "heads": ["global", "max_path"],
+    "injection_families": ["sparse_abrupt", "smooth_subthreshold"],
+    "waveform_metrics": ["waveform_correlation_mean", "relative_error_mean", "peak_cross_correlation_delay_samples_median", "peak_cross_correlation_delay_samples_mean_absolute", "frequency_band_retention", "event_density", "cap_hold_fraction"],
+    "frequency_bands": [[0.004, 0.012], [0.012, 0.024], [0.024, 0.05], [0.05, 0.1]]
+  },
+  "per_cell_required": {
+    "capacity": {"type": "integer", "enum": [2048, 4096, 8192, 16384]},
+    "delta_codes": {"type": "integer", "enum": [1, 8, 64, 512, 4096, 8192, 16384, 32767]},
+    "status": {"type": "string", "enum": ["scored", "not_applicable_saturation_failed", "not_applicable_delta_too_small", "not_applicable_other"]},
+    "payload_bytes_per_record": {"type": "number", "minimum": 0},
+    "bits_per_original_sample": {"type": "number", "minimum": 0},
+    "cap_saturated": {"type": "boolean"},
+    "event_count": {"type": "integer", "minimum": 0},
+    "event_density": {"type": "number", "minimum": 0},
+    "waveform_metrics": {
+      "type": "object",
+      "required": ["waveform_correlation_mean", "relative_error_mean", "peak_cross_correlation_delay_samples_median", "peak_cross_correlation_delay_samples_mean_absolute", "frequency_band_retention", "event_density", "cap_hold_fraction"]
+    },
+    "loss_decomposition": {
+      "type": "object",
+      "required": ["quantization_only_mse", "hard_cap_truncation_mse", "score_head_mismatch_reported"]
+    },
+    "control_injections": {
+      "type": "object",
+      "required": ["sparse_abrupt", "smooth_subthreshold"],
+      "properties": {
+        "sparse_abrupt": {"type": "object"},
+        "smooth_subthreshold": {"type": "object"}
+      }
+    }
+  },
+  "statistics_required": {
+    "roc_auc": {"type": "number", "minimum": 0, "maximum": 1},
+    "roc_auc_ci95": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+    "group_bootstrap": {
+      "type": "object",
+      "required": ["replicates", "unit", "ci95_lower", "ci95_upper"],
+      "properties": {
+        "replicates": {"type": "integer", "value": 1000},
+        "unit": {"type": "string", "enum": ["monitoring_record", "block", "campaign"]},
+        "ci95_lower": {"type": "number"},
+        "ci95_upper": {"type": "number"}
+      }
+    },
+    "paired_auc_difference": {
+      "type": "object",
+      "required": ["global_minus_max_path_mean", "global_minus_max_path_ci95"]
+    },
+    "temperature_matched": {
+      "type": "object",
+      "required": ["n_pairs", "temperature_abs_difference_celsius", "damage_higher_win_rate", "win_rate_ci95"]
+    }
+  },
+  "audit_rejection_conditions": [
+    "Missing any top-level required field",
+    "protocol_id does not equal 'mechanism-v2.6'",
+    "protocol_sha256 does not match the frozen protocol file",
+    "data_manifest_sha256 does not match the frozen manifest file",
+    "result_schema_sha256 does not match the frozen schema file",
+    "terminal_hold_pre_access_test.passed is false",
+    "Any applicable (capacity, delta) cell is missing from the grid report",
+    "Any required event_feature is missing for any cell",
+    "Only one aggregation head is reported (both global and max_path are required)",
+    "Head selection is performed after scoring",
+    "Test labels are used for configuration selection",
+    "Discovery data (D04/D24) enters the confirmation path",
+    "D12 is present in any capacity",
+    "Schema gate failure is not documented with a reason",
+    "A schema_ineligible dataset is silently replaced without COPV fallback rule",
+    "Group split overlap is detected (same component in two splits)",
+    "Path, receiver, or repeat is treated as an independent statistical sample",
+    "PoD, field FAR, MCU cost, energy, real-time, or deployment claim is present"
+  ],
+  "success_failure_reporting": {
+    "description": "Both pre-registered outcomes must be reported if their conditions are met.",
+    "outcome_A_event_native_recovery": {
+      "condition": "event-native diagnostic AUC > 0.7 AND group bootstrap 95% lower bound > 0.6",
+      "required_fields": ["auc_value", "ci95", "confirmation_domain", "conclusion_text"]
+    },
+    "outcome_B_mechanism_failure": {
+      "condition": "confirmation AUC <= 0.7 AND complete collision/terminal-hold evidence covers all applicable cells",
+      "required_fields": ["auc_value", "ci95", "collision_evidence_summary", "terminal_hold_evidence_summary", "conclusion_text"]
+    },
+    "mandatory": "If either condition is met, its full report must be present. If both are met in different domains, both must be present. Cherry-picking is an audit failure."
+  }
+}

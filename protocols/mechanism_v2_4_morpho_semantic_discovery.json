@@ -1,0 +1,47 @@
+{
+  "protocol_id": "mechanism-v2.4-morpho-semantic-discovery",
+  "protocol_schema": "mechanism-v2.4-semantic-discovery-v1",
+  "status": "frozen_before_morpho_document_semantic_access",
+  "purpose": "Read only official MORPHO documentation and the frozen no-value structural inventory to establish mapping provenance. This phase never opens the HDF5 file and never selects a final mapping or schema outcome.",
+  "structural_discovery_provenance": {
+    "result_path": "results/mechanism_v2_4_morpho_metadata_discovery.json",
+    "result_sha256": "5cbc6c7037abbdbc4db1400ee2468a91285b63aa8e11439a9b511667bd55f3ad",
+    "freeze_receipt_sha256": "d841a9607542f15c0aadb5668ebcf0e991e257a5b3c6fb12db96557f598c0fd4"
+  },
+  "input_documents": {
+    "readme_pdf": {
+      "path": "data/external/mechanism_v2/ReadMe.pdf",
+      "size_bytes": 1210287,
+      "sha256": "fd76d00deab5d61744b9969f4921e6a1d4375685ddaa0f9334738c539875251a"
+    },
+    "reader_example": {
+      "path": "data/external/mechanism_v2/EXAMPLE_READ_DATA.m",
+      "size_bytes": 4537,
+      "sha256": "4956759ab73e5d1cd9353a3a1ecba4cef5e81c83e91acb8034ee369004e922a5"
+    }
+  },
+  "document_access_contract": {
+    "allowed": [
+      "raw-byte SHA-256 verification before document open",
+      "PDF text extraction and visual rendering of the official ReadMe",
+      "UTF-8 text reading of the official reader example",
+      "structural path names from the prior no-value discovery receipt"
+    ],
+    "forbidden": [
+      "opening MORPHO HDF5",
+      "reading waveform, metadata, label, fatigue-block, time, or health values from HDF5",
+      "selecting the final v2.4 mapping or declaring schema eligibility",
+      "training, scoring, caching, E9, external result auditing, or COPV activation"
+    ]
+  },
+  "output_contract": {
+    "path": "results/mechanism_v2_4_morpho_semantic_discovery.json",
+    "must_include": [
+      "source hashes and exact extracted document text",
+      "prior structural discovery hash",
+      "keyword evidence and path-token summary",
+      "all no-HDF5/no-score/no-mapping-selection flags"
+    ],
+    "output_is_mapping_provenance_only": true
+  }
+}
