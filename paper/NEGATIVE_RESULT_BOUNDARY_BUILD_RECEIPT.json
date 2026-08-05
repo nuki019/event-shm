@@ -1,0 +1,83 @@
+{
+  "receipt_id": "strict-negative-result-boundary-build-receipt-v1",
+  "created_utc": "2026-08-05T14:10:30Z",
+  "source_commit": "007fda27ebe40d2443dfadfb22ec6213cecbcf75",
+  "source_tree": "b258b1011d1fdb9df3dc59393df86b32d6d4e9ee",
+  "evidence_manifest_sha256": "7a32a31c7de70626144cac6ddb06a518f5cb9c7d2aad1a6cfd7f42b236b6f30b",
+  "input_sha256": {
+    "paper/e7_strict_codec_benchmark_v1.png": "0339b7847efeca16596b289b92e77e6dffab94815ea0362d059aaec0a1cf83c1",
+    "paper/e8_cold_start_alarm_v1.png": "0cd543b1181526ef06525e8c2bfc1ad1d81c4d2bd65852d7ea7af23307f86e97",
+    "paper/main.tex": "512d77571a801b8b8da9f5e5eea08043d346b0a2be4129cd8dc1f20c890a9adc",
+    "paper/NEGATIVE_RESULT_BOUNDARY_EVIDENCE_MANIFEST.json": "7a32a31c7de70626144cac6ddb06a518f5cb9c7d2aad1a6cfd7f42b236b6f30b",
+    "paper/refs.bib": "c80ecc0304cd6b588a31978a94fd152bf7a8784ee7ce4163b191e9dd38bd850d",
+    "paper/sections/conclusion.tex": "e91afc036d735a86645f81fd97a5acbea0ec999021e14ea80a4bd4c326ed485f",
+    "paper/sections/data.tex": "5d9b47fd7ea1b45a40080a9a0b93597bb47c7a070ab85d61ac777f80e34f6c79",
+    "paper/sections/discussion.tex": "2724c2f64d6b5cf6b44d2d767fb439b3de4005d4bdb46fdf684cce1045b6e125",
+    "paper/sections/experiments.tex": "7cf98f378585dc461f3f0d35dc523d357c1d437001ff8f52243f2b0bab68b8e0",
+    "paper/sections/intro.tex": "8b42663803d6bc5a8e1bcef848e32fc9507534918149df1814b3be0bb20ee2e1",
+    "paper/sections/method.tex": "4f6f616d1375caa22d13586cbf3fcbb125802cb7385e72f8b9dfac905bc975dc",
+    "paper/sections/related.tex": "41aeffa955bf0588c9d6b08020238d7b5ed6bec0e27830545cffc830713c83ab",
+    "paper/sections/results.tex": "2b47c3ec16b621df2db8294e5a3a9d5f81ebce8175469adb96bb3ccd129b4baa",
+    "protocols/mechanism_v2_6_invalidation_receipt.json": "c65d281b3e9bf3c5c841ed052b8ba258cee9e92f578982da0ada3655e3b79a1d",
+    "protocols/strict_evaluation_v1.json": "9c780aee880c46580978d949c737573d59a9eee7092d9b90fc64a56d99858154",
+    "results/e7_strict_codec_benchmark_v1.json": "5b44ff3fbdd30a07101c0c2971455f8ed56bda1e41ba7b050eec2f75896638fa",
+    "results/e8_cold_start_alarm_v1.json": "53228251c6607e01b17288a4723ba60d0201eb0d81f62463820871d684c49e94"
+  },
+  "build_commands": [
+    "xelatex -interaction=nonstopmode -halt-on-error -file-line-error -recorder main.tex",
+    "bibtex main",
+    "xelatex -interaction=nonstopmode -halt-on-error -file-line-error -recorder main.tex",
+    "xelatex -interaction=nonstopmode -halt-on-error -file-line-error -recorder main.tex"
+  ],
+  "outputs": {
+    "pdf": {
+      "path": "paper/main.pdf",
+      "sha256": "24b38f5136ae5f75cb54c41bf441f2399021b584e031edf58accba371811c515",
+      "bytes": 214103
+    },
+    "bbl": {
+      "path": "paper/main.bbl",
+      "sha256": "5738735c66fdb5e2cf7252cbfb8d36b4fa005af881616fc9c190de4736febd20",
+      "bytes": 1301
+    },
+    "fls": {
+      "path": "paper/main.fls",
+      "sha256": "9aa70eee97439c92234b4be8bcf4113882f74e7f11ec84095522b9454d045b95",
+      "bytes": 14229
+    },
+    "log": {
+      "path": "paper/main.log",
+      "sha256": "69aafb3bed392063b3fe0ca5cdd9af44cb3ecb3e92749a71550576664204a1a0",
+      "bytes": 34017
+    }
+  },
+  "log_checks": {
+    "no_undefined_references": true,
+    "no_undefined_citations": true,
+    "no_fatal_errors": true
+  },
+  "pdf_page_count": 8,
+  "tex_runtime": {
+    "xelatex": {
+      "path": "C:/Program Files/MiKTeX/miktex/bin/x64/xelatex.exe",
+      "version": "MiKTeX-XeTeX 4.16 (MiKTeX 25.12)",
+      "sha256": "ef2397c0f8638ccb79a46a693be196e64ce90b361fde5cbcd7397a72e13e8ff4"
+    },
+    "bibtex": {
+      "path": "C:/Program Files/MiKTeX/miktex/bin/x64/bibtex.exe",
+      "version": "MiKTeX-BibTeX 4.2 (MiKTeX 25.12)",
+      "sha256": "58133dab3e2cee89b465862bd4dae2ca62e2809a7903b40f14d92ac389968b4e"
+    },
+    "ieeetr_bst": {
+      "path": "C:/Program Files/MiKTeX/bibtex/bst/bibtex/ieeetr.bst",
+      "version": "MiKTeX 25.12; kpsewhich ieeetr.bst",
+      "sha256": "fa8ebb99630bae707f2b6c85e00f29f51201f014bc3577053f0fe87171b70923"
+    }
+  },
+  "visual_review": {
+    "renderer": "pdftoppm -r 160 -png",
+    "pages_reviewed": [1, 2, 3, 4, 5, 6, 7, 8],
+    "result": "All eight pages were visually checked against the unchanged hash-bound manuscript inputs; no clipping, overlap, unreadable text, missing figure, or broken page transition was observed."
+  },
+  "scope_note": "This receipt binds one local XeLaTeX output to C1. It does not prove experimental chronology, raw-data provenance, absence of unrecorded access, scientific generalization, or submission acceptance."
+}
